@@ -1,0 +1,81 @@
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+.aws/
+.codex/
+.agents/
+*.pem
+*.key
+*.p12
+*.pfx
+.pgpass
+.pg_service.conf
+
+# Python environments, package/build output, caches
+.venv/
+.tools/
+.cache/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.hypothesis/
+.ipynb_checkpoints/
+.coverage
+.coverage.*
+coverage.xml
+coverage/
+htmlcov/
+build/
+dist/
+
+# JavaScript and browser test output
+node_modules/
+.vite/
+*.tsbuildinfo
+playwright-report/
+test-results/
+blob-report/
+.wrangler/
+
+# dbt generated output and local credentials
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/profiles.yml
+
+# Source data and generated/private artifacts
+data/
+artifacts/
+backups/
+*.dump
+*.log
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+*.tfvars.json
+# Keep dependency lockfiles, including .terraform.lock.hcl, versioned.
+
+# Machine/editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+
+# Local documentation and planning (existing exclusions)
+/docs
+/planning
+

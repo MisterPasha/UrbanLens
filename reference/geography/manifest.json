@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "authority": "E06000043",
+  "geography": "LSOA 2021",
+  "boundary": "BFC V10",
+  "membership": "Exact Fit V3 / LAD22CD",
+  "land_area": "SAM March 2021 EW V2, land hectares / 100",
+  "population": "Mid-2022 revised (Nov 2025) to mid-2024; reference 2024-06-30",
+  "items": {
+    "boundary": "2bbaef5230694f3abae4f9145a3a9800",
+    "lookup": "b9ca90c10aaa4b8d9791e9859a38ca67",
+    "sam": "a488cb8fc9a74accb63cb52961e456ef"
+  },
+  "artifacts": {
+    "boundary-item.json": {
+      "url": "https://www.arcgis.com/sharing/rest/content/items/2bbaef5230694f3abae4f9145a3a9800?f=json",
+      "response_url": "https://www.arcgis.com/sharing/rest/content/items/2bbaef5230694f3abae4f9145a3a9800?f=json",
+      "retrieved_at": "2026-11-01T20:31:00.335528+00:00",
+      "content_type": "application/json;charset=utf-8",
+      "etag": null,
+      "last_modified": null,
+      "bytes": 6298,
+      "sha256": "fdb664618ab1655a5cbcd68fa056cad3cc687ad906c593407538936316c36f8e"
+    },
+    "lookup-item.json": {
+      "url": "https://www.arcgis.com/sharing/rest/content/items/b9ca90c10aaa4b8d9791e9859a38ca67?f=json",
+      "response_url": "https://www.arcgis.com/sharing/rest/content/items/b9ca90c10aaa4b8d9791e9859a38ca67?f=json",
+      "retrieved_at": "2026-11-01T20:31:00.531991+00:00",
+      "content_type": "application/json;charset=utf-8",
+      "etag": null,
+      "last_modified": null,
+      "bytes": 5740,
+      "sha256": "822b5b6c2ff794155247d85e68197a7e99913f81181ad82c05cea6b3172dedcd"
+    },
+    "sam-item.json": {
+      "url": "https://www.arcgis.com/sharing/rest/content/items/a488cb8fc9a74accb63cb52961e456ef?f=json",
+      "response_url": "https://www.arcgis.com/sharing/rest/content/items/a488cb8fc9a74accb63cb52961e456ef?f=json",
+      "retrieved_at": "2026-11-01T20:31:00.763526+00:00",
+      "content_type": "application/json;charset=utf-8",
+      "etag": null,
+      "last_modified": null,
+      "bytes": 7295,
+      "sha256": "adc1524698b12ad80efb6a048b206a0dbc6ab35c6a7610c5b52e6d89015db40f"
+    },
+    "lookup-layer.json": {
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0?f=json",
+      "response_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0?f=json",
+      "retrieved_at": "2026-11-01T20:31:01.171291+00:00",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "-613991926",
+      "last_modified": "Wed, 22 Mar 2023 09:09:27 GMT",
+      "bytes": 7643,
+      "sha256": "67df82db99e2a8973e426103369533ef79fe14809f33977caae4543b640c65a4"
+    },
+    "boundary-layer.json": {
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0?f=json",
+      "response_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0?f=json",
+      "retrieved_at": "2026-11-01T20:31:01.286696+00:00",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "-1741834417",
+      "last_modified": "Tue, 30 Jun 2026 08:54:11 GMT",
+      "bytes": 9760,
+      "sha256": "9797a42e3b0eff266cf9cbc9b84ef11319f36572a78892a06f35438cf1bf8613"
+    },
+    "lookup-count.json": {
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0/query?f=json&where=LAD22CD%3D%27E06000043%27&returnCountOnly=true",
+      "response_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0/query?f=json&where=LAD22CD%3D%27E06000043%27&returnCountOnly=true",
+      "retrieved_at": "2026-11-01T20:31:01.610538+00:00",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "sd20137_737215429",
+      "last_modified": "Wed, 22 Mar 2023 09:09:27 GMT",
+      "bytes": 15,
+      "sha256": "0478fc4e96dc0e367ac8ffb7771c5b49eaabee021fa3214adc92d8fa1789f940"
+    },
+    "lookup-rows.json": {
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0/query?f=json&where=LAD22CD%3D%27E06000043%27&outFields=OA21CD%2CLSOA21CD%2CLSOA21NM%2CLAD22CD&returnGeometry=false&orderByFields=OA21CD&resultRecordCount=1000",
+      "response_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/OA_LSOA_MSOA_EW_DEC_2021_LU_v3/FeatureServer/0/query?f=json&where=LAD22CD%3D%27E06000043%27&outFields=OA21CD%2CLSOA21CD%2CLSOA21NM%2CLAD22CD&returnGeometry=false&orderByFields=OA21CD&resultRecordCount=1000",
+      "retrieved_at": "2026-11-01T20:31:02.386957+00:00",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "sd20137_737215429",
+      "last_modified": "Wed, 22 Mar 2023 09:09:27 GMT",
+      "bytes": 112095,
+      "sha256": "b4487a708ee99fa0269c9b5c403bbc9753f2c23795feb77316023085d5e29fbb"
+    },
+    "boundaries-0.geojson": {
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query?f=geojson&where=LSOA21CD+IN+%28%27E01016849%27%2C%27E01016850%27%2C%27E01016851%27%2C%27E01016852%27%2C%27E01016853%27%2C%27E01016854%27%2C%27E01016855%27%2C%27E01016856%27%2C%27E01016857%27%2C%27E01016858%27%2C%27E01016859%27%2C%27E01016860%27%2C%27E01016861%27%2C%27E01016862%27%2C%27E01016863%27%2C%27E01016864%27%2C%27E01016865%27%2C%27E01016866%27%2C%27E01016867%27%2C%27E01016868%27%2C%27E01016869%27%2C%27E01016870%27%2C%27E01016871%27%2C%27E01016872%27%2C%27E01016873%27%2C%27E01016874%27%2C%27E01016875%27%2C%27E01016876%27%2C%27E01016877%27%2C%27E01016878%27%2C%27E01016879%27%2C%27E01016880%27%2C%27E01016881%27%2C%27E01016882%27%2C%27E01016883%27%2C%27E01016884%27%2C%27E01016885%27%2C%27E01016886%27%2C%27E01016887%27%2C%27E01016888%27%29&outFields=LSOA21CD%2CLSOA21NM&returnGeometry=true&outSR=27700&orderByFields=LSOA21CD&resultRecordCount=2000",
+      "response_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query?f=geojson&where=LSOA21CD+IN+%28%27E01016849%27%2C%27E01016850%27%2C%27E01016851%27%2C%27E01016852%27%2C%27E01016853%27%2C%27E01016854%27%2C%27E01016855%27%2C%27E01016856%27%2C%27E01016857%27%2C%27E01016858%27%2C%27E01016859%27%2C%27E01016860%27%2C%27E01016861%27%2C%27E01016862%27%2C%27E01016863%27%2C%27E01016864%27%2C%27E01016865%27%2C%27E01016866%27%2C%27E01016867%27%2C%27E01016868%27%2C%27E01016869%27%2C%27E01016870%27%2C%27E01016871%27%2C%27E01016872%27%2C%27E01016873%27%2C%27E01016874%27%2C%27E01016875%27%2C%27E01016876%27%2C%27E01016877%27%2C%27E01016878%27%2C%27E01016879%27%2C%27E01016880%27%2C%27E01016881%27%2C%27E01016882%27%2C%27E01016883%27%2C%27E01016884%27%2C%27E01016885%27%2C%27E01016886%27%2C%27E01016887%27%2C%27E01016888%27%29&outFields=LSOA21CD%2CLSOA21NM&returnGeometry=true&outSR=27700&orderByFields=LSOA21CD&resultRecordCount=2000",
+      "retrieved_at": "2026-11-01T20:31:02.649320+00:00",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "sd24415_800524149",
+      "last_modified": "Tue, 30 Jun 2026 08:54:11 GMT",
+      "bytes": 509003,
+      "sha256": "318287982fc0e3f2303e3aff49c009d6dcbacf65a35f675bb698a0b224de9f5a"
+    },
+    "boundaries-1.geojson": {
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query?f=geojson&where=LSOA21CD+IN+%28%27E01016889%27%2C%27E01016890%27%2C%27E01016891%27%2C%27E01016892%27%2C%27E01016893%27%2C%27E01016894%27%2C%27E01016895%27%2C%27E01016896%27%2C%27E01016897%27%2C%27E01016898%27%2C%27E01016899%27%2C%27E01016900%27%2C%27E01016901%27%2C%27E01016902%27%2C%27E01016903%27%2C%27E01016904%27%2C%27E01016905%27%2C%27E01016906%27%2C%27E01016907%27%2C%27E01016908%27%2C%27E01016909%27%2C%27E01016910%27%2C%27E01016911%27%2C%27E01016912%27%2C%27E01016913%27%2C%27E01016914%27%2C%27E01016915%27%2C%27E01016916%27%2C%27E01016917%27%2C%27E01016918%27%2C%27E01016919%27%2C%27E01016920%27%2C%27E01016921%27%2C%27E01016922%27%2C%27E01016923%27%2C%27E01016924%27%2C%27E01016925%27%2C%27E01016926%27%2C%27E01016927%27%2C%27E01016928%27%29&outFields=LSOA21CD%2CLSOA21NM&returnGeometry=true&outSR=27700&orderByFields=LSOA21CD&resultRecordCount=2000",
+      "response_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query?f=geojson&where=LSOA21CD+IN+%28%27E01016889%27%2C%27E01016890%27%2C%27E01016891%27%2C%27E01016892%27%2C%27E01016893%27%2C%27E01016894%27%2C%27E01016895%27%2C%27E01016896%27%2C%27E01016897%27%2C%27E01016898%27%2C%27E01016899%27%2C%27E01016900%27%2C%27E01016901%27%2C%27E01016902%27%2C%27E01016903%27%2C%27E01016904%27%2C%27E01016905%27%2C%27E01016906%27%2C%27E01016907%27%2C%27E01016908%27%2C%27E01016909%27%2C%27E01016910%27%2C%27E01016911%27%2C%27E01016912%27%2C%27E01016913%27%2C%27E01016914%27%2C%27E01016915%27%2C%27E01016916%27%2C%27E01016917%27%2C%27E01016918%27%2C%27E01016919%27%2C%27E01016920%27%2C%27E01016921%27%2C%27E01016922%27%2C%27E01016923%27%2C%27E01016924%27%2C%27E01016925%27%2C%27E01016926%27%2C%27E01016927%27%2C%27E01016928%27%29&outFields=LSOA21CD%2CLSOA21NM&returnGeometry=true&outSR=27700&orderByFields=LSOA21CD&resultRecordCount=2000",
+      "retrieved_at": "2026-11-01T20:31:02.905295+00:00",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "sd24415_800524149",
+      "last_modified": "Tue, 30 Jun 2026 08:54:11 GMT",
+      "bytes": 727872,
+      "sha256": "511662a0e08b1f944d5d574b50c707b46d2aa7ab56ff2834599940e2b5e0c50c"
+    },
+    "boundaries-2.geojson": {
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query?f=geojson&where=LSOA21CD+IN+%28%27E01016929%27%2C%27E01016930%27%2C%27E01016931%27%2C%27E01016932%27%2C%27E01016933%27%2C%27E01016934%27%2C%27E01016935%27%2C%27E01016936%27%2C%27E01016937%27%2C%27E01016938%27%2C%27E01016939%27%2C%27E01016940%27%2C%27E01016941%27%2C%27E01016942%27%2C%27E01016943%27%2C%27E01016944%27%2C%27E01016945%27%2C%27E01016946%27%2C%27E01016947%27%2C%27E01016948%27%2C%27E01016949%27%2C%27E01016950%27%2C%27E01016951%27%2C%27E01016952%27%2C%27E01016953%27%2C%27E01016954%27%2C%27E01016955%27%2C%27E01016956%27%2C%27E01016957%27%2C%27E01016958%27%2C%27E01016959%27%2C%27E01016960%27%2C%27E01016961%27%2C%27E01016962%27%2C%27E01016963%27%2C%27E01016964%27%2C%27E01016966%27%2C%27E01016967%27%2C%27E01016968%27%2C%27E01016969%27%29&outFields=LSOA21CD%2CLSOA21NM&returnGeometry=true&outSR=27700&orderByFields=LSOA21CD&resultRecordCount=2000",
+      "response_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query?f=geojson&where=LSOA21CD+IN+%28%27E01016929%27%2C%27E01016930%27%2C%27E01016931%27%2C%27E01016932%27%2C%27E01016933%27%2C%27E01016934%27%2C%27E01016935%27%2C%27E01016936%27%2C%27E01016937%27%2C%27E01016938%27%2C%27E01016939%27%2C%27E01016940%27%2C%27E01016941%27%2C%27E01016942%27%2C%27E01016943%27%2C%27E01016944%27%2C%27E01016945%27%2C%27E01016946%27%2C%27E01016947%27%2C%27E01016948%27%2C%27E01016949%27%2C%27E01016950%27%2C%27E01016951%27%2C%27E01016952%27%2C%27E01016953%27%2C%27E01016954%27%2C%27E01016955%27%2C%27E01016956%27%2C%27E01016957%27%2C%27E01016958%27%2C%27E01016959%27%2C%27E01016960%27%2C%27E01016961%27%2C%27E01016962%27%2C%27E01016963%27%2C%27E01016964%27%2C%27E01016966%27%2C%27E01016967%27%2C%27E01016968%27%2C%27E01016969%27%29&outFields=LSOA21CD%2CLSOA21NM&returnGeometry=true&outSR=27700&orderByFields=LSOA21CD&resultRecordCount=2000",
+      "retrieved_at": "2026-11-01T20:31:03.177339+00:00",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "sd24415_800524149",
+      "last_modified": "Tue, 30 Jun 2026 08:54:11 GMT",
+      "bytes": 575358,
+      "sha256": "fa7cbf2d0bba86d8faf28b433c7d8a1089dcc46d37937a6e1f46bbfafbaf1c04"
+    },
+    "boundaries-3.geojson": {
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query?f=geojson&where=LSOA21CD+IN+%28%27E01016970%27%2C%27E01016971%27%2C%27E01016972%27%2C%27E01016973%27%2C%27E01016974%27%2C%27E01016975%27%2C%27E01016976%27%2C%27E01016977%27%2C%27E01016978%27%2C%27E01016979%27%2C%27E01016980%27%2C%27E01016981%27%2C%27E01016982%27%2C%27E01016983%27%2C%27E01016984%27%2C%27E01016985%27%2C%27E01016986%27%2C%27E01016987%27%2C%27E01016988%27%2C%27E01016989%27%2C%27E01016990%27%2C%27E01016991%27%2C%27E01016992%27%2C%27E01016993%27%2C%27E01016994%27%2C%27E01016995%27%2C%27E01016996%27%2C%27E01016997%27%2C%27E01016998%27%2C%27E01016999%27%2C%27E01017000%27%2C%27E01017001%27%2C%27E01017002%27%2C%27E01017003%27%2C%27E01017004%27%2C%27E01017005%27%2C%27E01017006%27%2C%27E01017007%27%2C%27E01017008%27%2C%27E01017009%27%29&outFields=LSOA21CD%2CLSOA21NM&returnGeometry=true&outSR=27700&orderByFields=LSOA21CD&resultRecordCount=2000",
+      "response_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query?f=geojson&where=LSOA21CD+IN+%28%27E01016970%27%2C%27E01016971%27%2C%27E01016972%27%2C%27E01016973%27%2C%27E01016974%27%2C%27E01016975%27%2C%27E01016976%27%2C%27E01016977%27%2C%27E01016978%27%2C%27E01016979%27%2C%27E01016980%27%2C%27E01016981%27%2C%27E01016982%27%2C%27E01016983%27%2C%27E01016984%27%2C%27E01016985%27%2C%27E01016986%27%2C%27E01016987%27%2C%27E01016988%27%2C%27E01016989%27%2C%27E01016990%27%2C%27E01016991%27%2C%27E01016992%27%2C%27E01016993%27%2C%27E01016994%27%2C%27E01016995%27%2C%27E01016996%27%2C%27E01016997%27%2C%27E01016998%27%2C%27E01016999%27%2C%27E01017000%27%2C%27E01017001%27%2C%27E01017002%27%2C%27E01017003%27%2C%27E01017004%27%2C%27E01017005%27%2C%27E01017006%27%2C%27E01017007%27%2C%27E01017008%27%2C%27E01017009%27%29&outFields=LSOA21CD%2CLSOA21NM&returnGeometry=true&outSR=27700&orderByFields=LSOA21CD&resultRecordCount=2000",
+      "retrieved_at": "2026-11-01T20:31:03.448687+00:00",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "sd24415_800524149",
+      "last_modified": "Tue, 30 Jun 2026 08:54:11 GMT",
+      "bytes": 633921,
+      "sha256": "0bae4c03f371408e465d20024161925ba40022693ee48cded5032628f1e9b64c"
+    },
+    "boundaries-4.geojson": {
+      "url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query?f=geojson&where=LSOA21CD+IN+%28%27E01017010%27%2C%27E01017011%27%2C%27E01017012%27%2C%27E01033328%27%2C%27E01033329%27%29&outFields=LSOA21CD%2CLSOA21NM&returnGeometry=true&outSR=27700&orderByFields=LSOA21CD&resultRecordCount=2000",
+      "response_url": "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query?f=geojson&where=LSOA21CD+IN+%28%27E01017010%27%2C%27E01017011%27%2C%27E01017012%27%2C%27E01033328%27%2C%27E01033329%27%29&outFields=LSOA21CD%2CLSOA21NM&returnGeometry=true&outSR=27700&orderByFields=LSOA21CD&resultRecordCount=2000",
+      "retrieved_at": "2026-11-01T20:31:03.614568+00:00",
+      "content_type": "application/json; charset=utf-8",
+      "etag": "sd24415_800524149",
+      "last_modified": "Tue, 30 Jun 2026 08:54:11 GMT",
+      "bytes": 89617,
+      "sha256": "8c8099e625dee0bd61fd6d7b05dcb4af14c490b0ab511a5a3c5dc9a1d364a714"
+    },
+    "sam.zip": {
+      "url": "https://www.arcgis.com/sharing/rest/content/items/a488cb8fc9a74accb63cb52961e456ef/data",
+      "response_url": "https://www.arcgis.com/sharing/rest/content/items/a488cb8fc9a74accb63cb52961e456ef/data",
+      "retrieved_at": "2026-11-01T20:31:05.120324+00:00",
+      "content_type": "application/zip",
+      "etag": "\"19898252948\"",
+      "last_modified": null,
+      "bytes": 6348375,
+      "sha256": "759351a082c0152efdade0a8bd6f70af8dd76f1785f8e977ec92f2ed21b60cb4"
+    },
+    "population.xlsx": {
+      "url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/lowersuperoutputareamidyearpopulationestimatesnationalstatistics/mid2022revisednov2025tomid2024/sapelsoabroadage20222024.xlsx",
+      "response_url": "https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/populationandmigration/populationestimates/datasets/lowersuperoutputareamidyearpopulationestimatesnationalstatistics/mid2022revisednov2025tomid2024/sapelsoabroadage20222024.xlsx",
+      "retrieved_at": "2026-11-01T20:31:07.038459+00:00",
+      "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8",
+      "etag": "\"b3cb5fd9f15c71bf81cd33e77909e0f6bf531e90\"",
+      "last_modified": null,
+      "bytes": 13063018,
+      "sha256": "b77a07033dca67a204ff7d306819bb90241234ea0ce4e3c259ebf98d7c7e6f28"
+    },
+    "uk_os_OSTN15_NTv2_OSGBtoETRS.tif": {
+      "url": "https://cdn.proj.org/uk_os_OSTN15_NTv2_OSGBtoETRS.tif",
+      "response_url": "https://cdn.proj.org/uk_os_OSTN15_NTv2_OSGBtoETRS.tif",
+      "retrieved_at": "2026-11-01T20:31:07.654464+00:00",
+      "content_type": "image/tiff",
+      "etag": "\"57a3e9c439815cc46c0b97a87ef325f3\"",
+      "last_modified": "Tue, 28 Jan 2020 14:45:15 GMT",
+      "bytes": 3035814,
+      "sha256": "5d6ed64d2119952c4c559fa1fccbc594b6520fc3ec3ef2fc10be13202c4384fa"
+    },
+    "grid-readme.txt": {
+      "url": "https://raw.githubusercontent.com/OSGeo/PROJ-data/master/uk_os/uk_os_README.txt",
+      "response_url": "https://raw.githubusercontent.com/OSGeo/PROJ-data/master/uk_os/uk_os_README.txt",
+      "retrieved_at": "2026-11-01T20:31:07.954289+00:00",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"6b4ea0710804a1a6be7e3678267ca4bf45259a3d57fc441ee8b32317c0a9def0\"",
+      "last_modified": null,
+      "bytes": 3414,
+      "sha256": "4ff34537d6b8456a1deb1537838ee2768c2b52f947e54380f985f5af45700d16"
+    }
+  }
+}

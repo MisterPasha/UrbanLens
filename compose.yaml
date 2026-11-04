@@ -1,0 +1,24 @@
+name: urbanlens-local
+
+services:
+  db:
+    # PostgreSQL 17 / PostGIS 3.6. Digest checked against the published tag.
+    image: postgis/postgis:17-3.6@sha256:1ac10b2551ba84ae05db8e7da477afcd0a3fede99bcb7705da2ee157390cb095
+    environment:
+      POSTGRES_DB: ${LOCAL_POSTGRES_DB:-urbanlens}
+      POSTGRES_USER: ${LOCAL_POSTGRES_USER:-urbanlens_local}
+      POSTGRES_PASSWORD: ${LOCAL_POSTGRES_PASSWORD:?Run python scripts/dev.py setup first}
+    ports:
+      - "127.0.0.1:${LOCAL_POSTGRES_PORT:-54322}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    stop_grace_period: 30s
+
+volumes:
+  postgres-data:

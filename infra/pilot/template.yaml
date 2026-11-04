@@ -1,0 +1,209 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Temporary private step 08 Lambda feasibility pilot; no public endpoints or schedules.
+Parameters:
+  RuntimeBoundary:
+    Type: String
+    Description: ARN of UrbanLensStep08RuntimeBoundary from the administrator access setup.
+  ApiImage:
+    Type: String
+    Description: Same-region ECR image URI pinned by digest.
+  PipelineImage:
+    Type: String
+    Description: Same-region ECR image URI pinned by digest.
+  ProbeDatabase:
+    Type: String
+    NoEcho: true
+    Description: Private direct Neon connection used only for the scratch-schema benchmark.
+Resources:
+  Artifacts:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LifecycleConfiguration:
+        Rules:
+          - Id: TemporaryPilot
+            Status: Enabled
+            ExpirationInDays: 1
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 1
+  ApiRole:
+    Type: AWS::IAM::Role
+    Properties:
+      PermissionsBoundary: !Ref RuntimeBoundary
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: OwnPilotLogs
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub 'arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${AWS::StackName}-api:*'
+  PipelineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      PermissionsBoundary: !Ref RuntimeBoundary
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: OwnPilotObjectsOnly
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: s3:GetObject
+                Resource: !Sub '${Artifacts.Arn}/bootstrap/*'
+              - Effect: Allow
+                Action: s3:PutObject
+                Resource:
+                  - !Sub '${Artifacts.Arn}/raw/*'
+                  - !Sub '${Artifacts.Arn}/filtered/*'
+                  - !Sub '${Artifacts.Arn}/results/*'
+              - Effect: Allow
+                Action: s3:AbortMultipartUpload
+                Resource: !Sub '${Artifacts.Arn}/raw/*'
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub 'arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${AWS::StackName}-pipeline:*'
+  ApiLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-api'
+      RetentionInDays: 1
+  PipelineLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-pipeline'
+      RetentionInDays: 1
+  DbtLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/codebuild/${AWS::StackName}-dbt'
+      RetentionInDays: 1
+  DbtRole:
+    Type: AWS::IAM::Role
+    Properties:
+      PermissionsBoundary: !Ref RuntimeBoundary
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codebuild.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: OwnPilotBuildOnly
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: s3:GetObject
+                Resource: !Sub '${Artifacts.Arn}/bootstrap/*'
+              - Effect: Allow
+                Action: s3:PutObject
+                Resource: !Sub '${Artifacts.Arn}/results/*'
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub 'arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${AWS::StackName}-dbt:*'
+              - Effect: Allow
+                Action: ecr:GetAuthorizationToken
+                Resource: '*'
+              - Effect: Allow
+                Action: [ecr:BatchGetImage, ecr:GetDownloadUrlForLayer, ecr:BatchCheckLayerAvailability]
+                Resource: !Sub 'arn:${AWS::Partition}:ecr:${AWS::Region}:${AWS::AccountId}:repository/urbanlens-step08-20261102-pipeline'
+  Dbt:
+    Type: AWS::CodeBuild::Project
+    DependsOn: DbtLogs
+    Properties:
+      Name: !Sub '${AWS::StackName}-dbt'
+      ServiceRole: !GetAtt DbtRole.Arn
+      TimeoutInMinutes: 5
+      QueuedTimeoutInMinutes: 5
+      ConcurrentBuildLimit: 1
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: !Ref PipelineImage
+        ImagePullCredentialsType: SERVICE_ROLE
+        PrivilegedMode: false
+        EnvironmentVariables:
+          - Name: URBANLENS_PILOT_BUCKET
+            Value: !Ref Artifacts
+          - Name: URBANLENS_FEASIBILITY_DATABASE_URL
+            Value: !Ref ProbeDatabase
+          - Name: DBT_SEND_ANONYMOUS_USAGE_STATS
+            Value: 'false'
+      Source:
+        Type: NO_SOURCE
+        BuildSpec: |
+          version: 0.2
+          phases:
+            build:
+              commands:
+                - cd /var/task
+                - /var/lang/bin/python -m urbanlens.build_probe
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+          GroupName: !Ref DbtLogs
+  Api:
+    Type: AWS::Lambda::Function
+    DependsOn: ApiLogs
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-api'
+      PackageType: Image
+      Code:
+        ImageUri: !Ref ApiImage
+      Role: !GetAtt ApiRole.Arn
+      Architectures: [x86_64]
+      MemorySize: 512
+      Timeout: 10
+  Pipeline:
+    Type: AWS::Lambda::Function
+    DependsOn: PipelineLogs
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-pipeline'
+      PackageType: Image
+      Code:
+        ImageUri: !Ref PipelineImage
+      Role: !GetAtt PipelineRole.Arn
+      Architectures: [x86_64]
+      MemorySize: 2048
+      Timeout: 600
+      EphemeralStorage:
+        Size: 512
+      Environment:
+        Variables:
+          URBANLENS_PILOT_BUCKET: !Ref Artifacts
+          URBANLENS_FEASIBILITY_DATABASE_URL: !Ref ProbeDatabase
+          DBT_SEND_ANONYMOUS_USAGE_STATS: 'false'
+Outputs:
+  DbtProject:
+    Value: !Ref Dbt
+  Bucket:
+    Value: !Ref Artifacts
+  ApiFunction:
+    Value: !Ref Api
+  PipelineFunction:
+    Value: !Ref Pipeline

@@ -1,0 +1,4 @@
+{
+  "lambda_base_image": "public.ecr.aws/lambda/python@sha256:cf3e082b6c28721944dfef2c252c2e6df2f65aab3c2e2a64ce1f86f80c7aa13d",
+  "platform": "linux/amd64"
+}

@@ -1,0 +1,131 @@
+{
+  "authority": "E06000043",
+  "lsoa_count": 165,
+  "oa_count": 936,
+  "land_hectares": "8283.30",
+  "land_km2": "82.833",
+  "population_totals_unrounded_for_validation_only": {
+    "population": 283870,
+    "age_0_15": 40352,
+    "age_16_64": 202995,
+    "age_65_plus": 40523
+  },
+  "boundary_native_srid": 27700,
+  "storage_srid": 4326,
+  "invalid_geometries": 0,
+  "overlap_m2": -4.470348358154297e-08,
+  "city_geometry_type": "Polygon",
+  "sam_member": "Standard Area Measurements (Latest) for 2021 Statistical Geographies/Measurements/SAM_LSOA_DEC_2021_EW.csv",
+  "sam_encoding": "cp1252",
+  "sam_fields": [
+    "LSOA21CD",
+    "LSOA21NM",
+    "Extent of the Realm (Area in Hectares)",
+    "Clipped to the Coastline (Area in Hectares)",
+    "Area of Inland Water (Hectares)",
+    "Land count (Area in Hectares)",
+    "LTLA22CD",
+    "LTLA22NM",
+    "LTLA22NMW"
+  ],
+  "sam_land_mapping": {
+    "provider_field": "Land count (Area in Hectares)",
+    "semantic_field": "AREALHECT",
+    "unit": "hectares"
+  },
+  "workbook": {
+    "sheets": [
+      "Cover sheet",
+      "Contents",
+      "Notes",
+      "Related publications",
+      "Mid-2022 LSOA 2021",
+      "Mid-2023 LSOA 2021",
+      "Mid-2024 LSOA 2021",
+      "Median age LSOA 2011-2024"
+    ],
+    "selected_sheet": "Mid-2024 LSOA 2021",
+    "header_row": 4,
+    "fields": [
+      "LAD 2021 Code",
+      "LAD 2021 Name",
+      "LSOA 2021 Code",
+      "LSOA 2021 Name",
+      "Total",
+      "F0 to 15",
+      "F16 to 29",
+      "F30 to 44",
+      "F45 to 64",
+      "F65 and over",
+      "M0 to 15",
+      "M16 to 29",
+      "M30 to 44",
+      "M45 to 64",
+      "M65 and over"
+    ],
+    "notes": [
+      [
+        "Notes related to the data in this spreadsheet"
+      ],
+      [
+        "Issues affecting all tables",
+        "Note text"
+      ],
+      [
+        1,
+        "Rounding: the estimates are presented unrounded. Unrounded estimates are published to enable and encourage further calculations and analysis. However, the estimates should not be taken to be accurate to the level of detail provided. More information on the accuracy of the estimates is available in the Quality and Methodology document (QMI). It is ONS policy to publish population estimates rounded to at least the nearest hundred persons. These unit-level estimates are provided to enable and encourage further calculations and analysis. However, the estimates cannot be guaranteed to be as exact as the level of detail implied by unit-level data. We request that data are rounded to the nearest 100 if quoted in any publication, documentation or similar."
+      ],
+      [
+        2,
+        "Small counts: the estimates are produced using a variety of data sources and statistical models, including some statistical disclosure control methods, and small estimates should not be taken to refer to particular individuals."
+      ],
+      [
+        3,
+        "Usual residence definitions: the estimated resident population of an area includes all those people who usually live there, regardless of nationality. Arriving international migrants are included in the usually resident population if they remain in the UK for at least a year. Emigrants are excluded if they remain outside the UK for at least a year. This is consistent with the United Nations definition of a long-term migrant. Armed forces stationed outside of the UK are excluded. Students are taken to be usually resident at their term time address."
+      ],
+      [
+        4,
+        "Accredited Official Statistics: these estimates are accredited official statistics as they have been assessed against the quality standards required for accredited official statistics status."
+      ],
+      [
+        5,
+        "Accuracy: these estimates (including estimates for Lower layer Super Output Areas (LSOAs), Middle layer Super Output Areas (MSOAs), electoral wards, Westminster Parliamentary constituencies, Clinical Commissioning Groups (CCGs) and National Parks) were initially intended for publication by five-year age group and sex. The more detailed estimates provided here are intended to enable and encourage further analysis and use of the estimates. Particular caution should be exercised in using estimates at a greater level of disaggregation - for example, for Output Areas, or for single year of age groups, as these would not be expected to have the same level of accuracy as the aggregated estimates."
+      ],
+      [
+        6,
+        "Geography: these population estimates reflect boundaries in place as of October 2025. The main products are the estimates for Super Output Areas (SOAs), which are based on the 2021 Census and rolled forward annually using a ratio change methodology. This approach uses the change in the population recorded in the Personal Demographics Service as an indicator of the change in the true population. Estimates for LSOAs by broad ages and MSOAs by quinary age groups (five-year age groups) hold Accredited Official Statistics status. Estimates at greater levels of disaggregation, for example by single year of age, are provided as supporting information only.\n\nThe remainder of these population estimates products relate to a range of different geographic areas and are derived directly from the SOA figures. First, estimates for LSOAs are broken down to Output Area (OA) level using an apportionment approach. These OA estimates are then aggregated to produce estimates for electoral wards and Westminster Parliamentary constituencies on a best-fit basis. Estimates for National Parks are also calculated from the OA-level data. Electoral wards, Westminster Parliamentary constituencies and National Parks all hold Official Statistics in Development status. Estimates for health geographies are aggregated directly from LSOAs and hold Accredited Official Statistics status."
+      ],
+      [
+        7,
+        "Specific notes for LSOAs: This workbook uses LSOA codes used by ONS from Census 2021. "
+      ],
+      [
+        8,
+        "Revision to mid-2022 population estimates: Population estimates for mid-2022 have primarily been revised to account for improvements to the disaggregation of international migration from the UK level down to local authority by age and sex and updated internal migration using a more complete set of Personal Demographics Service Data. Additionally the revised mid-2022 takes advantage of the availability of the more complete Personal Demographics Service data in the calculation of both ratio change for MSOA and LSOAs, and diaggregation of LSOA to OAs."
+      ],
+      [
+        9,
+        "First release of Mid-2023 and Mid-2024 estimates. On 26 October 2025 Mid-2023 and Mid-2024 population estimates for output areas, health, electoral and other geographies were published for the first time, these estimates are coherent with England and Wales estimates first published on the 30 July 2025 (and subsequently re-published on 26 September 2025)."
+      ],
+      [
+        "Issues affecting table Median age LSOA 2021",
+        "Note text"
+      ],
+      [
+        10,
+        "Population estimates: Median age for 2011 to 2024 has been calculated using the complete set of population estimates on 2021 LSOAs, including the corrected and rebased estimates for 2012 to 2020. "
+      ],
+      [
+        11,
+        "Median age: the median age is the age that divides a population into two numerically equal groups – that is, half the people are younger than this age and half are older. Median age provides a useful summary measure of the age structure of the population. It has been calculated using single year of age data."
+      ]
+    ]
+  },
+  "transform": "Inverse of British National Grid + OSGB36 to WGS 84 (9) (with axis order normalized for visualization)",
+  "transform_reported_accuracy_metres": 1.0,
+  "outputs": {
+    "areas-wgs84.geojson": "2840c30567595a592922b600eab6928cfc602899b31f64aba4960adacd9f07f7",
+    "city-coverage-27700.geojson": "e080427947d31b47b2d411d162b4169229c6867f31a952aadf4d1acef5da6e43",
+    "city-coverage-wgs84.geojson": "fb4f34c8c368afc463373e9bc4c7b26e6b5cfca1f1345e07b0a4a2d462e0c122"
+  }
+}

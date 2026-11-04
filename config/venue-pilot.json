@@ -1,0 +1,10 @@
+{
+  "version": "discovery-v1",
+  "overpass_endpoint": "https://overpass-api.de/api/interpreter",
+  "fsa_candidate_types": ["1", "7844", "7843", "4613"],
+  "candidate_radius_m": 150,
+  "name_similarity": 0.8,
+  "postcode_name_similarity": 0.65,
+  "duplicate_radius_m": 30,
+  "automatic_match_acceptance": false
+}

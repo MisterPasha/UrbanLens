@@ -1,0 +1,14 @@
+# Local owner access only. Neon roles/connections are a later, separate configuration.
+urbanlens:
+  target: local
+  outputs:
+    local:
+      type: postgres
+      host: "{{ env_var('LOCAL_POSTGRES_HOST', '127.0.0.1') }}"
+      port: "{{ env_var('LOCAL_POSTGRES_PORT', '54322') | int }}"
+      user: "{{ env_var('LOCAL_POSTGRES_USER', 'urbanlens_local') }}"
+      password: "{{ env_var('LOCAL_POSTGRES_PASSWORD') }}"
+      dbname: "{{ env_var('LOCAL_POSTGRES_DB', 'urbanlens') }}"
+      schema: local_development
+      threads: 2
+      connect_timeout: 5

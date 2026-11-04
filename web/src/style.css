@@ -1,0 +1,15 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #18312e;
+  background: #f4f7f5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  line-height: 1.6;
+}
+
+body { margin: 0; }
+main { max-width: 48rem; margin: 12vh auto; padding: 1.5rem; }
+h1 { font-size: clamp(2.5rem, 8vw, 4rem); line-height: 1.1; margin: 1rem 0; }
+h2 { font-size: 1.2rem; }
+.scope { font-weight: 600; color: #29594f; }
+section { margin-top: 2.5rem; padding: 1.5rem; background: #fff; border: 1px solid #c4d5ce; border-radius: .5rem; }

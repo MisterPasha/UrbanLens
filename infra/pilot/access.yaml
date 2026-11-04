@@ -1,0 +1,181 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Scoped developer permissions for the UrbanLens step 08 pilot. Creates only IAM policies.
+Parameters:
+  DeveloperUser:
+    Type: String
+    Description: Existing non-root IAM user whose access key is configured in urbanlens_dev.
+    AllowedPattern: '[A-Za-z0-9+=,.@_-]+'
+Resources:
+  RuntimeBoundary:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: UrbanLensStep08RuntimeBoundary
+      Description: Maximum permissions for the temporary pilot runtime roles.
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: [logs:CreateLogStream, logs:PutLogEvents]
+            Resource: !Sub 'arn:${AWS::Partition}:logs:eu-west-2:${AWS::AccountId}:log-group:/aws/lambda/urbanlens-step08-20261102-*:*'
+          - Effect: Allow
+            Action: [logs:CreateLogStream, logs:PutLogEvents]
+            Resource: !Sub 'arn:${AWS::Partition}:logs:eu-west-2:${AWS::AccountId}:log-group:/aws/codebuild/urbanlens-step08-20261102-*:*'
+          - Effect: Allow
+            Action: ecr:GetAuthorizationToken
+            Resource: '*'
+          - Effect: Allow
+            Action: [ecr:BatchGetImage, ecr:GetDownloadUrlForLayer, ecr:BatchCheckLayerAvailability]
+            Resource: !Sub 'arn:${AWS::Partition}:ecr:eu-west-2:${AWS::AccountId}:repository/urbanlens-step08-20261102-*'
+          - Effect: Allow
+            Action: [s3:GetObject, s3:PutObject, s3:AbortMultipartUpload]
+            Resource: 'arn:aws:s3:::urbanlens-step08-20261102-*/*'
+  DeveloperPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: UrbanLensStep08Developer
+      Description: Temporary London pilot resources only; no user/key/policy administration.
+      Users: [!Ref DeveloperUser]
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: RegionalDiscoveryAndRegistryLogin
+            Effect: Allow
+            Action:
+              - lambda:GetAccountSettings
+              - cloudformation:ValidateTemplate
+              - cloudformation:ListStacks
+              - ecr:GetRegistryScanningConfiguration
+              - ecr:GetAuthorizationToken
+              - ecr:DescribeRepositories
+              - logs:DescribeLogGroups
+            Resource: '*'
+            Condition:
+              StringEquals:
+                aws:RequestedRegion: eu-west-2
+          - Sid: OnlyPilotStack
+            Effect: Allow
+            Action:
+              - cloudformation:CreateStack
+              - cloudformation:UpdateStack
+              - cloudformation:DescribeStacks
+              - cloudformation:DescribeStackEvents
+              - cloudformation:DeleteStack
+              - cloudformation:GetTemplate
+            Resource: !Sub 'arn:${AWS::Partition}:cloudformation:eu-west-2:${AWS::AccountId}:stack/urbanlens-step08-20261102/*'
+          - Sid: OnlyPilotRepositories
+            Effect: Allow
+            Action:
+              - ecr:CreateRepository
+              - ecr:DeleteRepository
+              - ecr:TagResource
+              - ecr:ListTagsForResource
+              - ecr:SetRepositoryPolicy
+              - ecr:GetRepositoryPolicy
+              - ecr:DescribeImages
+              - ecr:BatchCheckLayerAvailability
+              - ecr:InitiateLayerUpload
+              - ecr:UploadLayerPart
+              - ecr:CompleteLayerUpload
+              - ecr:PutImage
+              - ecr:BatchGetImage
+              - ecr:GetDownloadUrlForLayer
+            Resource: !Sub 'arn:${AWS::Partition}:ecr:eu-west-2:${AWS::AccountId}:repository/urbanlens-step08-20261102-*'
+          - Sid: CreateOnlyBoundedPilotRoles
+            Effect: Allow
+            Action: iam:CreateRole
+            Resource: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:role/urbanlens-step08-20261102-*'
+            Condition:
+              ArnEquals:
+                iam:PermissionsBoundary: !Ref RuntimeBoundary
+          - Sid: ManageOnlyPilotRoles
+            Effect: Allow
+            Action:
+              - iam:GetRole
+              - iam:DeleteRole
+              - iam:TagRole
+              - iam:UntagRole
+              - iam:PutRolePolicy
+              - iam:GetRolePolicy
+              - iam:DeleteRolePolicy
+              - iam:ListRolePolicies
+              - iam:ListAttachedRolePolicies
+            Resource: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:role/urbanlens-step08-20261102-*'
+          - Sid: PassOnlyPilotRolesToLambda
+            Effect: Allow
+            Action: iam:PassRole
+            Resource: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:role/urbanlens-step08-20261102-*'
+            Condition:
+              StringEquals:
+                iam:PassedToService: [lambda.amazonaws.com, codebuild.amazonaws.com]
+          - Sid: ReadFixedBoundary
+            Effect: Allow
+            Action: [iam:GetPolicy, iam:GetPolicyVersion]
+            Resource: !Ref RuntimeBoundary
+          - Sid: OnlyPilotFunctions
+            Effect: Allow
+            Action:
+              - lambda:CreateFunction
+              - lambda:UpdateFunctionCode
+              - lambda:GetFunction
+              - lambda:GetFunctionConfiguration
+              - lambda:GetPolicy
+              - lambda:ListTags
+              - lambda:TagResource
+              - lambda:UntagResource
+              - lambda:DeleteFunction
+              - lambda:InvokeFunction
+            Resource: !Sub 'arn:${AWS::Partition}:lambda:eu-west-2:${AWS::AccountId}:function:urbanlens-step08-20261102-*'
+          - Sid: OnlyPilotBuildProject
+            Effect: Allow
+            Action:
+              - codebuild:CreateProject
+              - codebuild:UpdateProject
+              - codebuild:DeleteProject
+              - codebuild:BatchGetProjects
+              - codebuild:StartBuild
+              - codebuild:BatchGetBuilds
+              - codebuild:StopBuild
+            Resource:
+              - !Sub 'arn:${AWS::Partition}:codebuild:eu-west-2:${AWS::AccountId}:project/urbanlens-step08-20261102-*'
+              - !Sub 'arn:${AWS::Partition}:codebuild:eu-west-2:${AWS::AccountId}:build/urbanlens-step08-20261102-*'
+          - Sid: OnlyPilotBuckets
+            Effect: Allow
+            Action:
+              - s3:CreateBucket
+              - s3:DeleteBucket
+              - s3:ListBucket
+              - s3:Get*
+              - s3:PutBucketTagging
+              - s3:PutBucketPublicAccessBlock
+              - s3:GetEncryptionConfiguration
+              - s3:PutEncryptionConfiguration
+              - s3:GetLifecycleConfiguration
+              - s3:PutLifecycleConfiguration
+            Resource: 'arn:aws:s3:::urbanlens-step08-20261102-*'
+          - Sid: OnlyPilotObjects
+            Effect: Allow
+            Action: [s3:PutObject, s3:GetObject, s3:DeleteObject]
+            Resource: 'arn:aws:s3:::urbanlens-step08-20261102-*/*'
+          - Sid: OnlyPilotLogGroups
+            Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:DeleteLogGroup
+              - logs:PutRetentionPolicy
+              - logs:DeleteRetentionPolicy
+              - logs:TagResource
+              - logs:UntagResource
+              - logs:TagLogGroup
+              - logs:UntagLogGroup
+              - logs:ListTagsForResource
+              - logs:ListTagsLogGroup
+            Resource:
+              - !Sub 'arn:${AWS::Partition}:logs:eu-west-2:${AWS::AccountId}:log-group:/aws/lambda/urbanlens-step08-20261102-*'
+              - !Sub 'arn:${AWS::Partition}:logs:eu-west-2:${AWS::AccountId}:log-group:/aws/lambda/urbanlens-step08-20261102-*:*'
+              - !Sub 'arn:${AWS::Partition}:logs:eu-west-2:${AWS::AccountId}:log-group:/aws/codebuild/urbanlens-step08-20261102-*'
+              - !Sub 'arn:${AWS::Partition}:logs:eu-west-2:${AWS::AccountId}:log-group:/aws/codebuild/urbanlens-step08-20261102-*:*'
+Outputs:
+  RuntimeBoundaryArn:
+    Value: !Ref RuntimeBoundary
+  DeveloperPolicyArn:
+    Value: !Ref DeveloperPolicy

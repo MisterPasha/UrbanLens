@@ -1,0 +1,28 @@
+{
+  "checked_on": "2026-11-02",
+  "region": "eu-west-2",
+  "lambda_gb_second_usd": 0.0000166667,
+  "lambda_request_usd": 0.0000002,
+  "max_invocations": 26,
+  "worst_case_memory_gb": 2,
+  "worst_case_seconds": 600,
+  "registry_gb_month": 3,
+  "registry_gb_month_usd": 0.10,
+  "s3_gb_month": 1,
+  "s3_gb_month_usd": 0.024,
+  "requests_logs_control_buffer_usd": 0.05,
+  "codebuild_minutes_max": 20,
+  "codebuild_minute_usd": 0.005,
+  "codebuild_attempts_max": 2,
+  "worst_case_usd": 0.99400624,
+  "conservative_tax_fx_gbp_per_usd": 2,
+  "pilot_reserve_gbp": 2,
+  "free_allowances_assumed": false,
+  "sources": [
+    "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AWSLambda/current/eu-west-2/index.json",
+    "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonECR/current/eu-west-2/index.json",
+    "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonS3/current/eu-west-2/index.json",
+    "https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/CodeBuild/current/eu-west-2/index.json"
+  ],
+  "limitations": "Planning envelope, not a guaranteed billing cap. Owner current charges and non-root access must be verified separately; accrued usage/storage and billing lag remain after stopping compute."
+}

@@ -1,0 +1,44 @@
+name: Foundation checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.cache/ms-playwright
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install locked dependencies and private local configuration
+        run: python scripts/dev.py setup
+      - name: Python and frontend checks
+        run: python scripts/dev.py check
+      - name: Start disposable PostGIS
+        run: python scripts/dev.py db-up
+      - name: Test real database connection and spatial extension
+        run: python scripts/dev.py db-check
+      - name: Check dbt adapter and local connection
+        run: python scripts/dev.py dbt-debug
+      - name: Install browser and OS dependencies
+        working-directory: web
+        run: npm exec -- playwright install --with-deps chromium
+      - name: Browser/API integration smoke check
+        run: python scripts/dev.py browser-test
+      - name: Stop local services, preserving no running CI containers
+        if: always()
+        run: docker compose down
