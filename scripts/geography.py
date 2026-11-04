@@ -264,12 +264,14 @@ def population_bands(row: dict[str, Any]) -> dict[str, int]:
         int(row[f"{sex}{age}"]) for sex in "FM" for age in ("16 to 29", "30 to 44", "45 to 64")
     )
     older = int(row["F65 and over"] + row["M65 and over"])
-    require(total > 0 and young + working + older == total, "Age bands do not reconcile")
+    require(total >= 0 and young + working + older == total, "Age bands do not reconcile")
     return {"population": total, "age_0_15": young, "age_16_64": working, "age_65_plus": older}
 
 
-def populations(codes: set[str]) -> tuple[dict[str, dict[str, int]], dict[str, Any]]:
-    workbook = load_workbook(RAW / "population.xlsx", read_only=True, data_only=True)
+def populations(
+    codes: set[str], *, raw: Path = RAW
+) -> tuple[dict[str, dict[str, int]], dict[str, Any]]:
+    workbook = load_workbook(raw / "population.xlsx", read_only=True, data_only=True)
     try:
         sheet = workbook["Mid-2024 LSOA 2021"]
         header = list(next(sheet.iter_rows(min_row=4, max_row=4, values_only=True)))
@@ -302,22 +304,22 @@ def populations(codes: set[str]) -> tuple[dict[str, dict[str, int]], dict[str, A
         workbook.close()
 
 
-def verify_pins() -> dict[str, Any]:
-    require(PIN.exists(), "No manifest: run geography-fetch first")
-    pins: dict[str, Any] = read_json(PIN)
+def verify_pins(*, raw: Path = RAW, pin: Path = PIN) -> dict[str, Any]:
+    require(pin.exists(), "No manifest: run geography-fetch first")
+    pins: dict[str, Any] = read_json(pin)
     for name, record in pins["artifacts"].items():
-        path = RAW / name
+        path = raw / name
         require(path.is_file(), f"Missing artifact: {name}; run geography-fetch")
         require(sha(path.read_bytes()) == record["sha256"], f"Checksum mismatch: {name}")
     return pins
 
 
-def validate() -> None:
-    pins = verify_pins()
-    lookup = read_json(RAW / "lookup-rows.json")
+def validate(*, raw: Path = RAW, out: Path = OUT, pin: Path = PIN) -> None:
+    pins = verify_pins(raw=raw, pin=pin)
+    lookup = read_json(raw / "lookup-rows.json")
     attributes = [f["attributes"] for f in lookup["features"]]
     require(not lookup.get("exceededTransferLimit"), "Lookup truncated")
-    require(len(attributes) == read_json(RAW / "lookup-count.json")["count"], "Lookup incomplete")
+    require(len(attributes) == read_json(raw / "lookup-count.json")["count"], "Lookup incomplete")
     require(len({r["OA21CD"] for r in attributes}) == len(attributes), "Duplicate OA keys")
     require(all(r["LAD22CD"] == LAD for r in attributes), "Lookup authority mismatch")
     codes = {r["LSOA21CD"] for r in attributes}
@@ -329,13 +331,13 @@ def validate() -> None:
         all(len(c) == 9 and c.startswith("E01") and c[1:].isdigit() for c in codes),
         "Invalid LSOA code",
     )
-    layer = read_json(RAW / "boundary-layer.json")
+    layer = read_json(raw / "boundary-layer.json")
     require(layer["extent"]["spatialReference"]["wkid"] == 27700, "Boundary native CRS changed")
     geometries: dict[str, Any] = {}
     for name in sorted(pins["artifacts"]):
         if not name.startswith("boundaries-"):
             continue
-        collection = read_json(RAW / name)
+        collection = read_json(raw / name)
         require(collection["crs"]["properties"]["name"] == "EPSG:27700", "Unexpected boundary CRS")
         require(not collection.get("exceededTransferLimit"), "Boundary response truncated")
         for feature in collection["features"]:
@@ -355,17 +357,17 @@ def validate() -> None:
             )
             geometries[code] = geometry
     require(set(geometries) == codes, "Boundary code set mismatch")
-    with zipfile.ZipFile(RAW / "sam.zip") as archive:
+    with zipfile.ZipFile(raw / "sam.zip") as archive:
         matches = [n for n in archive.namelist() if n.endswith("/SAM_LSOA_DEC_2021_EW.csv")]
         require(len(matches) == 1, "SAM LSOA file ambiguous or missing")
         areas, fields = land_rows(archive.read(matches[0]), codes)
         sam_member = matches[0]
-    population, workbook = populations(codes)
+    population, workbook = populations(codes, raw=raw)
     union = unary_union(list(geometries.values()))
     require(union.is_valid and not union.is_empty, "Invalid city union")
     overlap = sum(g.area for g in geometries.values()) - union.area
     require(abs(overlap) < 0.01, f"Overlapping analytical boundaries: {overlap} m2")
-    datadir.append_data_dir(str(RAW.resolve()))
+    datadir.append_data_dir(str(raw.resolve()))
     group = TransformerGroup(27700, 4326, always_xy=True)
     require(group.best_available, "OSTN15 grid unavailable; refuse less accurate fallback")
     transformer = group.transformers[0]
@@ -426,8 +428,8 @@ def validate() -> None:
     )
     # A boundary-centred circle crosses city coverage; never allocate radius demographics.
     require(not union.covers(vertex.buffer(500)), "City-edge coverage fixture failed")
-    OUT.mkdir(parents=True, exist_ok=True)
-    with (OUT / "target-areas.csv").open("w", encoding="utf-8", newline="") as stream:
+    out.mkdir(parents=True, exist_ok=True)
+    with (out / "target-areas.csv").open("w", encoding="utf-8", newline="") as stream:
         writer = csv.DictWriter(
             stream,
             fieldnames=[
@@ -454,9 +456,9 @@ def validate() -> None:
                     **population[code],
                 }
             )
-    write_json(RAW / "areas-wgs84.geojson", {"type": "FeatureCollection", "features": wgs_features})
+    write_json(raw / "areas-wgs84.geojson", {"type": "FeatureCollection", "features": wgs_features})
     write_json(
-        RAW / "city-coverage-27700.geojson",
+        raw / "city-coverage-27700.geojson",
         {
             "type": "Feature",
             "geometry": mapping(union),
@@ -464,7 +466,7 @@ def validate() -> None:
         },
     )
     write_json(
-        RAW / "city-coverage-wgs84.geojson",
+        raw / "city-coverage-wgs84.geojson",
         {
             "type": "Feature",
             "geometry": mapping(transform(union, transformer.transform, interleaved=False)),
@@ -472,7 +474,7 @@ def validate() -> None:
         },
     )
     write_json(
-        OUT / "spatial-fixtures.json",
+        out / "spatial-fixtures.json",
         {
             "assignment": "covers; lexicographically smallest LSOA code on ties",
             "fixtures": fixtures,
@@ -505,7 +507,7 @@ def validate() -> None:
         "transform": transformer.description,
         "transform_reported_accuracy_metres": transformer.accuracy,
         "outputs": {
-            name: sha((RAW / name).read_bytes())
+            name: sha((raw / name).read_bytes())
             for name in (
                 "areas-wgs84.geojson",
                 "city-coverage-27700.geojson",
@@ -513,7 +515,7 @@ def validate() -> None:
             )
         },
     }
-    write_json(OUT / "inspection.json", summary)
+    write_json(out / "inspection.json", summary)
     print(
         f"Validated {len(codes)} LSOAs from {len(attributes)} OAs; "
         f"official land {summary['land_km2']} km2."

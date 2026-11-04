@@ -1,0 +1,234 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: UrbanLens private Bronze storage and bounded monthly source collection (London).
+Parameters:
+  DeveloperUser:
+    Type: String
+    Description: Existing non-root IAM username used by the urbanlens_dev CLI profile.
+    AllowedPattern: '[A-Za-z0-9+=,.@_-]+'
+Resources:
+  Artifacts:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LifecycleConfiguration:
+        Rules:
+          - Id: Raw90Days
+            Status: Enabled
+            Prefix: bronze/
+            ExpirationInDays: 90
+          - Id: AbortIncompleteUploads
+            Status: Enabled
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 1
+      Tags:
+        - Key: Project
+          Value: UrbanLens
+        - Key: Layer
+          Value: Bronze
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref Artifacts
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: RequireTLS
+            Effect: Deny
+            Principal: '*'
+            Action: 's3:*'
+            Resource: [!GetAtt Artifacts.Arn, !Sub '${Artifacts.Arn}/*']
+            Condition:
+              Bool:
+                aws:SecureTransport: 'false'
+          - Sid: RequireImmutableArtifactCreates
+            Effect: Deny
+            Principal: '*'
+            Action: s3:PutObject
+            Resource:
+              - !Sub '${Artifacts.Arn}/bronze/*'
+              - !Sub '${Artifacts.Arn}/silver/*'
+              - !Sub '${Artifacts.Arn}/manifests/*'
+              - !Sub '${Artifacts.Arn}/evidence/*'
+              - !Sub '${Artifacts.Arn}/deployment/*'
+            Condition:
+              'Null':
+                s3:if-none-match: 'true'
+  RuntimeRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: PrivateSourceCollection
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: s3:ListBucket
+                Resource: !GetAtt Artifacts.Arn
+              - Effect: Allow
+                Action: [s3:GetObject, s3:PutObject]
+                Resource:
+                  - !Sub '${Artifacts.Arn}/bronze/*'
+                  - !Sub '${Artifacts.Arn}/silver/*'
+                  - !Sub '${Artifacts.Arn}/manifests/*'
+                  - !Sub '${Artifacts.Arn}/evidence/*'
+                  - !Sub '${Artifacts.Arn}/registry/*'
+                  - !Sub '${Artifacts.Arn}/budgets/*'
+              - Effect: Allow
+                Action: [logs:CreateLogStream, logs:PutLogEvents]
+                Resource: !Sub 'arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${AWS::StackName}-collect:*'
+              - Effect: Allow
+                Action: ssm:GetParameter
+                Resource: !Sub 'arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/urbanlens/companies-house-api-key'
+  Logs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${AWS::StackName}-collect'
+      RetentionInDays: 7
+  Collector:
+    Type: AWS::Lambda::Function
+    DependsOn: Logs
+    Properties:
+      FunctionName: !Sub '${AWS::StackName}-collect'
+      Runtime: python3.13
+      Architectures: [x86_64]
+      Handler: index.handler
+      Role: !GetAtt RuntimeRole.Arn
+      MemorySize: 1024
+      Timeout: 300
+      EphemeralStorage:
+        Size: 1024
+      Environment:
+        Variables:
+          BRONZE_BUCKET: !Ref Artifacts
+          BOOTSTRAP_CATALOG: pending
+      Code:
+        ZipFile: |
+          def handler(event, context):
+              raise RuntimeError('Upload the verified UrbanLens package before enabling schedules')
+  InvokeConfiguration:
+    Type: AWS::Lambda::EventInvokeConfig
+    Properties:
+      FunctionName: !Ref Collector
+      Qualifier: '$LATEST'
+      MaximumRetryAttempts: 0
+      MaximumEventAgeInSeconds: 3600
+  FsaMonthly:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Sub '${AWS::StackName}-fsa-monthly'
+      Description: Monthly FSA observation; disabled until live acceptance passes.
+      ScheduleExpression: 'cron(0 8 7 * ? *)'
+      State: DISABLED
+      Targets:
+        - Id: fsa
+          Arn: !GetAtt Collector.Arn
+          Input: '{"provider":"fsa"}'
+          RetryPolicy:
+            MaximumRetryAttempts: 0
+            MaximumEventAgeInSeconds: 3600
+  OsmMonthly:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Sub '${AWS::StackName}-osm-monthly'
+      Description: Monthly OSM observation; disabled until live acceptance passes.
+      ScheduleExpression: 'cron(0 9 7 * ? *)'
+      State: DISABLED
+      Targets:
+        - Id: osm
+          Arn: !GetAtt Collector.Arn
+          Input: '{"provider":"osm"}'
+          RetryPolicy:
+            MaximumRetryAttempts: 0
+            MaximumEventAgeInSeconds: 3600
+  ProfilesMonthly:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: !Sub '${AWS::StackName}-profiles-monthly'
+      Description: Monthly tracked company profiles; disabled until the private key is configured.
+      ScheduleExpression: 'cron(0 10 7 * ? *)'
+      State: DISABLED
+      Targets:
+        - Id: profiles
+          Arn: !GetAtt Collector.Arn
+          Input: '{"provider":"companies-house-profiles"}'
+          RetryPolicy:
+            MaximumRetryAttempts: 0
+            MaximumEventAgeInSeconds: 3600
+  FsaInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref Collector
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt FsaMonthly.Arn
+  OsmInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref Collector
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt OsmMonthly.Arn
+  ProfilesInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref Collector
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt ProfilesMonthly.Arn
+  DeveloperPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Use this UrbanLens bucket, collector and schedules; no IAM administration.
+      Users: [!Ref DeveloperUser]
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action: [cloudformation:DescribeStacks, cloudformation:DescribeStackEvents, cloudformation:GetTemplate]
+            Resource: !Ref AWS::StackId
+          - Effect: Allow
+            Action: [s3:ListBucket, s3:GetBucketLocation, s3:GetBucketPublicAccessBlock, s3:GetEncryptionConfiguration, s3:GetLifecycleConfiguration, s3:GetBucketOwnershipControls, s3:GetBucketPolicyStatus, s3:GetBucketPolicy]
+            Resource: !GetAtt Artifacts.Arn
+          - Effect: Allow
+            Action: [s3:GetObject, s3:PutObject]
+            Resource: !Sub '${Artifacts.Arn}/*'
+          - Effect: Allow
+            Action: [lambda:GetFunction, lambda:GetFunctionConfiguration, lambda:UpdateFunctionCode, lambda:UpdateFunctionConfiguration, lambda:InvokeFunction]
+            Resource: !GetAtt Collector.Arn
+          - Effect: Allow
+            Action: [events:DescribeRule, events:EnableRule, events:DisableRule]
+            Resource: [!GetAtt FsaMonthly.Arn, !GetAtt OsmMonthly.Arn, !GetAtt ProfilesMonthly.Arn]
+          - Effect: Allow
+            Action: [ssm:PutParameter, ssm:GetParameter]
+            Resource: !Sub 'arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/urbanlens/companies-house-api-key'
+Outputs:
+  Bucket:
+    Value: !Ref Artifacts
+  Function:
+    Value: !Ref Collector
+  FsaSchedule:
+    Value: !Ref FsaMonthly
+  OsmSchedule:
+    Value: !Ref OsmMonthly
+  ProfilesSchedule:
+    Value: !Ref ProfilesMonthly

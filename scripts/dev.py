@@ -130,6 +130,14 @@ def main() -> None:
             "dbt-debug",
             "geography-fetch",
             "geography-check",
+            "ingestion-schema",
+            "ingest",
+            "pipeline",
+            "bronze",
+            "fsa-fetch",
+            "fsa-check",
+            "osm-fetch",
+            "osm-check",
             "venue-pilot-fetch",
             "venue-pilot-check",
             "company-pilot-fetch",
@@ -150,7 +158,10 @@ def main() -> None:
             "runtime-spatial",
         ],
     )
+    parser.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args()
+    if args.arguments and args.task not in {"ingest", "pipeline", "bronze"}:
+        parser.error("Additional arguments are supported only for ingest, pipeline and bronze")
     match args.task:
         case "setup":
             setup()
@@ -189,6 +200,18 @@ def main() -> None:
             in_environment("python", "scripts/geography.py", "fetch")
         case "geography-check":
             in_environment("python", "scripts/geography.py", "check")
+        case "ingestion-schema":
+            in_environment("python", "-m", "scripts.ingestion_schema")
+        case "ingest":
+            in_environment("python", "-m", "urbanlens.ingestion.commands", *args.arguments)
+        case "pipeline":
+            in_environment("python", "-m", "scripts.source_pipeline", *args.arguments)
+        case "bronze":
+            in_environment("python", "-m", "scripts.bronze", *args.arguments)
+        case "fsa-fetch" | "fsa-check":
+            in_environment("python", "-m", "scripts.fsa_source", args.task.removeprefix("fsa-"))
+        case "osm-fetch" | "osm-check":
+            in_environment("python", "-m", "scripts.osm_source", args.task.removeprefix("osm-"))
         case "venue-pilot-fetch":
             in_environment("python", "scripts/venue_pilot.py", "fetch")
         case "venue-pilot-check":

@@ -1,0 +1,1 @@
+{"type": "Feature", "properties": {"synthetic": true}, "geometry": {"type": "Polygon", "coordinates": [[[0, 50], [0.01, 50], [0.01, 50.01], [0, 50.01], [0, 50]]]}}

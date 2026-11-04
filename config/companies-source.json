@@ -1,0 +1,13 @@
+{
+  "version": "companies-monthly-v1",
+  "scope": "brighton-hove-registered-offices",
+  "min_national_rows": 1000000,
+  "max_national_rows": 10000000,
+  "max_profiles": 50,
+  "tracked_numbers": [
+    "00778921",
+    "00895683",
+    "01283420"
+  ],
+  "verified_operators": []
+}

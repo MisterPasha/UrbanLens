@@ -11,6 +11,7 @@ dependencies = [
   "fastapi==0.162.0",
   "mangum==0.22.0",
   "psycopg[binary]==3.3.6",
+  "pydantic==2.14.2",
   "pydantic-settings==2.16.2",
   "python-dotenv>=1.2.2,<2",
   "uvicorn==0.54.0",
@@ -18,11 +19,13 @@ dependencies = [
 
 [project.optional-dependencies]
 pipeline = [
+    "httpx==0.28.1",
     "dbt-core==1.12.6",
     "dbt-postgres==1.11.0",
     "openpyxl==3.1.5",
     "pyproj==3.8.0",
     "shapely==2.2.0",
+    "boto3>=1.40,<2",
 ]
 
 [dependency-groups]
@@ -54,6 +57,10 @@ markers = ["database: requires the local Docker PostGIS service"]
 
 [[tool.mypy.overrides]]
 module = ["openpyxl.*", "shapely.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["boto3.*", "botocore.*"]
 ignore_missing_imports = true
 
 [tool.uv]

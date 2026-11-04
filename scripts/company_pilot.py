@@ -520,8 +520,8 @@ def enrich() -> None:
         RAW / "tracked-companies.json",
         {
             "scope": "three registered-office cohort examples, not verified venue operators",
-            "daily_requests": len(tracked),
-            "monthly_31_day_requests": 31 * len(tracked),
+            "refresh_cadence": "calendar-monthly",
+            "monthly_requests": len(tracked),
             "companies": [
                 {"company_number": r["company_number"], "company_name": r["company_name"]}
                 for r in tracked

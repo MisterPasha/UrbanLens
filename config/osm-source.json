@@ -1,0 +1,11 @@
+{
+  "version": "osm-venues-monthly-v2",
+  "scope": "brighton-hove-e06000043",
+  "endpoint": "https://overpass-api.de/api/interpreter",
+  "boundary_sha256": "fb4f34c8c368afc463373e9bc4c7b26e6b5cfca1f1345e07b0a4a2d462e0c122",
+  "template_sha256": "38ca3ae64486157038a9fc1964b13a7ffe6239f51668b727da27bb80e06002ad",
+  "padding_degrees": 0.03,
+  "min_records": 1000,
+  "max_records": 20000,
+  "max_drop_fraction": 0.2
+}

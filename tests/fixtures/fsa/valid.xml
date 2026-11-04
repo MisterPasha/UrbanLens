@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FHRSEstablishment>
+  <Header><ExtractDate>2026-11-01</ExtractDate><ItemCount>4</ItemCount><ReturnCode>Success</ReturnCode></Header>
+  <EstablishmentCollection>
+    <EstablishmentDetail>
+      <FHRSID>000001</FHRSID><LocalAuthorityBusinessID>LA-001</LocalAuthorityBusinessID>
+      <BusinessName>Example Café</BusinessName><BusinessType>Restaurant/Cafe/Canteen</BusinessType><BusinessTypeID>1</BusinessTypeID>
+      <AddressLine1>1 Example Street</AddressLine1><PostCode>BN1 1AA</PostCode>
+      <LocalAuthorityCode>875</LocalAuthorityCode><LocalAuthorityName>Brighton and Hove</LocalAuthorityName>
+      <RatingValue>5</RatingValue><RatingKey>fhrs_5_en-gb</RatingKey><RatingDate>2026-10-01</RatingDate>
+      <SchemeType>FHRS</SchemeType><NewRatingPending>False</NewRatingPending>
+      <Scores><Hygiene>0</Hygiene></Scores><Geocode><Longitude>-0.14</Longitude><Latitude>50.82</Latitude></Geocode>
+    </EstablishmentDetail>
+    <EstablishmentDetail>
+      <FHRSID>000002</FHRSID><LocalAuthorityBusinessID>LA-002</LocalAuthorityBusinessID>
+      <BusinessName>Example Home Caterer</BusinessName><BusinessType>Other catering premises</BusinessType><BusinessTypeID>7841</BusinessTypeID>
+      <AddressLine1>Private address</AddressLine1><AddressLine2>Must not be exposed</AddressLine2><PostCode>BN1 1AA</PostCode>
+      <LocalAuthorityCode>875</LocalAuthorityCode><LocalAuthorityName>Brighton and Hove</LocalAuthorityName>
+      <RatingValue>AwaitingInspection</RatingValue><RatingDate/><SchemeType>FHRS</SchemeType><NewRatingPending>False</NewRatingPending>
+      <Geocode><Longitude>-0.14</Longitude><Latitude>50.82</Latitude></Geocode>
+    </EstablishmentDetail>
+    <EstablishmentDetail>
+      <FHRSID>000003</FHRSID><BusinessName>Example Shop</BusinessName><BusinessType>Retailers - other</BusinessType><BusinessTypeID>4613</BusinessTypeID>
+      <AddressLine1>3 Example Street</AddressLine1><PostCode>BN1 1AA</PostCode>
+      <LocalAuthorityCode>875</LocalAuthorityCode><LocalAuthorityName>Brighton and Hove</LocalAuthorityName>
+      <RatingValue>Exempt</RatingValue><RatingDate/><SchemeType>FHRS</SchemeType><NewRatingPending>False</NewRatingPending><Geocode/>
+    </EstablishmentDetail>
+    <EstablishmentDetail>
+      <FHRSID>000004</FHRSID><BusinessName>Example School</BusinessName><BusinessType>School/college/university</BusinessType><BusinessTypeID>7845</BusinessTypeID>
+      <AddressLine1>4 Example Street</AddressLine1><PostCode>BN1 1AA</PostCode>
+      <LocalAuthorityCode>875</LocalAuthorityCode><LocalAuthorityName>Brighton and Hove</LocalAuthorityName>
+      <RatingValue>AwaitingPublication</RatingValue><RatingDate/><SchemeType>FHRS</SchemeType><NewRatingPending>True</NewRatingPending>
+      <Geocode><Longitude>NaN</Longitude><Latitude>50.82</Latitude></Geocode>
+    </EstablishmentDetail>
+  </EstablishmentCollection>
+</FHRSEstablishment>

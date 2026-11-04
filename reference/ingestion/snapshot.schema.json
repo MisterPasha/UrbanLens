@@ -1,0 +1,609 @@
+{
+  "$defs": {
+    "Artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "uri": {
+          "title": "Uri",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "byte_count": {
+          "minimum": 0,
+          "title": "Byte Count",
+          "type": "integer"
+        },
+        "media_type": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Media Type",
+          "type": "string"
+        },
+        "compression": {
+          "default": "none",
+          "enum": [
+            "none",
+            "gzip",
+            "zip"
+          ],
+          "title": "Compression",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256",
+        "byte_count",
+        "media_type"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "CollectionCycle": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "1",
+          "default": "1",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "cycle_id": {
+          "format": "uuid",
+          "title": "Cycle Id",
+          "type": "string"
+        },
+        "provider": {
+          "$ref": "#/$defs/Provider"
+        },
+        "scope": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,95}$",
+          "title": "Scope",
+          "type": "string"
+        },
+        "query_version": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Query Version",
+          "type": "string"
+        },
+        "query_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Query Sha256",
+          "type": "string"
+        },
+        "window_start": {
+          "format": "date-time",
+          "title": "Window Start",
+          "type": "string"
+        },
+        "window_end": {
+          "format": "date-time",
+          "title": "Window End",
+          "type": "string"
+        },
+        "expected_partitions": {
+          "default": [
+            "full"
+          ],
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9_-]{0,95}$",
+            "type": "string"
+          },
+          "title": "Expected Partitions",
+          "type": "array"
+        },
+        "source_edition": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Edition"
+        }
+      },
+      "required": [
+        "cycle_id",
+        "provider",
+        "scope",
+        "query_version",
+        "query_sha256",
+        "window_start",
+        "window_end"
+      ],
+      "title": "CollectionCycle",
+      "type": "object"
+    },
+    "Counts": {
+      "additionalProperties": false,
+      "properties": {
+        "raw": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw"
+        },
+        "parsed": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parsed"
+        },
+        "accepted": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Accepted"
+        },
+        "rejected": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rejected"
+        }
+      },
+      "title": "Counts",
+      "type": "object"
+    },
+    "Failure": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "$ref": "#/$defs/FailureClass"
+        },
+        "code": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,95}$",
+          "title": "Code",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "category",
+        "code",
+        "retryable"
+      ],
+      "title": "Failure",
+      "type": "object"
+    },
+    "FailureClass": {
+      "enum": [
+        "timeout",
+        "network",
+        "rate-limit",
+        "authentication",
+        "schema",
+        "integrity",
+        "scope",
+        "incomplete",
+        "budget",
+        "internal"
+      ],
+      "title": "FailureClass",
+      "type": "string"
+    },
+    "Partition": {
+      "additionalProperties": false,
+      "properties": {
+        "partition_id": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,95}$",
+          "title": "Partition Id",
+          "type": "string"
+        },
+        "cycle_id": {
+          "format": "uuid",
+          "title": "Cycle Id",
+          "type": "string"
+        },
+        "run_id": {
+          "format": "uuid",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "source_edition": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Edition"
+        },
+        "schema_version": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "pipeline_version": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Pipeline Version",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "fetched",
+            "parsed",
+            "complete",
+            "failed"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "fetched_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fetched At"
+        },
+        "source_extracted_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Extracted At"
+        },
+        "source_extract_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Extract Date"
+        },
+        "artifacts": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Artifact"
+          },
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "counts": {
+          "$ref": "#/$defs/Counts"
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Failure"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "partition_id",
+        "cycle_id",
+        "run_id",
+        "schema_version",
+        "pipeline_version",
+        "status"
+      ],
+      "title": "Partition",
+      "type": "object"
+    },
+    "Provider": {
+      "enum": [
+        "fsa",
+        "osm",
+        "companies-house",
+        "postcodes-io",
+        "ons"
+      ],
+      "title": "Provider",
+      "type": "string"
+    },
+    "Run": {
+      "additionalProperties": false,
+      "properties": {
+        "contract_version": {
+          "const": "1",
+          "default": "1",
+          "title": "Contract Version",
+          "type": "string"
+        },
+        "run_id": {
+          "format": "uuid",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "cycle_id": {
+          "format": "uuid",
+          "title": "Cycle Id",
+          "type": "string"
+        },
+        "pipeline_version": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Pipeline Version",
+          "type": "string"
+        },
+        "mode": {
+          "default": "collect",
+          "enum": [
+            "collect",
+            "replay"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "replay_of_snapshot_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Replay Of Snapshot Id"
+        },
+        "attempt": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Attempt",
+          "type": "integer"
+        },
+        "retry_of_run_id": {
+          "anyOf": [
+            {
+              "format": "uuid",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retry Of Run Id"
+        },
+        "started_at": {
+          "format": "date-time",
+          "title": "Started At",
+          "type": "string"
+        },
+        "ended_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ended At"
+        },
+        "status": {
+          "$ref": "#/$defs/Stage",
+          "default": "pending"
+        },
+        "failure": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Failure"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "run_id",
+        "cycle_id",
+        "pipeline_version",
+        "started_at"
+      ],
+      "title": "Run",
+      "type": "object"
+    },
+    "Stage": {
+      "enum": [
+        "pending",
+        "fetched",
+        "parsed",
+        "complete",
+        "accepted",
+        "rejected",
+        "transformed",
+        "modelled",
+        "published",
+        "failed"
+      ],
+      "title": "Stage",
+      "type": "string"
+    },
+    "ValidationCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,95}$",
+          "title": "Code",
+          "type": "string"
+        },
+        "blocking": {
+          "default": true,
+          "title": "Blocking",
+          "type": "boolean"
+        },
+        "outcome": {
+          "enum": [
+            "passed",
+            "failed",
+            "not-run"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "outcome"
+      ],
+      "title": "ValidationCheck",
+      "type": "object"
+    },
+    "ValidationReport": {
+      "additionalProperties": false,
+      "properties": {
+        "rule_version": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Rule Version",
+          "type": "string"
+        },
+        "required_checks": {
+          "default": [
+            "schema",
+            "scope",
+            "completeness",
+            "counts"
+          ],
+          "items": {
+            "pattern": "^[a-z0-9][a-z0-9_-]{0,95}$",
+            "type": "string"
+          },
+          "title": "Required Checks",
+          "type": "array"
+        },
+        "checks": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/ValidationCheck"
+          },
+          "title": "Checks",
+          "type": "array"
+        }
+      },
+      "required": [
+        "rule_version"
+      ],
+      "title": "ValidationReport",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1",
+      "default": "1",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "format": "uuid",
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "cycle": {
+      "$ref": "#/$defs/CollectionCycle"
+    },
+    "run": {
+      "$ref": "#/$defs/Run"
+    },
+    "completeness": {
+      "enum": [
+        "pending",
+        "partial",
+        "complete",
+        "failed"
+      ],
+      "title": "Completeness",
+      "type": "string"
+    },
+    "partitions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Partition"
+      },
+      "title": "Partitions",
+      "type": "array"
+    },
+    "validation": {
+      "$ref": "#/$defs/ValidationReport"
+    }
+  },
+  "required": [
+    "snapshot_id",
+    "cycle",
+    "run",
+    "completeness",
+    "validation"
+  ],
+  "title": "Snapshot",
+  "type": "object"
+}

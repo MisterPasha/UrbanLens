@@ -1,0 +1,93 @@
+{
+  "contract_version": "1",
+  "snapshot_id": "00000000-0000-0000-0000-000000000003",
+  "cycle": {
+    "contract_version": "1",
+    "cycle_id": "00000000-0000-0000-0000-000000000001",
+    "provider": "fsa",
+    "scope": "brighton-hove-e06000043",
+    "query_version": "authority-v1",
+    "query_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "window_start": "2026-11-04T00:00:00Z",
+    "window_end": "2026-11-05T00:00:00Z",
+    "expected_partitions": [
+      "full"
+    ],
+    "source_edition": null
+  },
+  "run": {
+    "contract_version": "1",
+    "run_id": "00000000-0000-0000-0000-000000000002",
+    "cycle_id": "00000000-0000-0000-0000-000000000001",
+    "pipeline_version": "test-v1",
+    "mode": "collect",
+    "replay_of_snapshot_id": null,
+    "attempt": 1,
+    "retry_of_run_id": null,
+    "started_at": "2026-11-04T00:00:00Z",
+    "ended_at": "2026-11-04T00:00:02Z",
+    "status": "accepted",
+    "failure": null
+  },
+  "completeness": "complete",
+  "partitions": [
+    {
+      "partition_id": "full",
+      "cycle_id": "00000000-0000-0000-0000-000000000001",
+      "run_id": "00000000-0000-0000-0000-000000000002",
+      "source_edition": null,
+      "schema_version": "fsa-v1",
+      "pipeline_version": "test-v1",
+      "status": "complete",
+      "fetched_at": "2026-11-04T00:00:01Z",
+      "source_extracted_at": null,
+      "artifacts": [
+        {
+          "uri": "file:///synthetic/empty-source.json",
+          "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+          "byte_count": 3,
+          "media_type": "application/json",
+          "compression": "none"
+        }
+      ],
+      "counts": {
+        "raw": 0,
+        "parsed": 0,
+        "accepted": 0,
+        "rejected": 0
+      },
+      "failure": null
+    }
+  ],
+  "validation": {
+    "rule_version": "test-v1",
+    "required_checks": [
+      "schema",
+      "scope",
+      "completeness",
+      "counts"
+    ],
+    "checks": [
+      {
+        "code": "schema",
+        "blocking": true,
+        "outcome": "passed"
+      },
+      {
+        "code": "scope",
+        "blocking": true,
+        "outcome": "passed"
+      },
+      {
+        "code": "completeness",
+        "blocking": true,
+        "outcome": "passed"
+      },
+      {
+        "code": "counts",
+        "blocking": true,
+        "outcome": "passed"
+      }
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "version": "fsa-authority-monthly-v2",
+  "scope": "brighton-hove-e06000043",
+  "authority_id": 286,
+  "authority_code": "875",
+  "authority_name": "Brighton and Hove",
+  "ons_code": "E06000043",
+  "min_records": 1000,
+  "max_records": 20000,
+  "max_drop_fraction": 0.2
+}

@@ -1,0 +1,11 @@
+{
+  "version": "ons-geography2021-pop2024-v1",
+  "scope": "brighton-hove-e06000043",
+  "manifest_sha256": "e6ba8ed8a669895f952c1f150ec696b3e61cfaf1314a45f93c86695cc2aa0e39",
+  "target_codes_sha256": "4965c0fa79bce88a0c0b2a841a49d3b2109a3b3bfc9b15dab451ac593f6307ae",
+  "expected_areas": 165,
+  "geography_vintage": "LSOA-2021",
+  "population_sheet": "Mid-2024 LSOA 2021",
+  "population_header_row": 4,
+  "population_reference_date": "2024-06-30"
+}

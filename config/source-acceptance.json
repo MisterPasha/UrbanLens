@@ -1,0 +1,7 @@
+{
+  "version": "source-acceptance-v1",
+  "change_records": 20,
+  "change_fraction": 0.2,
+  "first_baseline_requires_review": true,
+  "structural_failures_overridable": false
+}

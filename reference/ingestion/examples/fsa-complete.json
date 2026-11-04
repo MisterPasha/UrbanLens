@@ -1,0 +1,107 @@
+{
+  "contract_version": "1",
+  "snapshot_id": "1b5591ff-c3d0-5081-bc8f-ac331527bab6",
+  "cycle": {
+    "contract_version": "1",
+    "cycle_id": "50e8090d-2f7b-559a-966b-b1d0d95cc289",
+    "provider": "fsa",
+    "scope": "brighton-hove-e06000043",
+    "query_version": "fsa-authority-v1",
+    "query_sha256": "7307ff2c00f7eb6188d3d05a67b7127c81d0add17eb4e8d0f05906ca5da7dd43",
+    "window_start": "2026-11-04T00:00:00Z",
+    "window_end": "2026-11-05T00:00:00Z",
+    "expected_partitions": [
+      "full"
+    ],
+    "source_edition": null
+  },
+  "run": {
+    "contract_version": "1",
+    "run_id": "1e88d223-cf6e-44fe-8745-540b9ce767ea",
+    "cycle_id": "50e8090d-2f7b-559a-966b-b1d0d95cc289",
+    "pipeline_version": "fsa-source-v1",
+    "mode": "collect",
+    "replay_of_snapshot_id": null,
+    "attempt": 1,
+    "retry_of_run_id": null,
+    "started_at": "2026-11-04T16:27:29.212411Z",
+    "ended_at": "2026-11-04T16:27:29.907076Z",
+    "status": "accepted",
+    "failure": null
+  },
+  "completeness": "complete",
+  "partitions": [
+    {
+      "partition_id": "full",
+      "cycle_id": "50e8090d-2f7b-559a-966b-b1d0d95cc289",
+      "run_id": "1e88d223-cf6e-44fe-8745-540b9ce767ea",
+      "source_edition": null,
+      "schema_version": "fsa-authority-xml-v1",
+      "pipeline_version": "fsa-source-v1",
+      "status": "complete",
+      "fetched_at": "2026-11-04T16:27:29.836547Z",
+      "source_extracted_at": null,
+      "source_extract_date": "2026-11-01",
+      "artifacts": [
+        {
+          "uri": "file:///synthetic/fsa/establishments.xml.gz",
+          "sha256": "db36d62cca8dad62a3a98694d3bcb6ab21e927e1a0151d38db3764484ad20478",
+          "byte_count": 692,
+          "media_type": "application/xml",
+          "compression": "gzip"
+        },
+        {
+          "uri": "file:///synthetic/fsa/authority.json.gz",
+          "sha256": "863916c9e5e505551365454571bbcd03aa9b40abc281d3ff539b0c47cf21085c",
+          "byte_count": 147,
+          "media_type": "application/json",
+          "compression": "gzip"
+        }
+      ],
+      "counts": {
+        "raw": 4,
+        "parsed": 4,
+        "accepted": 4,
+        "rejected": 0
+      },
+      "failure": null
+    }
+  ],
+  "validation": {
+    "rule_version": "fsa-authority-v1",
+    "required_checks": [
+      "schema",
+      "scope",
+      "duplicates",
+      "completeness",
+      "counts"
+    ],
+    "checks": [
+      {
+        "code": "schema",
+        "blocking": true,
+        "outcome": "passed"
+      },
+      {
+        "code": "scope",
+        "blocking": true,
+        "outcome": "passed"
+      },
+      {
+        "code": "duplicates",
+        "blocking": true,
+        "outcome": "passed"
+      },
+      {
+        "code": "completeness",
+        "blocking": true,
+        "outcome": "passed"
+      },
+      {
+        "code": "counts",
+        "blocking": true,
+        "outcome": "passed"
+      }
+    ]
+  }
+}

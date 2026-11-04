@@ -1,0 +1,160 @@
+{
+  "version": 0.6,
+  "generator": "synthetic Overpass",
+  "osm3s": {
+    "timestamp_osm_base": "2026-11-04T10:00:00Z",
+    "copyright": "Synthetic fixture"
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 1,
+      "lat": 50.005,
+      "lon": 0.005,
+      "version": 3,
+      "timestamp": "2026-11-03T10:00:00Z",
+      "tags": {
+        "amenity": "cafe",
+        "name": "Invented Cafe",
+        "fhrs:id": "000123;456;bad"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1,
+      "version": 2,
+      "timestamp": "2026-11-02T10:00:00Z",
+      "nodes": [
+        1,
+        2,
+        3,
+        4,
+        1
+      ],
+      "geometry": [
+        {
+          "lon": -0.005,
+          "lat": 49.995
+        },
+        {
+          "lon": 0.015,
+          "lat": 49.995
+        },
+        {
+          "lon": 0.015,
+          "lat": 50.015
+        },
+        {
+          "lon": -0.005,
+          "lat": 50.015
+        },
+        {
+          "lon": -0.005,
+          "lat": 49.995
+        }
+      ],
+      "tags": {
+        "amenity": "restaurant",
+        "name": "Invented Crossing Venue"
+      }
+    },
+    {
+      "type": "relation",
+      "id": 1,
+      "version": 1,
+      "timestamp": "2026-11-01T10:00:00Z",
+      "members": [
+        {
+          "type": "way",
+          "ref": 50,
+          "role": "outer",
+          "geometry": [
+            {
+              "lon": 0.001,
+              "lat": 50.001
+            },
+            {
+              "lon": 0.009,
+              "lat": 50.001
+            },
+            {
+              "lon": 0.009,
+              "lat": 50.009
+            },
+            {
+              "lon": 0.001,
+              "lat": 50.009
+            },
+            {
+              "lon": 0.001,
+              "lat": 50.001
+            }
+          ]
+        },
+        {
+          "type": "way",
+          "ref": 51,
+          "role": "inner",
+          "geometry": [
+            {
+              "lon": 0.004,
+              "lat": 50.004
+            },
+            {
+              "lon": 0.006,
+              "lat": 50.004
+            },
+            {
+              "lon": 0.006,
+              "lat": 50.006
+            },
+            {
+              "lon": 0.004,
+              "lat": 50.006
+            },
+            {
+              "lon": 0.004,
+              "lat": 50.004
+            }
+          ]
+        }
+      ],
+      "tags": {
+        "type": "multipolygon",
+        "amenity": "pub"
+      }
+    },
+    {
+      "type": "way",
+      "id": 2,
+      "nodes": [
+        10,
+        11
+      ],
+      "geometry": [
+        {
+          "lon": 0.002,
+          "lat": 50.002
+        },
+        {
+          "lon": 0.003,
+          "lat": 50.003
+        }
+      ],
+      "tags": {
+        "fhrs:id": "789",
+        "shop": "newsagent"
+      }
+    },
+    {
+      "type": "count",
+      "id": 0,
+      "tags": {
+        "nodes": "1",
+        "ways": "2",
+        "relations": "1",
+        "total": "4"
+      }
+    }
+  ]
+}

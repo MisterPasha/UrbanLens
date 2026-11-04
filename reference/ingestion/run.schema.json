@@ -1,0 +1,167 @@
+{
+  "$defs": {
+    "Failure": {
+      "additionalProperties": false,
+      "properties": {
+        "category": {
+          "$ref": "#/$defs/FailureClass"
+        },
+        "code": {
+          "pattern": "^[a-z0-9][a-z0-9_-]{0,95}$",
+          "title": "Code",
+          "type": "string"
+        },
+        "retryable": {
+          "title": "Retryable",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "category",
+        "code",
+        "retryable"
+      ],
+      "title": "Failure",
+      "type": "object"
+    },
+    "FailureClass": {
+      "enum": [
+        "timeout",
+        "network",
+        "rate-limit",
+        "authentication",
+        "schema",
+        "integrity",
+        "scope",
+        "incomplete",
+        "budget",
+        "internal"
+      ],
+      "title": "FailureClass",
+      "type": "string"
+    },
+    "Stage": {
+      "enum": [
+        "pending",
+        "fetched",
+        "parsed",
+        "complete",
+        "accepted",
+        "rejected",
+        "transformed",
+        "modelled",
+        "published",
+        "failed"
+      ],
+      "title": "Stage",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1",
+      "default": "1",
+      "title": "Contract Version",
+      "type": "string"
+    },
+    "run_id": {
+      "format": "uuid",
+      "title": "Run Id",
+      "type": "string"
+    },
+    "cycle_id": {
+      "format": "uuid",
+      "title": "Cycle Id",
+      "type": "string"
+    },
+    "pipeline_version": {
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Pipeline Version",
+      "type": "string"
+    },
+    "mode": {
+      "default": "collect",
+      "enum": [
+        "collect",
+        "replay"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "replay_of_snapshot_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Replay Of Snapshot Id"
+    },
+    "attempt": {
+      "default": 1,
+      "minimum": 1,
+      "title": "Attempt",
+      "type": "integer"
+    },
+    "retry_of_run_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Retry Of Run Id"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    },
+    "ended_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ended At"
+    },
+    "status": {
+      "$ref": "#/$defs/Stage",
+      "default": "pending"
+    },
+    "failure": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Failure"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "run_id",
+    "cycle_id",
+    "pipeline_version",
+    "started_at"
+  ],
+  "title": "Run",
+  "type": "object"
+}
