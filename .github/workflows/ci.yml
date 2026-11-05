@@ -29,6 +29,7 @@ jobs:
       - name: Python and frontend checks
         run: python scripts/dev.py check
       - name: Start disposable PostGIS
+        id: database
         run: python scripts/dev.py db-up
       - name: Test real database connection and spatial extension
         run: python scripts/dev.py db-check
@@ -40,5 +41,5 @@ jobs:
       - name: Browser/API integration smoke check
         run: python scripts/dev.py browser-test
       - name: Stop local services, preserving no running CI containers
-        if: always()
+        if: ${{ always() && steps.database.outcome && steps.database.outcome != 'skipped' }}
         run: docker compose down
