@@ -1,0 +1,11 @@
+{
+  "version": "silver-retention-v1",
+  "raw_days": 90,
+  "history_months": 12,
+  "logs_days": 7,
+  "daily_backup_days": 7,
+  "weekly_backup_days": 28,
+  "daily_backups": 7,
+  "weekly_backups": 4,
+  "note": "Current entities, identity registries, active links, reviews and referenced evidence are protected. Cleanup is reference-aware, never a blanket Silver expiry."
+}

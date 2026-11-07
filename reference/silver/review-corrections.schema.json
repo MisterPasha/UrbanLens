@@ -1,0 +1,394 @@
+{
+  "$defs": {
+    "Artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "uri": {
+          "title": "Uri",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "byte_count": {
+          "minimum": 0,
+          "title": "Byte Count",
+          "type": "integer"
+        },
+        "media_type": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Media Type",
+          "type": "string"
+        },
+        "compression": {
+          "default": "none",
+          "enum": [
+            "none",
+            "gzip",
+            "zip"
+          ],
+          "title": "Compression",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256",
+        "byte_count",
+        "media_type"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "Correction": {
+      "additionalProperties": false,
+      "properties": {
+        "review_id": {
+          "title": "Review Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "current_name_or_source_label",
+            "superseded_source_label",
+            "replacement_venue_report",
+            "postcode_correction",
+            "address_correction"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "owner_statement": {
+          "minLength": 1,
+          "title": "Owner Statement",
+          "type": "string"
+        },
+        "current_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Current Name"
+        },
+        "current_source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "superseded_source_labels": {
+          "items": {
+            "$ref": "#/$defs/OldLabel"
+          },
+          "title": "Superseded Source Labels",
+          "type": "array"
+        },
+        "field_overrides": {
+          "$ref": "#/$defs/Overrides"
+        },
+        "evidence_basis": {
+          "title": "Evidence Basis",
+          "type": "string"
+        },
+        "identity_decision": {
+          "anyOf": [
+            {
+              "enum": [
+                "same place",
+                "different places",
+                "unsure"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Identity Decision"
+        }
+      },
+      "required": [
+        "review_id",
+        "kind",
+        "owner_statement",
+        "current_name",
+        "current_source",
+        "superseded_source_labels",
+        "field_overrides",
+        "evidence_basis",
+        "identity_decision"
+      ],
+      "title": "Correction",
+      "type": "object"
+    },
+    "OldLabel": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "$ref": "#/$defs/Ref"
+        },
+        "published_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Published Name"
+        },
+        "status": {
+          "const": "owner_reports_not_current_at_this_address",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "source",
+        "published_name",
+        "status"
+      ],
+      "title": "OldLabel",
+      "type": "object"
+    },
+    "Overrides": {
+      "additionalProperties": false,
+      "properties": {
+        "postcode": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Z0-9 ]+$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Postcode"
+        },
+        "address": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Address"
+        },
+        "preferred_postcode_source": {
+          "anyOf": [
+            {
+              "enum": [
+                "left",
+                "right"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Preferred Postcode Source"
+        },
+        "preferred_address_source": {
+          "anyOf": [
+            {
+              "enum": [
+                "left",
+                "right"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Preferred Address Source"
+        },
+        "replacement_candidate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Replacement"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "Overrides",
+      "type": "object"
+    },
+    "Ref": {
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "enum": [
+            "fsa",
+            "osm"
+          ],
+          "title": "Provider",
+          "type": "string"
+        },
+        "scope": {
+          "title": "Scope",
+          "type": "string"
+        },
+        "source_key": {
+          "title": "Source Key",
+          "type": "string"
+        },
+        "generation": {
+          "minimum": 1,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "record_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Record Hash",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider",
+        "scope",
+        "source_key",
+        "generation",
+        "record_hash"
+      ],
+      "title": "Ref",
+      "type": "object"
+    },
+    "Replacement": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "primary_category": {
+          "const": "restaurant",
+          "title": "Primary Category",
+          "type": "string"
+        },
+        "service_style": {
+          "title": "Service Style",
+          "type": "string"
+        },
+        "owner_original_tag_description": {
+          "title": "Owner Original Tag Description",
+          "type": "string"
+        },
+        "address_from_reviewed_records": {
+          "title": "Address From Reviewed Records",
+          "type": "string"
+        },
+        "postcode_from_reviewed_records": {
+          "title": "Postcode From Reviewed Records",
+          "type": "string"
+        },
+        "longitude": {
+          "default": null,
+          "title": "Longitude",
+          "type": "null"
+        },
+        "latitude": {
+          "default": null,
+          "title": "Latitude",
+          "type": "null"
+        },
+        "identity_continuity": {
+          "title": "Identity Continuity",
+          "type": "string"
+        },
+        "opening_date": {
+          "default": null,
+          "title": "Opening Date",
+          "type": "null"
+        }
+      },
+      "required": [
+        "name",
+        "primary_category",
+        "service_style",
+        "owner_original_tag_description",
+        "address_from_reviewed_records",
+        "postcode_from_reviewed_records",
+        "identity_continuity"
+      ],
+      "title": "Replacement",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "title": "Version",
+      "type": "string"
+    },
+    "received_on": {
+      "format": "date",
+      "title": "Received On",
+      "type": "string"
+    },
+    "reviewer": {
+      "title": "Reviewer",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "source_review_manifest": {
+      "$ref": "#/$defs/Artifact"
+    },
+    "name_selection_policy": {
+      "additionalProperties": true,
+      "title": "Name Selection Policy",
+      "type": "object"
+    },
+    "corrections": {
+      "items": {
+        "$ref": "#/$defs/Correction"
+      },
+      "title": "Corrections",
+      "type": "array"
+    },
+    "provenance_policy": {
+      "title": "Provenance Policy",
+      "type": "string"
+    }
+  },
+  "required": [
+    "version",
+    "received_on",
+    "reviewer",
+    "status",
+    "source_review_manifest",
+    "name_selection_policy",
+    "corrections",
+    "provenance_policy"
+  ],
+  "title": "CorrectionBatch",
+  "type": "object"
+}

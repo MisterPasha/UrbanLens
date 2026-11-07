@@ -1,0 +1,390 @@
+{
+  "version": "venue-review-corrections-v1",
+  "received_on": "2026-11-05",
+  "reviewer": "project owner",
+  "status": "recorded_for_step_24_validation_and_import",
+  "source_review_manifest": {
+    "uri": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/silver/identity/identity-engine-v1/6c475d2c4512df8a9bde851ef4cd7326f43bfea6c4e54205e3c1a0aac69fcad2.json",
+    "sha256": "6c475d2c4512df8a9bde851ef4cd7326f43bfea6c4e54205e3c1a0aac69fcad2",
+    "byte_count": 11675879,
+    "media_type": "application/json",
+    "compression": "none"
+  },
+  "name_selection_policy": {
+    "default_preferred_source": "osm",
+    "conditions": [
+      "Use an existing, named, current OSM venue where supported.",
+      "Explicit owner corrections override the source preference.",
+      "Do not prefer missing, obsolete or owner-reported non-current OSM names.",
+      "Use a valid current FSA name when OSM is missing/non-current; retain provenance."
+    ],
+    "scope": "Venue names only; this does not automatically prefer OSM coordinates, addresses, postcodes or categories."
+  },
+  "corrections": [
+    {
+      "review_id": "U099",
+      "kind": "current_name_or_source_label",
+      "owner_statement": "Brighton Bites is the current name; The Fat Pizza does not exist anymore.",
+      "current_name": "Brighton Bites",
+      "current_source": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1849841",
+        "generation": 1,
+        "record_hash": "ae10925f04c7d4adef67b0316ddf5d57d3a3f8f67d437d6a7fe62644d7a48caf"
+      },
+      "superseded_source_labels": [
+        {
+          "source": {
+            "provider": "osm",
+            "scope": "brighton-hove-e06000043",
+            "source_key": "node/6515018203",
+            "generation": 1,
+            "record_hash": "f53b13b63c59b3d46a770e34bea5acac0d840629a1239735acc148d5618afc42"
+          },
+          "published_name": "The Fat Pizza",
+          "status": "owner_reports_not_current_at_this_address"
+        }
+      ],
+      "field_overrides": {},
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "different places"
+    },
+    {
+      "review_id": "U111",
+      "kind": "current_name_or_source_label",
+      "owner_statement": "Pelicano is current at this address; Brodwolf Bakery is no longer at this address.",
+      "current_name": "Pelicano",
+      "current_source": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13158376856",
+        "generation": 1,
+        "record_hash": "b4ed7b8691007e76363c2b903691ab4d463fd369a31d05226957410a865d703e"
+      },
+      "superseded_source_labels": [
+        {
+          "source": {
+            "provider": "fsa",
+            "scope": "brighton-hove-e06000043",
+            "source_key": "1666574",
+            "generation": 1,
+            "record_hash": "722e252bb1429a0dd30b6943ea7f4eeb49a4f871fd894c728bfbb035d3c05303"
+          },
+          "published_name": "Brodwolf Bakery",
+          "status": "owner_reports_not_current_at_this_address"
+        }
+      ],
+      "field_overrides": {},
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "different places"
+    },
+    {
+      "review_id": "U233",
+      "kind": "current_name_or_source_label",
+      "owner_statement": "The current name is Fluffy Fluffy Dessert Cafe.",
+      "current_name": "Fluffy Fluffy Dessert Cafe",
+      "current_source": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/12364623216",
+        "generation": 1,
+        "record_hash": "df58e652f3178a650923bb784640da9a2f44798ba7776e03a7d44ffca5f13210"
+      },
+      "superseded_source_labels": [],
+      "field_overrides": {},
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "same place"
+    },
+    {
+      "review_id": "U283",
+      "kind": "current_name_or_source_label",
+      "owner_statement": "Blind Octopus is not current; the correct name is Seven Stars.",
+      "current_name": "Seven Stars",
+      "current_source": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1208833",
+        "generation": 1,
+        "record_hash": "254729ea2a84d0edb166fd9026dee6d9e46f159c230a59b752b439efc0081b24"
+      },
+      "superseded_source_labels": [
+        {
+          "source": {
+            "provider": "osm",
+            "scope": "brighton-hove-e06000043",
+            "source_key": "node/7035363494",
+            "generation": 1,
+            "record_hash": "81f50a04d16d03eb65f5f0a5a4012b2e170c6fdab748cabdaaddbf169ab960f7"
+          },
+          "published_name": "Blind Octopus",
+          "status": "owner_reports_not_current_at_this_address"
+        }
+      ],
+      "field_overrides": {},
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "different places"
+    },
+    {
+      "review_id": "U362",
+      "kind": "current_name_or_source_label",
+      "owner_statement": "The correct name is Nine Dragons; Maren does not exist.",
+      "current_name": "Nine Dragons",
+      "current_source": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/528781300",
+        "generation": 1,
+        "record_hash": "adc62d9c41e5ff43741110abb2310bc99751658cbb5a686a6b6296ba6aece21d"
+      },
+      "superseded_source_labels": [
+        {
+          "source": {
+            "provider": "fsa",
+            "scope": "brighton-hove-e06000043",
+            "source_key": "1736987",
+            "generation": 1,
+            "record_hash": "0a87017cd1d32070b12a048eac45feffa6c8ec0520600b3e8cd984d4aa38ee59"
+          },
+          "published_name": "Maren",
+          "status": "owner_reports_not_current_at_this_address"
+        }
+      ],
+      "field_overrides": {},
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "different places"
+    },
+    {
+      "review_id": "U369",
+      "kind": "current_name_or_source_label",
+      "owner_statement": "Meating Point is no longer current; the correct name is Nom Pasta.",
+      "current_name": "Nom Pasta",
+      "current_source": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/4866289398",
+        "generation": 1,
+        "record_hash": "069ee7a8177cd3561ce14457337e6a8ed207ede3e03ab4f0183599b32676e609"
+      },
+      "superseded_source_labels": [
+        {
+          "source": {
+            "provider": "fsa",
+            "scope": "brighton-hove-e06000043",
+            "source_key": "1684363",
+            "generation": 1,
+            "record_hash": "5053ce5d3bc31926f6d417d1cf7036c9dce167a5218ca7cfa0312c854c249a5e"
+          },
+          "published_name": "Meating Point",
+          "status": "owner_reports_not_current_at_this_address"
+        }
+      ],
+      "field_overrides": {},
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "different places"
+    },
+    {
+      "review_id": "U425",
+      "kind": "current_name_or_source_label",
+      "owner_statement": "Cutie Pies And Fries At North Laine Brewhouse is correct; Outlaws Only Tacos At North Laine Brewhouse does not exist.",
+      "current_name": "Cutie Pies And Fries At North Laine Brewhouse",
+      "current_source": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1893415",
+        "generation": 1,
+        "record_hash": "cf86a167ddfb5e35f706dffde8202e48137c1c7295110e663c2d39083530d36a"
+      },
+      "superseded_source_labels": [
+        {
+          "source": {
+            "provider": "fsa",
+            "scope": "brighton-hove-e06000043",
+            "source_key": "1885066",
+            "generation": 1,
+            "record_hash": "cd30a8dfad78eb1999c8ce0757360c5a2b436656f847323216c8c169cf277611"
+          },
+          "published_name": "Outlaws Only Tacos At North Laine Brewhouse",
+          "status": "owner_reports_not_current_at_this_address"
+        }
+      ],
+      "field_overrides": {},
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "different places"
+    },
+    {
+      "review_id": "U426",
+      "kind": "superseded_source_label",
+      "owner_statement": "Outlaws Only Tacos At North Laine Brewhouse does not exist.",
+      "current_name": null,
+      "current_source": null,
+      "superseded_source_labels": [
+        {
+          "source": {
+            "provider": "fsa",
+            "scope": "brighton-hove-e06000043",
+            "source_key": "1885066",
+            "generation": 1,
+            "record_hash": "cd30a8dfad78eb1999c8ce0757360c5a2b436656f847323216c8c169cf277611"
+          },
+          "published_name": "Outlaws Only Tacos At North Laine Brewhouse",
+          "status": "owner_reports_not_current_at_this_address"
+        }
+      ],
+      "field_overrides": {},
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "different places"
+    },
+    {
+      "review_id": "U454",
+      "kind": "current_name_or_source_label",
+      "owner_statement": "Okka Coffee is correct; Plumber On Call is not current.",
+      "current_name": "Okka Coffee",
+      "current_source": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1219954067",
+        "generation": 1,
+        "record_hash": "3626a907ee7495f0366e28e088f04dff6fa4e0868197bfd4059795a897d272c0"
+      },
+      "superseded_source_labels": [
+        {
+          "source": {
+            "provider": "fsa",
+            "scope": "brighton-hove-e06000043",
+            "source_key": "892307",
+            "generation": 1,
+            "record_hash": "099d91d12697411737f77f1265fb4d5149dbed3d71e935e868fe9a1f2fe2ce90"
+          },
+          "published_name": "Plumber On Call",
+          "status": "owner_reports_not_current_at_this_address"
+        }
+      ],
+      "field_overrides": {},
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "same place"
+    },
+    {
+      "review_id": "U544",
+      "kind": "replacement_venue_report",
+      "owner_statement": "Both source names are no longer current. The new place is Barbino, a restaurant serving small plates.",
+      "current_name": null,
+      "current_source": null,
+      "superseded_source_labels": [
+        {
+          "source": {
+            "provider": "fsa",
+            "scope": "brighton-hove-e06000043",
+            "source_key": "1474813",
+            "generation": 1,
+            "record_hash": "7dbf7206112d14e1959b9b82572eb70a8d7cea803efd6aa989ab208092576ee0"
+          },
+          "published_name": "Somkid Hughes At Three Jolly Butchers",
+          "status": "owner_reports_not_current_at_this_address"
+        },
+        {
+          "source": {
+            "provider": "osm",
+            "scope": "brighton-hove-e06000043",
+            "source_key": "node/7020312944",
+            "generation": 1,
+            "record_hash": "62bd9d4bd5792728fec289d9e6f87b8559a1269e716e932c9779094368dfb322"
+          },
+          "published_name": "Thai Kitchen",
+          "status": "owner_reports_not_current_at_this_address"
+        }
+      ],
+      "field_overrides": {
+        "replacement_candidate": {
+          "name": "Barbino",
+          "primary_category": "restaurant",
+          "service_style": "small plates",
+          "owner_original_tag_description": "amenity = small plates",
+          "address_from_reviewed_records": "59 North Road, Brighton",
+          "postcode_from_reviewed_records": "BN1 1YD",
+          "longitude": null,
+          "latitude": null,
+          "identity_continuity": "not established; do not merge into either old business",
+          "opening_date": null
+        }
+      },
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": null
+    },
+    {
+      "review_id": "U684",
+      "kind": "postcode_correction",
+      "owner_statement": "The correct postcode is BN2 7HG.",
+      "current_name": null,
+      "current_source": null,
+      "superseded_source_labels": [],
+      "field_overrides": {
+        "postcode": "BN2 7HG",
+        "preferred_postcode_source": "right"
+      },
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "same place"
+    },
+    {
+      "review_id": "U701",
+      "kind": "address_correction",
+      "owner_statement": "The correct address is 39 High Street, Rottingdean, Brighton.",
+      "current_name": null,
+      "current_source": null,
+      "superseded_source_labels": [],
+      "field_overrides": {
+        "address": "39 High Street, Rottingdean, Brighton",
+        "preferred_address_source": "left"
+      },
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "same place"
+    },
+    {
+      "review_id": "U704",
+      "kind": "current_name_or_source_label",
+      "owner_statement": "The correct name is Turkish Delight Kebab House.",
+      "current_name": "Turkish Delight Kebab House",
+      "current_source": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/11818733545",
+        "generation": 1,
+        "record_hash": "4350e8873dcbf762493e08fa1a863ad2d2cee28aedadc6bfebb3c11f1b4a8155"
+      },
+      "superseded_source_labels": [],
+      "field_overrides": {},
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "same place"
+    },
+    {
+      "review_id": "U722",
+      "kind": "current_name_or_source_label",
+      "owner_statement": "The correct name is Voya; Oseta Cafe does not exist.",
+      "current_name": "Voya",
+      "current_source": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "798506",
+        "generation": 1,
+        "record_hash": "cffb7b3b09d022423c4ac6d14fca45466d39e7d30c605cccb451b0bed8822b48"
+      },
+      "superseded_source_labels": [
+        {
+          "source": {
+            "provider": "osm",
+            "scope": "brighton-hove-e06000043",
+            "source_key": "node/5775312724",
+            "generation": 1,
+            "record_hash": "2ef43371acd5be41769a1dc985d7d32632348698d393bcd2be9d9db369284bd2"
+          },
+          "published_name": "Oseta Cafe",
+          "status": "owner_reports_not_current_at_this_address"
+        }
+      ],
+      "field_overrides": {},
+      "evidence_basis": "Project-owner statement in this conversation, received 2026-11-05; not independently verified.",
+      "identity_decision": "different places"
+    }
+  ],
+  "provenance_policy": "Owner corrections supplement source observations. They do not overwrite source facts, assert opening/closure dates, determine business continuity, or change coordinates without evidence."
+}

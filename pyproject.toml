@@ -9,6 +9,7 @@ description = "Public hospitality location research for Brighton & Hove"
 requires-python = ">=3.13,<3.14"
 dependencies = [
   "fastapi==0.162.0",
+  "httpx==0.28.1",
   "mangum==0.22.0",
   "psycopg[binary]==3.3.6",
   "pydantic==2.14.2",

@@ -1,0 +1,3071 @@
+{
+  "version": "identity-reviews-v1",
+  "reviews": [
+    {
+      "review_id": "M001",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1855601",
+        "generation": 1,
+        "record_hash": "43fad9bb152f4f48bace6d61368a284be4b6eb5f88c66d2f7847140bc4eae78b"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/14246436268",
+        "generation": 1,
+        "record_hash": "057c1045ad5aa0bd1e191f685eb3b68dd4f0df43337d88840ec3c7f7e1a22d69"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M001",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M002",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1806440",
+        "generation": 1,
+        "record_hash": "6ef4a368d2433590bbe249f1b2349020ff5118e24aa58bd22faf40a2cc4e26b6"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/1175868555",
+        "generation": 1,
+        "record_hash": "dde1020e604f9b1e98136751574ad287739bf34b967581613953b974f0eb4ad5"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M002",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M003",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1934150",
+        "generation": 1,
+        "record_hash": "e37bbaa7c8909c581d43c71079308af167e8a15f5e7e8d1cc8d3e3d5aae739ca"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/238753347",
+        "generation": 1,
+        "record_hash": "abbd697e068231eb630585b5046320f7ab2d0d660b0e1be0d563a0fa267521de"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M003",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M004",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1911839",
+        "generation": 1,
+        "record_hash": "0ae25277632c0ad5665418ea980f3b05fce1e3e4aae1a74e8a726934da3b360e"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/242200808",
+        "generation": 1,
+        "record_hash": "7a0a20fb724ae94914b2ccbb9e335a951638ab11ad177b982dfda1e930558a9a"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M004",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M005",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1793113",
+        "generation": 1,
+        "record_hash": "2cfaa460b836aee4fc513b2947ed78c1ddeadeead4f8457aaeb517ffe5b2080b"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/4496535296",
+        "generation": 1,
+        "record_hash": "626aa1054f1305cdeb67cfe9eb033cefc891e609fda5315aa73f76f079dc6a6f"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M005",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M006",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "867580",
+        "generation": 1,
+        "record_hash": "cd0c8a21bfdc36a4130bd889190594aedd47eae627539649f4af74ab0f87ada8"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/14049670712",
+        "generation": 1,
+        "record_hash": "64ecdd813ce536c96e35fcb6ea4a473c7b38d80682c5eb16cd451bee7af5ef14"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M006",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M007",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1604905",
+        "generation": 1,
+        "record_hash": "1e101823dc006b7cfc8b429cfb8dfdb7555188604d3aca9573a16797d041dba0"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6944951119",
+        "generation": 1,
+        "record_hash": "e631392a9eaa865f0f0ad5e1c7f89b71c5a6e12ce4b38afe71e4730bf5559ff6"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M007",
+      "reason": "Wolfsmouth At The Signalman does not exist in Brighton; Big Sams Kitchen is the correct venue at this address."
+    },
+    {
+      "review_id": "M008",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "269657",
+        "generation": 1,
+        "record_hash": "08c336d2a701dadafcd3b72f919d10bfa2af730260d7d986f152339decbecabe"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6700540760",
+        "generation": 1,
+        "record_hash": "efa3396190444e1c26d366570d448fe400cd49f4a4929e7d739581d9c53d07f4"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M008",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M009",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1793616",
+        "generation": 1,
+        "record_hash": "4a78716422b66887bc5b57d97f89a454d3c8abeb0d84a9770279f1181208ede0"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6238105437",
+        "generation": 1,
+        "record_hash": "6c06f5076ef7a6f498f9e2cefc744a9e40ed80c3245ebd55ec82c6f7e0f0f895"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M009",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M010",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "206235",
+        "generation": 1,
+        "record_hash": "4ba4755805077d4dfd48d76926c89e64359caa23fa6f6497e7063353ba21b30e"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/9863263398",
+        "generation": 1,
+        "record_hash": "9b65e2c10c1217a8bcc9f16de68bb9d15c3616ced9efe66bf79e2f0dd724c9ca"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M010",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M011",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1562556",
+        "generation": 1,
+        "record_hash": "93a66a4ac3c9620bc57c5d682afca33049aef4bae84b1042508bc14b77d4b5b7"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/11606547217",
+        "generation": 1,
+        "record_hash": "6a5d870b848e74ac124cecaf2ccfc997fdf34f55b36f4c74a14a09e8c04c7195"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M011",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M012",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1862633",
+        "generation": 1,
+        "record_hash": "dd70cf62e5391febbccd087fb8465d47c3fe1b12ec1eb08bce3e8c59f1e78465"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6200458148",
+        "generation": 1,
+        "record_hash": "50522287b22fdb31fc5593f6e96ffda6647a30132717ccdec03f897c3ad83b48"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M012",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M013",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1790730",
+        "generation": 1,
+        "record_hash": "1b219561d73037ff7f40234749ed926b8aa45bf9317d2e64bf7cd532efb9bb2f"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/7050018157",
+        "generation": 1,
+        "record_hash": "ba185972ba6da5d3eaeab27a4d673c4936a1c193418dca17e525171b4c9e64b3"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M013",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M014",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1790730",
+        "generation": 1,
+        "record_hash": "1b219561d73037ff7f40234749ed926b8aa45bf9317d2e64bf7cd532efb9bb2f"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1116012638",
+        "generation": 1,
+        "record_hash": "66a158dfaae0e87561bff85a270b2080df99e58a727b005e925765fd901247d7"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M014",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M015",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1976637",
+        "generation": 1,
+        "record_hash": "09cf85b1145ed4f6a7eba134b7a19e8bd58e7a7c43763a33955e06714d3468a2"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6427799933",
+        "generation": 1,
+        "record_hash": "dd1627d043ea30c743c164abd307101b3beefa48b4888b760f056522bafea584"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M015",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M016",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1392487",
+        "generation": 1,
+        "record_hash": "0e289da40b9bc35512473c4f1424592dd934cf3204082d953a9c6bd1bd3fa891"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/4573097474",
+        "generation": 1,
+        "record_hash": "fd07d240d29c017d84383322aa73409c114382dff854dc88c222cebaaeedb1dc"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M016",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M017",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1806460",
+        "generation": 1,
+        "record_hash": "f1b433d55b364c3ef7f8d653260ee00a7cd51c370e6c7467e8f8a762e6396d39"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/611732160",
+        "generation": 1,
+        "record_hash": "59cf50ff9ebc1e3b9255c5efb2f1cb0edaac0608dabcabcf1fe4ff3761d58f65"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M017",
+      "reason": "Same location but different businesses The Good Companions - pub, BVC Kitchens At Good Companions Pub - kitchen"
+    },
+    {
+      "review_id": "M018",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1629071",
+        "generation": 1,
+        "record_hash": "055011210df82e3f7d5480a979f49ce6bb99c02b85bb636122c3b006bf876460"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/12726079830",
+        "generation": 1,
+        "record_hash": "f8243705d2406b57157288510f06210a62ee838100f7cb61e9908e53f4cc2fca"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M018",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M019",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1956091",
+        "generation": 1,
+        "record_hash": "fb81831bb4393320fb65c21fc846415d8538ddbb4f68eaebccc2eb7f9c171425"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/5647781984",
+        "generation": 1,
+        "record_hash": "6dcdc6b120e0bb535b499dc10d688c727f42bfd4a284d387c9de4ca19274d609"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M019",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M020",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1177167",
+        "generation": 1,
+        "record_hash": "19799c9878e20cb7316f3f6abee9a3033b727ead571de25ce87d2fe4a11ed0e4"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6514796983",
+        "generation": 1,
+        "record_hash": "a40188a75dbcbedaebe46e8d3d70e687b57fced63e53aeead9cf5b6da3c34256"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M020",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M021",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "2006721",
+        "generation": 1,
+        "record_hash": "230164c4169ef8bb42900a9e8e8e80caaa183ec18e90922b6db816535ccc7ccf"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6198336451",
+        "generation": 1,
+        "record_hash": "03c8aad406b68312d1446a2815005d13f3bde5bfa0547252e5230832d4c87769"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M021",
+      "reason": "different businesses and different addresses, even though they are close to each other"
+    },
+    {
+      "review_id": "M022",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "206481",
+        "generation": 1,
+        "record_hash": "a5fd338de05f34545c3fa413deb0ff21c65547a1ec28eed342f3c6242782ffd7"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/7014811900",
+        "generation": 1,
+        "record_hash": "b1b90f9c16b935664b51b56967077de6f554c1ced36fda5de65a263bb1c3b36a"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M022",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M023",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1495312",
+        "generation": 1,
+        "record_hash": "7b41f75f84173d494d50caddeee4ab7a355d46ad9118ec64fd2392c81d0def74"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6442997751",
+        "generation": 1,
+        "record_hash": "b6d6b2695a488c317eb38afaff9b340cc39f6f82b59c7282afdd9ffce223386e"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M023",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M024",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1828157",
+        "generation": 1,
+        "record_hash": "09eaea756c5774e94491a4aa186e21b01b11c9586031070a46c407f4edb1946a"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/9951304217",
+        "generation": 1,
+        "record_hash": "2cb6288febdddcc330c33087b9a9835049b63664b56078fc2e233a0582ef7a64"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M024",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M025",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "208773",
+        "generation": 1,
+        "record_hash": "6c36d3225f3b5fe84e552110213ed2ededaec86aca487e864b3aa8d9b87a4cdd"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/4570482910",
+        "generation": 1,
+        "record_hash": "2c9e4be09c132b6f5f77bc87e09724ed69bd691e25ea2ca7fa73a656bae48b5f"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M025",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M026",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1938258",
+        "generation": 1,
+        "record_hash": "0de2a424ad73758357c299b366ad71853880d9b77a454b640a0fd2dae187da60"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13570716778",
+        "generation": 1,
+        "record_hash": "c73d5aff7a1d3a9ed7b1a9277abce62063553ecc40ab1a7fce19c368b719d469"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M026",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M027",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1855594",
+        "generation": 1,
+        "record_hash": "82f80071a9f37296823b4b45ecda1af890be22f49035c4279e993744c5d4b8e2"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/636597855",
+        "generation": 1,
+        "record_hash": "ca3145c03fdab06e9a78efcd34120a9b4d6be3e39d52518c4c695782dc743616"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M027",
+      "reason": "Cyrlls At The Chimney House does not exist in Brighton; The Chimney House is the correct venue at this address."
+    },
+    {
+      "review_id": "M028",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "605343",
+        "generation": 1,
+        "record_hash": "3337bdf13663c42c63f7decaeeb03f8ffd1f30ca1ed303f5f68fc488f95685ca"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/4440485209",
+        "generation": 1,
+        "record_hash": "400369965356f6a6d49a28e16b1e0802d843814c42f876610aa047fffcedaf46"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M028",
+      "reason": "Eat Central is the correct name for this venue, Dine Central is an old name that is no longer used."
+    },
+    {
+      "review_id": "M029",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1976638",
+        "generation": 1,
+        "record_hash": "7b45f4b81f749770b693151563d97a409518e40aca397529f4ada1dbb9c078b5"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/807926820",
+        "generation": 1,
+        "record_hash": "0f4c45230daed54bce33799d51ab77907b4b60dfe3711bb3ecd9694f1a24b85b"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M029",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M030",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "208328",
+        "generation": 1,
+        "record_hash": "540b1e701f2e1983f4bf818322f440a03facb9b32dca28074ef129edc1bbedf7"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/7050018157",
+        "generation": 1,
+        "record_hash": "ba185972ba6da5d3eaeab27a4d673c4936a1c193418dca17e525171b4c9e64b3"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M030",
+      "reason": "Different businesses. Fish & Chips on 42 King's Road is now renamed to Pizza King which is pizzeria and takeaway. Fish And Chips on 39 Kings Road is a different business."
+    },
+    {
+      "review_id": "M031",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1291248",
+        "generation": 1,
+        "record_hash": "16940f0f351eb45d7f7537956ab2bae30f6c38296dbd795a94fd5fa41f6dee4d"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1123948546",
+        "generation": 1,
+        "record_hash": "2157126c668faf793335b7b22f6581495563039425caf9b7acb39651a3ad3cbc"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M031",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M032",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1885052",
+        "generation": 1,
+        "record_hash": "79fc734130b5a5b76aeb24a5632de815702af75ccb4c2fbcdda15b24259e3b07"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/4577032985",
+        "generation": 1,
+        "record_hash": "4d396fb7182c5773ffc478ed428b93e9704426e541b5af5d3718e92e0d874567"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M032",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M033",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1765506",
+        "generation": 1,
+        "record_hash": "ce79ee1091fe1b24becd8cd3e65c9e4950779bc93ad37409a6321166d6016d34"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6373062098",
+        "generation": 1,
+        "record_hash": "7b71017563f05b4a0e45ea12d2bfbf115c09172c0627965c0a72b528d4ec6555"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M033",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M034",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1657686",
+        "generation": 1,
+        "record_hash": "eb04a7b6fc6bd5d6710dbb242155cdd3252f2deaf323bb46d379a5940f8beecc"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6203842000",
+        "generation": 1,
+        "record_hash": "2380d20f7b4df1b358e0d4c59acdc7390e0880ef4ec3cb231540463a152626af"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M034",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M035",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1097543",
+        "generation": 1,
+        "record_hash": "6b795735bcabd99842fa44ccbb2893ec857f3bd69c33fcb7cd8f90a7672578f3"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/139443711",
+        "generation": 1,
+        "record_hash": "8784b629fb05b87d058f5144ab4f65942907764e55d8df6c3fc9d71ee1c48ab2"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M035",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M036",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1170983",
+        "generation": 1,
+        "record_hash": "43b60d09cc6b3c8a8ba3ceceb0c220d6953fd953d5efdf3edbd3ff6e7d9345f2"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/454330862",
+        "generation": 1,
+        "record_hash": "a88ae04b88864ecb4dc1d3e3a61a4ae488d4d3032f00164d35074c4fcc43f5ab"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M036",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M037",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1786532",
+        "generation": 1,
+        "record_hash": "acf8bbcd46d92005a45906d8fad523154354976e0b79bf91f77c020bce621f5b"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10932517648",
+        "generation": 1,
+        "record_hash": "176c1fb13e480f20e8197735c2381993a9afdad56b59cd8733efc0975921aa5d"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M037",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M038",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1170965",
+        "generation": 1,
+        "record_hash": "846c4f578df2ae596fcff37e715dbd0b4b9f8c5fd4b6c94d8615a0c6c074ba7a"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/9842236532",
+        "generation": 1,
+        "record_hash": "ecc23c2fa2a56303345171bf6ac829b17dbe1d97fd73d7a3f9fc2a891be3c17e"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M038",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M039",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "206494",
+        "generation": 1,
+        "record_hash": "69edc76d2c77f4b45806e24d0a0331a2bc5be0fd3f7010bb8abd6e063f58f6c1"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/238700283",
+        "generation": 1,
+        "record_hash": "4d1d552a068dcd4e370cffe9c86f9fe30a257ba9150268f358e609b6c4cd752d"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M039",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M040",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1601778",
+        "generation": 1,
+        "record_hash": "a37d096684776893f8c91fbe035fb71f68829f324f2eb6266359cedce5b1301a"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/11668567655",
+        "generation": 1,
+        "record_hash": "afd867f84b189c8d8ae822fabd4f75eb52d3d7acc035e942d467485adc891cb9"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M040",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M041",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1684360",
+        "generation": 1,
+        "record_hash": "9524a64766c3073ccd661025304ed78120f536fb4c832dc2c242990b86324e6c"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/11819318104",
+        "generation": 1,
+        "record_hash": "e825324c2452ad0a29707de9fa3fda7ab962cc1f92efee07c9651895b97fb3da"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M041",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M042",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1691899",
+        "generation": 1,
+        "record_hash": "2e173b33947c29f041e7d5a6f522a2f5481d9f5f115f54d0aac8566e7c3f0db3"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10574586302",
+        "generation": 1,
+        "record_hash": "e23e2751f062416724ef85f53f5a0a2f5c9dc748a4605354bc90e7255f65ce38"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M042",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M043",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1131303",
+        "generation": 1,
+        "record_hash": "a91a5cf32a5832fb69a4f4c88d9b25760e861de2e29ddfa4bb89a45700052110"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/12041167058",
+        "generation": 1,
+        "record_hash": "29a467bce6eb8228320f802a12b4b78368f7cdfa5a3633250d99b6e3b08ec330"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M043",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M044",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1969147",
+        "generation": 1,
+        "record_hash": "773f40cc75a202c72f928a6903004b415f57c2b423544269e131e05b71a4c08b"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13976293975",
+        "generation": 1,
+        "record_hash": "be23c389fc5d83113f48f2fb33de21b1df64ef7c7857ec05dc937794443ccf71"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M044",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M045",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "940334",
+        "generation": 1,
+        "record_hash": "d901f0ca2147ddec098d1d425d70595399070efa15f9b8fd2d7808007336ab15"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/14293874912",
+        "generation": 1,
+        "record_hash": "4059af4b53da41cb387095699002ead165374b8cf8ae24695647c9e256cd64b5"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M045",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M046",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1829348",
+        "generation": 1,
+        "record_hash": "4d6c5127558439da9767be4ae530faad895e5cbc7ed3fdb7f7bfa99e219ce2b1"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/12595659201",
+        "generation": 1,
+        "record_hash": "c53e21b010e9c20bc403f1ffc85dbf7f06e131f9ba9978418f18f239e88e139b"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M046",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M047",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1663918",
+        "generation": 1,
+        "record_hash": "c0a2043700f6ce510fbfd46e9c7463e4b9ba0cd72a765aeb8992f12d445f4189"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10301121962",
+        "generation": 1,
+        "record_hash": "2a5123873043400b7ef4c61498962b24da3ad4a1c44031c0315699af3a7d6348"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M047",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M048",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1138389",
+        "generation": 1,
+        "record_hash": "8167773c58575953ac2e65b1c2115bc63506a54a442fb5d3fc0fecf29b849c13"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10690951506",
+        "generation": 1,
+        "record_hash": "1f8863622d09d7c7376443b9387d853fc8d3a4fce8a9609f5658e799b0340eb8"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M048",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M049",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1782220",
+        "generation": 1,
+        "record_hash": "32b5c69970ba54072f4baba7c93a7c1b5f172ef718d663a7edc87335f69a8629"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/12989077575",
+        "generation": 1,
+        "record_hash": "7674b0297edc4ca43045016e66dfafb1aff29f8af48bef473ebc5afe561c622f"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M049",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M050",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "781230",
+        "generation": 1,
+        "record_hash": "d69d3bfbceea622c21f4808ff1882e422c1e400a4b6589750d2a87cc480c6c01"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/9951304224",
+        "generation": 1,
+        "record_hash": "de30c77f3f588be0899b7909be8c61997eac62fcd9c31312df7b7bd532650848"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M050",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M051",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1956086",
+        "generation": 1,
+        "record_hash": "2f624287336875d5abc1ed1edf146d5d89339d8cbf8694aa9611c2b9059b3b93"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/9907671524",
+        "generation": 1,
+        "record_hash": "c8cac55ca9be8e32950a3c4e26d0e4609388d473cf85927d5fad2e882e5cca51"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M051",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M052",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1712432",
+        "generation": 1,
+        "record_hash": "100895342000246b693f9d769eed0a272ca009fceb540b687841c3275761f42d"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/636384568",
+        "generation": 1,
+        "record_hash": "4862e0c2ae497b5b77adf6764da7a695cdbf9b8568fe8ca1fdd4d6e7e2dbe84e"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M052",
+      "reason": "Different businesses but sharing the same space. Mae Tic Kitchen is a kitchen and The Hare and Hounds is a pub."
+    },
+    {
+      "review_id": "M053",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "2006705",
+        "generation": 1,
+        "record_hash": "b1b4ccb420a3aaf0860fb14a90d8df5160e897b50c3c562ab0f53663ad9ae96c"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/242199846",
+        "generation": 1,
+        "record_hash": "8499038bffc5107dcdc2ee36d1001d6a8558acb2fdda640a721d9436fbead7e1"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M053",
+      "reason": "Different businesses but sharing the same space. Magpie is a restaurant and The Black Lion is a pub."
+    },
+    {
+      "review_id": "M054",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1726009",
+        "generation": 1,
+        "record_hash": "46812d4a24137d954b19e703027baf9085b414f042ebb42bc50341690fdc597b"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/137725378",
+        "generation": 1,
+        "record_hash": "f8854d000f8ac4863b9fbb829ced7ef5f299351a7decdd00328e2fb51fe28feb"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M054",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M055",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1374095",
+        "generation": 1,
+        "record_hash": "db9ab0338f408a3d77658e940bdcca86c57f38ebf4b5bd877a54adffeb76c799"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10097282242",
+        "generation": 1,
+        "record_hash": "0a20ab94aa975946ac59f178972d5d2ed454157aed982585bd0bda6abf9f5e5a"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M055",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M056",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1590172",
+        "generation": 1,
+        "record_hash": "b77d94980fa986784beac3079bc3ba064c7e75f027d7574f7db82a9b5f701043"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6426407402",
+        "generation": 1,
+        "record_hash": "09df9e8a6db11cd635d537de18db39af8861e4ca1ec7c46aecec5890bbffaf66"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M056",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M057",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1812937",
+        "generation": 1,
+        "record_hash": "eb5b4dc2cba2e8c0c405834151e1eaf7bd869593499df88c957bbbf683e1146f"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1116874534",
+        "generation": 1,
+        "record_hash": "6ca33948d2f08a5763bde789ca5752c6fbda9d53060953950b2110fc1eb60f98"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M057",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M058",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "979142",
+        "generation": 1,
+        "record_hash": "a71f514af4a6706f3dcc3e2b827003ac6f40c7921cc0458ee50ee0f6639a09c0"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13860992662",
+        "generation": 1,
+        "record_hash": "784de7853b8d8b65dddaa9134703ad5299ac0d0c73b0ecd2ab10888e4b80d5a6"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M058",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M059",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1733783",
+        "generation": 1,
+        "record_hash": "2f0bebaba1840a05e295203a8b0bc39390c8ad569442c72eda36a484484410c9"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/11632443423",
+        "generation": 1,
+        "record_hash": "f79a1d9e7928d7b464422f854f1049bbe475392105c89da70b411dada680421f"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M059",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M060",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1765500",
+        "generation": 1,
+        "record_hash": "36f3230a72b954ba17b7bc041a51ae705392f49f8a75974fe1965df69f2d5a8f"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1115993983",
+        "generation": 1,
+        "record_hash": "c71484ac7267ce1ecc4a7476a087289c43a95138ee8760dab6a04017d789ac7d"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M060",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M061",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "2006710",
+        "generation": 1,
+        "record_hash": "5a7f5abbfb8aa5f6d31144aafd2bd122f34631f56d08568574bb22a9b139ca2b"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/12145044007",
+        "generation": 1,
+        "record_hash": "daef32899c0a6004cdfb5285c568cb43dac79f1018c5255ab1b6ee82a3ada1fa"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M061",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M062",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "584012",
+        "generation": 1,
+        "record_hash": "2d5340aaa67d58a32abdfcadf9cb69042ba057f03fbd51aaf9d2555034aaaa5f"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/1160887832",
+        "generation": 1,
+        "record_hash": "c86e67b431808d5b7ea74e602fa3b5d686a2e7910485673a2a0dd4d7c8720b35"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M062",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M063",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1844227",
+        "generation": 1,
+        "record_hash": "36d88a4f7d7370d0db06153b30a6e06fe4f400933e8ae6e00b578d8bf9b7fdd0"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/622204053",
+        "generation": 1,
+        "record_hash": "d970d69b2c7e05a994c1dd186e19a1809b1e68ecf4f07b01efb14e401ac6876f"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M063",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M064",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1806463",
+        "generation": 1,
+        "record_hash": "d7403fb4e97542510993d8ce930da23ce233f228d68493029e1cdb30304c4d43"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/14220013929",
+        "generation": 1,
+        "record_hash": "36c02a2dcf39c9cf8806d12d478677faed265d0c7a91e635011db1361eb18b01"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M064",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M065",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1752307",
+        "generation": 1,
+        "record_hash": "5c56f0bb5da7f481761d2c0531161df9cb82d788afa700433f88adf11a795f89"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/340412261",
+        "generation": 1,
+        "record_hash": "5fc4367b9929663a81c98a9b61e2733cecc4b3a48d5fedf86cd7ebc1d62a6855"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M065",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M066",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "920137",
+        "generation": 1,
+        "record_hash": "2c3584e9c606b6641f517ede48c5cc1e523893691cf44acedad48356ad48535d"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10779460371",
+        "generation": 1,
+        "record_hash": "c303c51f5c63406de98a9df954f57a78b47f3baacd3e574c5cea4030f56b4306"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M066",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M067",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1525221",
+        "generation": 1,
+        "record_hash": "02c03e66cc9e30521ec60919484c893ef8aa2b2f1302b166cac090e732559ea9"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13860992664",
+        "generation": 1,
+        "record_hash": "959b754eb3f04122d3c7387826c5894bbb3d84e6a863f30ee01ab8535900eb85"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M067",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M068",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1844216",
+        "generation": 1,
+        "record_hash": "35f4f44346c89ab1b68b0c0a5ec54cab7886de29e9d8bfd55cf99982ee4949f7"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6200458147",
+        "generation": 1,
+        "record_hash": "aa92243a33670cad12b58c6090d3e2c667967d31d140b0a418e0e0b246550c39"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M068",
+      "reason": "Different businesses but sharing the same space. Papa Dumpling is a restaurant and The Golden Pineapple is a pub."
+    },
+    {
+      "review_id": "M069",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1934148",
+        "generation": 1,
+        "record_hash": "b9ed709efd22d1b0ed9b4b6a827dabccc3b70f47263a3e6820648fbd02cdb961"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13158376856",
+        "generation": 1,
+        "record_hash": "b4ed7b8691007e76363c2b903691ab4d463fd369a31d05226957410a865d703e"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M069",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M070",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1878017",
+        "generation": 1,
+        "record_hash": "968c240552ea7673f80f6ba262663ca1374556aac03b51f0a77bf3521bbad9bf"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6481780498",
+        "generation": 1,
+        "record_hash": "882f63fde177a4f1d816361f1aae3e8a66815b6a3b06e5bad9a077c1100f434d"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M070",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M071",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1800200",
+        "generation": 1,
+        "record_hash": "28f5dba7b43852ea143b3af161dab35ddb8b8e959490005e73eddcbae3414948"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/2571173026",
+        "generation": 1,
+        "record_hash": "5adeceb031e5c8677c7cbabface6538694104eab2abea2abcea277ae87e1cd78"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M071",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M072",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1301952",
+        "generation": 1,
+        "record_hash": "c4867ad750087f576986c5a879c5f17e771d168b1eba2832ee340e418e5f0895"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13665133884",
+        "generation": 1,
+        "record_hash": "714d42375bff8667c283bc0713eec96ae8301e6ed16410bb3eb2174273e0e9e1"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M072",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M073",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1844226",
+        "generation": 1,
+        "record_hash": "4cc40bb291972ea3ca85dee7249b5aee229d44303043fe7c308d7738f259a675"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13716778800",
+        "generation": 1,
+        "record_hash": "aefbd28933a016d1cf4fffe0fd8a900f5077069538b09abeda3b56dfd660df78"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M073",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M074",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1212411",
+        "generation": 1,
+        "record_hash": "c29737c11db471f37eb09293c3facf637ccdf9515ebf9acc390811b2dc51c137"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/14293874911",
+        "generation": 1,
+        "record_hash": "9d1818749beace5f939209d43428bd06be63e76b0b13148f2904bc3bb00fe67a"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M074",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M075",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1885062",
+        "generation": 1,
+        "record_hash": "1bc3331147ef4e2c9e3614e7674d5181e4d33755c62691ad0bb33d4eac9530a0"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/7035867579",
+        "generation": 1,
+        "record_hash": "07df3fe76031ebddba60b78186ac0b73803a8a579a7d56281314821e2d0b42f5"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M075",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M076",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1919649",
+        "generation": 1,
+        "record_hash": "72bdd2a9a330861677b5b60031568745ec95739f47de6960c59658ecb5444bd6"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/4569143976",
+        "generation": 1,
+        "record_hash": "57a745cc27539d80126bd00f892c2ae732f0fbba3299c2a871aadf02a46e8f88"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M076",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M077",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1987861",
+        "generation": 1,
+        "record_hash": "3deea18c2e24bbe0b37842fd1b1a4cb61cdca3ffe9874c1329df28b77728ec81"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/1275319647",
+        "generation": 1,
+        "record_hash": "771748534ffce2bc15f00f9f4d7cbb9cbb48b72656333ebab2568840033c2239"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M077",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M078",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1956097",
+        "generation": 1,
+        "record_hash": "7bbf05a2b541864b16cb37858fb18ebdacfa4c3f44bd93a180816d9d16bda995"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13762891855",
+        "generation": 1,
+        "record_hash": "c9ed6e805f55c6c283dd6fbf28bebd00b3433b6f21b248bb7edd1098d4074fb3"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M078",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M079",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1230336",
+        "generation": 1,
+        "record_hash": "7909ce10d076c29d04638c09db440975df9404c30dd462ae963bba94dd022756"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6514939784",
+        "generation": 1,
+        "record_hash": "0c8f4dd8836821bdef0e1555daa7d2ffea1a4945a591ea078169f9fe40c5de6a"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M079",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M080",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1893427",
+        "generation": 1,
+        "record_hash": "0e098ec705ac4c1879284fd968e836cb124ba0437c3aee7077134803ac8e396e"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/137725387",
+        "generation": 1,
+        "record_hash": "f53f02d2c96e5cd12beed17e86deb497f7d20bd5d68fb6d4f4801090a6c19b4d"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M080",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M081",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1802306",
+        "generation": 1,
+        "record_hash": "dbccd5293ce925fb93301374a322a10b4dd9695b67273416a6259fb8ebeb9427"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13157129457",
+        "generation": 1,
+        "record_hash": "a965b1d3bf5085d022b0f2d52ef41d0c4d6075ae081c265a919f2fe920717407"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M081",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M082",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1849840",
+        "generation": 1,
+        "record_hash": "6a1d3a209c7290e9ffa2617d6a1aeee622f8497f78fe22df2beace63a73e7e14"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13691571734",
+        "generation": 1,
+        "record_hash": "f5cfe97dacc9e7c2d513a555565b611fcf902ee5c1d3725111c1abf1d3cd177f"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M082",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M083",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "990439",
+        "generation": 1,
+        "record_hash": "144b3060df6380730fdc4d17d4d46d34917c604a2153062083fbecbb612bd312"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/766758696",
+        "generation": 1,
+        "record_hash": "a40950a405c08df9af9d2729c8c81c2f8066eb7de6e4a67c90fb8db6d0814fe7"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M083",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M084",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1684359",
+        "generation": 1,
+        "record_hash": "ffc5b962357e0421ab689dbaa2346199b871c29055e73d40645b7d585e9b4d7f"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/12729012009",
+        "generation": 1,
+        "record_hash": "86c53b45a4863231302423faf71df953d99f71fe4a647bceaaf86b629471a796"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M084",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M085",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1733773",
+        "generation": 1,
+        "record_hash": "7e5a547baea7fe9566c7a5fbb834fc149565dfcda81830152282f0a229e3a606"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10773390813",
+        "generation": 1,
+        "record_hash": "a6f05349dc3f00dfe0526d89276fd9cc371739a58205a41b572eef73b92921e0"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M085",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M086",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "2006720",
+        "generation": 1,
+        "record_hash": "4f8b622fbfc7c0b68743aa45c79df4812bfe1712c0ef5c434040624031710cf5"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13716848560",
+        "generation": 1,
+        "record_hash": "6e17e3119d2095f0005bcdee99424609dd9c2494509434389c9495fef8daaeb7"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M086",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M087",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1987862",
+        "generation": 1,
+        "record_hash": "37305907869e999b188f001156a5199699e09a037104843e67b5d2fc20416ee5"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10784479208",
+        "generation": 1,
+        "record_hash": "a76d0f6f285fffa0ca585546d84065de0f31acb6fce172f3a30f3cd5b242b183"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M087",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M088",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1828158",
+        "generation": 1,
+        "record_hash": "8e1c49add64ac9b473b0b9a38ace69723b2524db70de40340c7ecb4915d286d9"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10809379881",
+        "generation": 1,
+        "record_hash": "6942a357ae8541d1e83c46a2ebf32114f7d916fb129a5556a8c0419c9f736986"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M088",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M089",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1888849",
+        "generation": 1,
+        "record_hash": "7cde871ce0f77b9f1d731345c0960e2720e7e87bd8239f762df39c2fda0aad0e"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1629389825",
+        "generation": 1,
+        "record_hash": "b126fdb8f551ece5bc121662ecb3058bfc6afb57acc8e1efcb3c13be9d3e0929"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M089",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M090",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1956068",
+        "generation": 1,
+        "record_hash": "3e33b467f74dba5fc600b60613891049c4766af7b922300c76dfbe4a37a10da7"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/7020341198",
+        "generation": 1,
+        "record_hash": "ae34a212db1df666ab5a3b5a8140770bbe0bcdb91bd3372d1212017f24d9ab14"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M090",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M091",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1938251",
+        "generation": 1,
+        "record_hash": "275dc28d5a19fedebc2d1d8fc31e4196d66b7d3b4d29d8356984b4ef8c28cde5"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/8196260630",
+        "generation": 1,
+        "record_hash": "c6b46539bfb94adca9b8e9d3608c5149bc94286a2604a2cb1bc9bbabfbcdc373"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M091",
+      "reason": "Stoneham News is not a hospitality venue."
+    },
+    {
+      "review_id": "M092",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1833215",
+        "generation": 1,
+        "record_hash": "cb3df0ebc789d49c907ea50652f288efb2bfe0a6889a03f0755080fb6514bc93"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6373062098",
+        "generation": 1,
+        "record_hash": "7b71017563f05b4a0e45ea12d2bfbf115c09172c0627965c0a72b528d4ec6555"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M092",
+      "reason": "Sweetielicious is not a hospitality venue."
+    },
+    {
+      "review_id": "M093",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1792042",
+        "generation": 1,
+        "record_hash": "ac9793686c34aafde34dde2817c1a497db5b3a7c24bafd3c64cd6d996de59a17"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13685190070",
+        "generation": 1,
+        "record_hash": "739fa3ceb3062c68475a8362d87b6ffe74723b22da54cdc1631dce0820c16e9e"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M093",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M094",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1901518",
+        "generation": 1,
+        "record_hash": "25023fee4a9ecce8625d69a960776b673816a042576f03b06407de81f3b2bfa9"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13684523487",
+        "generation": 1,
+        "record_hash": "f92794df75db8d0439d5825f0e4b180a22d280d52a2762147a6f5fa2daf03129"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M094",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M095",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1837735",
+        "generation": 1,
+        "record_hash": "61ed0a616eb07930199595a1505c8cf3f17e845cfde9b5e03509746993c91b1f"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6423732487",
+        "generation": 1,
+        "record_hash": "0a8b2d3a7f8bdda6f9eda73109dd7521ff178e2a1424808337a5de97611c9d7f"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M095",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M096",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1846276",
+        "generation": 1,
+        "record_hash": "4ff577eaf1ef7828777cf1d9d58479d9bf728b9a60a90a3892e5612a011fa346"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/4577405061",
+        "generation": 1,
+        "record_hash": "4392124dc1e4b96c3dc1dcbb0e4684b64ce7f01679822f68a5f11ca6efee1ab1"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M096",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M097",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1601766",
+        "generation": 1,
+        "record_hash": "7fcb21dd1a0b601b0842b5f406ca015abd24c85149c4f6dd1505662230f99409"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10809379881",
+        "generation": 1,
+        "record_hash": "6942a357ae8541d1e83c46a2ebf32114f7d916fb129a5556a8c0419c9f736986"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M097",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M098",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1737058",
+        "generation": 1,
+        "record_hash": "f9937a3049a2ba0da0215251aaa2ab74047c5828d33468b17ff256cf210c702f"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/234939292",
+        "generation": 1,
+        "record_hash": "3f229f73e87fcd15c39f2e0c69997c1578c044b7bb230d878e8b1416b3afd835"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M098",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M099",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1837730",
+        "generation": 1,
+        "record_hash": "f665bebc854ce991dda244f583953027f4ced9ec9433309667b23dcc6e0a5675"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/242199846",
+        "generation": 1,
+        "record_hash": "8499038bffc5107dcdc2ee36d1001d6a8558acb2fdda640a721d9436fbead7e1"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M099",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M100",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1828150",
+        "generation": 1,
+        "record_hash": "0e9efeb84d427865951ab41b8668f6d82e82e9bb3a834957c44852680bd313fb"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1882500371",
+        "generation": 1,
+        "record_hash": "dacbf8100aa83bdd584d487e006885762a3898093fa66fbf7bc736be44f327f4"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M100",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M101",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1797319",
+        "generation": 1,
+        "record_hash": "4aa51f6f6359680965d9fc478d93b2184a77954bef0b8e9f2b10c39ad672fe18"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13592144796",
+        "generation": 1,
+        "record_hash": "8d070405e3172e995ced00e072c89118d214608b6d45e3ea6e5381e93491fb5e"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M101",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M102",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1915871",
+        "generation": 1,
+        "record_hash": "4363bf65c58bff73d88eb53085a2a8f047e64b64936d347fa6525ee185c52c4d"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/14334598487",
+        "generation": 1,
+        "record_hash": "bf455601124643745acd2c7d1825eaed8cd18ca2193850416a71a3008383d025"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M102",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M103",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1844219",
+        "generation": 1,
+        "record_hash": "451ef0cc826203c665208d17d0564e20357b07bd6b6b8f715ae5a17a623cc5f6"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6427799940",
+        "generation": 1,
+        "record_hash": "41bb69217de241afe028fdaec207e83f3df9c0ff5956bec8cb7155f449acddfa"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M103",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M104",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1613897",
+        "generation": 1,
+        "record_hash": "87d32d10c6648537dbe6a77edc5bc38ef0aa603733ba84ad625168ac310ae46c"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1456843422",
+        "generation": 1,
+        "record_hash": "bfe2cfd8a3a77fd7c4876af8ab38b4eb85a957e93709ec81e98b5113c0da85f5"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M104",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M105",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "668893",
+        "generation": 1,
+        "record_hash": "61a2a24e2f89abbb701f9342e033d457063cc92bca0d842d3566a48ad19e16ac"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10173769217",
+        "generation": 1,
+        "record_hash": "204819d670069490b63bde1f1b45593fe47dc43e35792d90bb50b3628488fc73"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M105",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M106",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1684357",
+        "generation": 1,
+        "record_hash": "c0ce89d79b82fd0668822b6cfad8bc5c109df93bae7dd9eb0ac30b4542cdccdd"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13163962201",
+        "generation": 1,
+        "record_hash": "5c953b46a28c9b4c95c272c700f089653dc72255bb172384879f3f17ab694c88"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M106",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M107",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1695422",
+        "generation": 1,
+        "record_hash": "f75ef5850276bcc6bc784ae2ab4869f22491fa2f78b534e172de63ebdcb7bf8a"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/308766767",
+        "generation": 1,
+        "record_hash": "291132ea046bc142e11aff8ef53b30ff7f6b7431cb1a0b5eefa28a844b20c2d8"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M107",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M108",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1948132",
+        "generation": 1,
+        "record_hash": "64cd8ed9c249e92edc172ac5402f263100a2a6157ac6f0b9e04c0fa731c2b4c7"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/1181159021",
+        "generation": 1,
+        "record_hash": "641dd4c32571b15ca54ecc2afd228e1bab64562da34fc96897ddfde6129d53b9"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M108",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M109",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1987866",
+        "generation": 1,
+        "record_hash": "61eb7df08b38570c9e54385662546db6333c697af4531d79410dcfa203657228"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/274720211",
+        "generation": 1,
+        "record_hash": "034a4044bda76b813a1e04e72c5b331872e22b6a91220eba6fa241afaea71b30"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M109",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M110",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1604932",
+        "generation": 1,
+        "record_hash": "53a88aea5256a1b218a22823a8fdf27692698e3302657ee3e80fb6ebd475e9a6"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/1183524142",
+        "generation": 1,
+        "record_hash": "ed47329c5194e641844294f6b0add3a69c450a9999a5a81252367e52fb3ef0e6"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M110",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M111",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "2008612",
+        "generation": 1,
+        "record_hash": "0c777f754652642ec6ca0359c70d7d61a38211aa020e9611c587a782aa56b184"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/90615655",
+        "generation": 1,
+        "record_hash": "587244b05b5c596336aac98ecc4e0a856fa18628caf0b80d5ae7f297277b4ed1"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M111",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M112",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1888844",
+        "generation": 1,
+        "record_hash": "35cbd1caa1ffec43133bbeb11fcbea4b16406fd107329565f6e5f22f7750c384"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1155310306",
+        "generation": 1,
+        "record_hash": "0c4f29009f5c53750cb374fcd955c2b3d6e0ed73bca07d6bff8ed8c6f1cd2885"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M112",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M113",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1837733",
+        "generation": 1,
+        "record_hash": "1903dc8c310e59b6152390937cc1acd5255a4cdfd81ac85671c60fd38eb5810b"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1115941550",
+        "generation": 1,
+        "record_hash": "ee12bc8d632a3d21ad7f32ba0baf9c33b6140a2f69b04ee341e9c965c81bf1d0"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M113",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M114",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1558680",
+        "generation": 1,
+        "record_hash": "12661f3e19a9ed1ec4a50f15e506aa548f616b62b5f21c044f317234d9ea8c9e"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/472289720",
+        "generation": 1,
+        "record_hash": "482f66b244bc25b72ad7df9f74e6b555d6de9a7cc3c582cb8db7205dfc8b1e35"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M114",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M115",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "207514",
+        "generation": 1,
+        "record_hash": "792fdfbced5d6ed9d44d7b634677dc95e0c2638697f6b717b5411e3646c6e9b6"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6515042197",
+        "generation": 1,
+        "record_hash": "10ee521801645aa69428bc3b27fc695cb79e12051c0c25fbb0b116cc79e15fc5"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M115",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M116",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1681255",
+        "generation": 1,
+        "record_hash": "56e7bacf4d79c56818f0997ac004ec31d3408b8485555aaa63348fe344891212"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/1194914506",
+        "generation": 1,
+        "record_hash": "5de293df33819f4e03aefc8e593630e483f3a7cec54ac9d6f0541b27d37f14a5"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M116",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M117",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1100516",
+        "generation": 1,
+        "record_hash": "b1a769864f62d890db5cc05094c193cd10d89ee92ac616a055428cf775889e18"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6944951119",
+        "generation": 1,
+        "record_hash": "e631392a9eaa865f0f0ad5e1c7f89b71c5a6e12ce4b38afe71e4730bf5559ff6"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M117",
+      "reason": "Wolfsmouth At The Signalman does not exist in Brighton; Big Sams Kitchen is the correct venue at this address."
+    },
+    {
+      "review_id": "M118",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1129218",
+        "generation": 1,
+        "record_hash": "3105c6440f64937cfc871975b70099b1c05b9906c8ecd7d6ef2526714697bb58"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1526906940",
+        "generation": 1,
+        "record_hash": "e116280de68f66988913d8400e4682c4cc062c0c22d015728b18e313d2574bc8"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M118",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M119",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1762593",
+        "generation": 1,
+        "record_hash": "256759681c525206aa55be47d27f8122e90df2552a5839edff355b3f48f81ba2"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/238700283",
+        "generation": 1,
+        "record_hash": "4d1d552a068dcd4e370cffe9c86f9fe30a257ba9150268f358e609b6c4cd752d"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M119",
+      "reason": "Owner confirmed different places: The Station at 7A Hove Park Villas versus The Station Pub at 100 Goldstone Villas."
+    },
+    {
+      "review_id": "M120",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1956099",
+        "generation": 1,
+        "record_hash": "c306e10397fcfc4e3d36c4bb533e2180b97a7d0018ef601afa1fb7a79149cde5"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/2424570167",
+        "generation": 1,
+        "record_hash": "2a82ae5600bd1d5568cc53147323a53e6b8c97f50b2e2477d70a211aa49044be"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M120",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M121",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1107113",
+        "generation": 1,
+        "record_hash": "87211cfa4186b78b5ac99fdb47644b856678627e0e30274416ca72f75e9a1f3f"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13735577947",
+        "generation": 1,
+        "record_hash": "be8fc89cef0bfe95c54126d76e45cae3d120fe642d56ca6d97b0778be57dca5b"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M121",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M122",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1840312",
+        "generation": 1,
+        "record_hash": "b610aa4cdd2e670fcd791cb0c9f906bce619e8c6b920cdaec47bb1c6d7f603cb"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/7023567384",
+        "generation": 1,
+        "record_hash": "90b899d689fa2126962d64a79d057036ae15cef57c6fc878b32e785decd4923c"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M122",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M123",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1552645",
+        "generation": 1,
+        "record_hash": "697176819d10659fecd5af6bd5beacedd4da5c0e3d0e896f77a9486cebddc1c2"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/7807458385",
+        "generation": 1,
+        "record_hash": "5286c34ae932ef0e31da71ad369d45647fe4d5c44a11fb0cd2c79980e1cb7185"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M123",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M124",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1650690",
+        "generation": 1,
+        "record_hash": "04563b0ba262583d5c07306942f5718f3a1f9a6fe5df73733b191a1615ada521"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/137689033",
+        "generation": 1,
+        "record_hash": "c34553d09a45826e0f5dafacc4714b5b2262e572eb68d079a4eae0913b9a1886"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M124",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M125",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1545875",
+        "generation": 1,
+        "record_hash": "a259f441f253e8553ba95b34ab5e87926d156621e483a82da67ab6262d862283"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6518540606",
+        "generation": 1,
+        "record_hash": "ae632698823ae78816a2c8b78d3751e5ae91f8c35b69abf26f74700060315d28"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M125",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M126",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "876020",
+        "generation": 1,
+        "record_hash": "192cd55e0fe5a256810fee5d14644e5da908ed434efaa699d8ed591466f9ae6b"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13678320116",
+        "generation": 1,
+        "record_hash": "b09742deaa10dbf31c7fea9e086d6b7bab9790d8e7e9727d65f7b1376bb5d99a"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M126",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M127",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "656192",
+        "generation": 1,
+        "record_hash": "662c63a77ea1d1d758b134990636e559b47384c560c532637a2073291959ae6d"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/11665706917",
+        "generation": 1,
+        "record_hash": "4a45a762b91bdb7257a12ea0f45dcf490ef4b8865be4913abe006236200faa88"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M127",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "M128",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1723443",
+        "generation": 1,
+        "record_hash": "c72fa133964a55447394a7778cfa96ee7a43de0e57f1597ce79bd643c545432f"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/10063403051",
+        "generation": 1,
+        "record_hash": "f5140e82b35b8605f88d6ab55e6e41cc0fd807477a67c9e2f4f32849c2c836d1"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M128",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M129",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1699605",
+        "generation": 1,
+        "record_hash": "639c556408a76f146535a3172309ae8861d1b970f7e7102640631d988dcd48ec"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6514796984",
+        "generation": 1,
+        "record_hash": "4e526d4762ca48b825d443c603ed580ebcb319831dfca76bc2d46e538cb04b13"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M129",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M130",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1707072",
+        "generation": 1,
+        "record_hash": "1952ad80cf600f9a650a277c0423ae198504b25b462289181e23807dc1cfcbe2"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/5981480456",
+        "generation": 1,
+        "record_hash": "6547c6f888d80c57d0e508e826133f8057453f47318e4f82f3aae9460f737591"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M130",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M131",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1537883",
+        "generation": 1,
+        "record_hash": "a5073c970c16baa554445e9586e74770a63f7d97b4d7c67a8a57bf768e4b2348"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6194779221",
+        "generation": 1,
+        "record_hash": "5e6603b72062445162f260b2b3fd7da0b6a43d02bf2ef51a562c4ade90205bca"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M131",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M132",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1662984",
+        "generation": 1,
+        "record_hash": "4e7c72a4d9e0bf78fec389de99709fa13cdc59f9f3ba941198d85aacd13a3e53"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/12926383428",
+        "generation": 1,
+        "record_hash": "b8bd94a868a247bba3ac010fa461950dcd6ac439cec4d63f173c7d3be11b2010"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M132",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "M133",
+      "left": {
+        "provider": "fsa",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "1412668",
+        "generation": 1,
+        "record_hash": "32ae9eb01c5ae2afee014a8227276037efed93a402f1a44a0c278bc1400284a7"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13799657072",
+        "generation": 1,
+        "record_hash": "30fd5c70a04cabea1b3e9ca27ba0fecc59ef1a4bc65d87e7b644c8ff07b0b796"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#M133",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "D001",
+      "left": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/27273877",
+        "generation": 1,
+        "record_hash": "f93ae9d3d77c6e3610101f3e64276b23fb10178bea7f5e3ea69ff275168c98d5"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/1460475420",
+        "generation": 1,
+        "record_hash": "37af0bd7a0631857b08106b36c20a79d00d86c07d1d719c902a82e7c5fcc57ef"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#D001",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "D002",
+      "left": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/882334383",
+        "generation": 1,
+        "record_hash": "e34d83bd66c64b88f1e221102d9c737bb346b3779871e6b4ea79f658cb982238"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6513895928",
+        "generation": 1,
+        "record_hash": "2d2f8da717cc7003a9954cad3d512ab06fce01e5f77fa1e9a5a68ed04f122dfb"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#D002",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "D003",
+      "left": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/1123981148",
+        "generation": 1,
+        "record_hash": "986b6fcb82f7c21c3831e72ec981c29057c4cdaf879d00228149fcc082946375"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6413742628",
+        "generation": 1,
+        "record_hash": "a470ac009b55cfaa55f08589447417d53a27e8387b902ef89cb1a86cb0d6d089"
+      },
+      "decision": "different places",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#D003",
+      "reason": "Owner reviewed this pair as different places."
+    },
+    {
+      "review_id": "D004",
+      "left": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/5981480578",
+        "generation": 1,
+        "record_hash": "97ee8994736429bae550f9a4f2622b98deb4d5e4ab4d43d408bec8875dfb5eda"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/5981480611",
+        "generation": 1,
+        "record_hash": "829a1e52f2308a188e557b81ea76a79b8a12396f715afc91939b9a37d20ddb52"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#D004",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "D005",
+      "left": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/6611866185",
+        "generation": 1,
+        "record_hash": "eb2cb4d9a7998fb914d90614b8d459d084cc0a9264c5264c09830bf051cc6375"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/13738164070",
+        "generation": 1,
+        "record_hash": "36757a097aad77d35a485185f015483d4c4b5ca815f24b42fe13f284843d9d85"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#D005",
+      "reason": "Owner reviewed this pair as same place."
+    },
+    {
+      "review_id": "D006",
+      "left": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "node/11652456623",
+        "generation": 1,
+        "record_hash": "522f334fe3cdb555d0cdc825dbfe7f384da629d2ae23d07f8c92f5ed6ae95d2a"
+      },
+      "right": {
+        "provider": "osm",
+        "scope": "brighton-hove-e06000043",
+        "source_key": "way/1563815061",
+        "generation": 1,
+        "record_hash": "b0709caeef9c44ed5b326cd27fc31e989e987c90b72873d5a312873ad7a1896c"
+      },
+      "decision": "same place",
+      "reviewer": "project owner",
+      "reviewed_on": "2026-11-02",
+      "evidence": "s3://urbanlens-bronze-artifacts-fsm46ku1rto6/evidence/identity-pilot/11eeeb4d779ba4f7e0df22457aeead2496ba204bd1469aae9cb41b676570b00e/venue_match_review.json#D006",
+      "reason": "Owner reviewed this pair as same place."
+    }
+  ],
+  "held_source_keys": [
+    "fsa|brighton-hove-e06000043|1855594|1",
+    "osm|brighton-hove-e06000043|node/6944951119|1",
+    "osm|brighton-hove-e06000043|node/7050018157|1"
+  ],
+  "preferred_name_keys": [
+    "osm|brighton-hove-e06000043|node/4440485209|1"
+  ]
+}

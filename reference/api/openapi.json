@@ -1,0 +1,3859 @@
+{
+  "components": {
+    "schemas": {
+      "ActivityBaseline": {
+        "additionalProperties": false,
+        "properties": {
+          "baseline_source_scopes": {
+            "title": "Baseline Source Scopes",
+            "type": "integer"
+          },
+          "entity_type": {
+            "enum": [
+              "establishment",
+              "company"
+            ],
+            "title": "Entity Type",
+            "type": "string"
+          },
+          "established_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Established At"
+          },
+          "retained_event_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retained Event Count"
+          },
+          "retention_boundary": {
+            "format": "date-time",
+            "title": "Retention Boundary",
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "baseline_unavailable",
+              "no_observed_changes",
+              "observed_changes"
+            ],
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "entity_type",
+          "established_at",
+          "retained_event_count",
+          "state",
+          "retention_boundary",
+          "baseline_source_scopes"
+        ],
+        "title": "ActivityBaseline",
+        "type": "object"
+      },
+      "ActivityEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "after_value": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "After Value"
+          },
+          "baseline_established_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baseline Established At"
+          },
+          "before_value": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Before Value"
+          },
+          "company_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Number"
+          },
+          "entity_type": {
+            "enum": [
+              "establishment",
+              "company",
+              "source"
+            ],
+            "title": "Entity Type",
+            "type": "string"
+          },
+          "establishment_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Establishment Id"
+          },
+          "event_id": {
+            "format": "uuid",
+            "title": "Event Id",
+            "type": "string"
+          },
+          "event_type": {
+            "enum": [
+              "newly_observed",
+              "no_longer_observed",
+              "reappeared",
+              "source_changed",
+              "company_incorporated",
+              "company_dissolved",
+              "processing_correction"
+            ],
+            "title": "Event Type",
+            "type": "string"
+          },
+          "evidence": {
+            "additionalProperties": true,
+            "title": "Evidence",
+            "type": "object"
+          },
+          "interpretation": {
+            "title": "Interpretation",
+            "type": "string"
+          },
+          "observed_at": {
+            "format": "date-time",
+            "title": "Observed At",
+            "type": "string"
+          },
+          "rule_version": {
+            "title": "Rule Version",
+            "type": "string"
+          },
+          "source_event_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Event Date"
+          }
+        },
+        "required": [
+          "event_id",
+          "entity_type",
+          "establishment_id",
+          "company_number",
+          "event_type",
+          "observed_at",
+          "source_event_date",
+          "before_value",
+          "after_value",
+          "evidence",
+          "rule_version",
+          "baseline_established_at",
+          "interpretation"
+        ],
+        "title": "ActivityEvent",
+        "type": "object"
+      },
+      "ActivityPage": {
+        "additionalProperties": false,
+        "properties": {
+          "baselines": {
+            "items": {
+              "$ref": "#/components/schemas/ActivityBaseline"
+            },
+            "title": "Baselines",
+            "type": "array"
+          },
+          "context_note": {
+            "title": "Context Note",
+            "type": "string"
+          },
+          "has_more": {
+            "title": "Has More",
+            "type": "boolean"
+          },
+          "interpretation": {
+            "title": "Interpretation",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ActivityEvent"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total",
+          "items",
+          "has_more",
+          "baselines",
+          "interpretation",
+          "context_note"
+        ],
+        "title": "ActivityPage",
+        "type": "object"
+      },
+      "Area": {
+        "additionalProperties": false,
+        "properties": {
+          "area_code": {
+            "title": "Area Code",
+            "type": "string"
+          },
+          "area_name": {
+            "title": "Area Name",
+            "type": "string"
+          },
+          "display_geometry": {
+            "additionalProperties": true,
+            "title": "Display Geometry",
+            "type": "object"
+          },
+          "geography_version": {
+            "title": "Geography Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "area_code",
+          "area_name",
+          "geography_version",
+          "display_geometry"
+        ],
+        "title": "Area",
+        "type": "object"
+      },
+      "AreaMetrics": {
+        "additionalProperties": false,
+        "properties": {
+          "age_0_15": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age 0 15"
+          },
+          "age_0_15_percent": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age 0 15 Percent"
+          },
+          "age_16_64": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age 16 64"
+          },
+          "age_16_64_percent": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age 16 64 Percent"
+          },
+          "age_65_plus": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age 65 Plus"
+          },
+          "age_65_plus_percent": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age 65 Plus Percent"
+          },
+          "age_mix_unavailable_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age Mix Unavailable Reason"
+          },
+          "area_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Area Code"
+          },
+          "area_name": {
+            "title": "Area Name",
+            "type": "string"
+          },
+          "category_mix": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "cafe",
+                "restaurant",
+                "takeaway",
+                "bakery",
+                "pub_bar",
+                "food_service"
+              ]
+            },
+            "title": "Category Mix",
+            "type": "object"
+          },
+          "establishment_count": {
+            "title": "Establishment Count",
+            "type": "integer"
+          },
+          "establishments_per_1000_residents": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Establishments Per 1000 Residents"
+          },
+          "establishments_per_land_km2": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Establishments Per Land Km2"
+          },
+          "geography_version": {
+            "title": "Geography Version",
+            "type": "string"
+          },
+          "land_area_basis": {
+            "title": "Land Area Basis",
+            "type": "string"
+          },
+          "land_area_edition": {
+            "additionalProperties": true,
+            "title": "Land Area Edition",
+            "type": "object"
+          },
+          "land_rate_unavailable_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Land Rate Unavailable Reason"
+          },
+          "official_land_km2": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Official Land Km2"
+          },
+          "population": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Population"
+          },
+          "population_density_unavailable_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Population Density Unavailable Reason"
+          },
+          "population_edition": {
+            "title": "Population Edition",
+            "type": "string"
+          },
+          "population_per_land_km2": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Population Per Land Km2"
+          },
+          "population_reference_date": {
+            "format": "date",
+            "title": "Population Reference Date",
+            "type": "string"
+          },
+          "resident_rate_unavailable_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resident Rate Unavailable Reason"
+          }
+        },
+        "required": [
+          "area_code",
+          "area_name",
+          "geography_version",
+          "population_edition",
+          "population_reference_date",
+          "land_area_basis",
+          "land_area_edition",
+          "establishment_count",
+          "official_land_km2",
+          "population",
+          "establishments_per_land_km2",
+          "land_rate_unavailable_reason",
+          "establishments_per_1000_residents",
+          "resident_rate_unavailable_reason",
+          "population_per_land_km2",
+          "population_density_unavailable_reason",
+          "age_0_15",
+          "age_16_64",
+          "age_65_plus",
+          "age_0_15_percent",
+          "age_16_64_percent",
+          "age_65_plus_percent",
+          "age_mix_unavailable_reason",
+          "category_mix"
+        ],
+        "title": "AreaMetrics",
+        "type": "object"
+      },
+      "AreaSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "area": {
+            "$ref": "#/components/schemas/AreaMetrics"
+          },
+          "city_benchmark": {
+            "$ref": "#/components/schemas/AreaMetrics"
+          }
+        },
+        "required": [
+          "area",
+          "city_benchmark"
+        ],
+        "title": "AreaSummary",
+        "type": "object"
+      },
+      "CompaniesPage": {
+        "additionalProperties": false,
+        "properties": {
+          "has_more": {
+            "title": "Has More",
+            "type": "boolean"
+          },
+          "interpretation": {
+            "title": "Interpretation",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Company"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "total",
+          "items",
+          "has_more",
+          "interpretation"
+        ],
+        "title": "CompaniesPage",
+        "type": "object"
+      },
+      "Company": {
+        "additionalProperties": false,
+        "properties": {
+          "cessation_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cessation Date"
+          },
+          "cohorts": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cohorts",
+            "type": "array"
+          },
+          "company_number": {
+            "pattern": "^[A-Z0-9]{8}$",
+            "title": "Company Number",
+            "type": "string"
+          },
+          "company_type": {
+            "title": "Company Type",
+            "type": "string"
+          },
+          "first_observed_at": {
+            "format": "date-time",
+            "title": "First Observed At",
+            "type": "string"
+          },
+          "incorporation_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Incorporation Date"
+          },
+          "last_observed_at": {
+            "format": "date-time",
+            "title": "Last Observed At",
+            "type": "string"
+          },
+          "legal_name": {
+            "title": "Legal Name",
+            "type": "string"
+          },
+          "legal_status": {
+            "title": "Legal Status",
+            "type": "string"
+          },
+          "office_caveat": {
+            "title": "Office Caveat",
+            "type": "string"
+          },
+          "profile_observed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profile Observed At"
+          },
+          "registered_office": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Registered Office"
+          },
+          "registered_office_postcode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Registered Office Postcode"
+          },
+          "sic_codes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Sic Codes",
+            "type": "array"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "company_number",
+          "legal_name",
+          "legal_status",
+          "company_type",
+          "sic_codes",
+          "incorporation_date",
+          "cessation_date",
+          "registered_office",
+          "registered_office_postcode",
+          "cohorts",
+          "office_caveat",
+          "first_observed_at",
+          "last_observed_at",
+          "profile_observed_at",
+          "url"
+        ],
+        "title": "Company",
+        "type": "object"
+      },
+      "CompanyDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "cessation_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cessation Date"
+          },
+          "cohorts": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cohorts",
+            "type": "array"
+          },
+          "company_number": {
+            "pattern": "^[A-Z0-9]{8}$",
+            "title": "Company Number",
+            "type": "string"
+          },
+          "company_type": {
+            "title": "Company Type",
+            "type": "string"
+          },
+          "first_observed_at": {
+            "format": "date-time",
+            "title": "First Observed At",
+            "type": "string"
+          },
+          "incorporation_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Incorporation Date"
+          },
+          "last_observed_at": {
+            "format": "date-time",
+            "title": "Last Observed At",
+            "type": "string"
+          },
+          "legal_name": {
+            "title": "Legal Name",
+            "type": "string"
+          },
+          "legal_status": {
+            "title": "Legal Status",
+            "type": "string"
+          },
+          "office_caveat": {
+            "title": "Office Caveat",
+            "type": "string"
+          },
+          "profile_observed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Profile Observed At"
+          },
+          "registered_office": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Registered Office"
+          },
+          "registered_office_postcode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Registered Office Postcode"
+          },
+          "sic_codes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Sic Codes",
+            "type": "array"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          },
+          "verified_premises": {
+            "items": {
+              "$ref": "#/components/schemas/PremisesLink"
+            },
+            "title": "Verified Premises",
+            "type": "array"
+          }
+        },
+        "required": [
+          "company_number",
+          "legal_name",
+          "legal_status",
+          "company_type",
+          "sic_codes",
+          "incorporation_date",
+          "cessation_date",
+          "registered_office",
+          "registered_office_postcode",
+          "cohorts",
+          "office_caveat",
+          "first_observed_at",
+          "last_observed_at",
+          "profile_observed_at",
+          "url",
+          "verified_premises"
+        ],
+        "title": "CompanyDetail",
+        "type": "object"
+      },
+      "Comparison": {
+        "additionalProperties": false,
+        "properties": {
+          "areas": {
+            "items": {
+              "$ref": "#/components/schemas/AreaMetrics"
+            },
+            "title": "Areas",
+            "type": "array"
+          },
+          "city_benchmark": {
+            "$ref": "#/components/schemas/AreaMetrics"
+          }
+        },
+        "required": [
+          "areas",
+          "city_benchmark"
+        ],
+        "title": "Comparison",
+        "type": "object"
+      },
+      "Envelope_ActivityPage_": {
+        "additionalProperties": false,
+        "properties": {
+          "api_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Api Version",
+            "type": "string"
+          },
+          "applied_filters": {
+            "additionalProperties": true,
+            "title": "Applied Filters",
+            "type": "object"
+          },
+          "coverage": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Coverage",
+            "type": "array"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ActivityPage"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "null_reasons": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Null Reasons",
+            "type": "object"
+          },
+          "release_id": {
+            "format": "uuid",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "release_id",
+          "applied_filters",
+          "metadata",
+          "coverage",
+          "null_reasons",
+          "data"
+        ],
+        "title": "Envelope[ActivityPage]",
+        "type": "object"
+      },
+      "Envelope_AreaSummary_": {
+        "additionalProperties": false,
+        "properties": {
+          "api_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Api Version",
+            "type": "string"
+          },
+          "applied_filters": {
+            "additionalProperties": true,
+            "title": "Applied Filters",
+            "type": "object"
+          },
+          "coverage": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Coverage",
+            "type": "array"
+          },
+          "data": {
+            "$ref": "#/components/schemas/AreaSummary"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "null_reasons": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Null Reasons",
+            "type": "object"
+          },
+          "release_id": {
+            "format": "uuid",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "release_id",
+          "applied_filters",
+          "metadata",
+          "coverage",
+          "null_reasons",
+          "data"
+        ],
+        "title": "Envelope[AreaSummary]",
+        "type": "object"
+      },
+      "Envelope_CompaniesPage_": {
+        "additionalProperties": false,
+        "properties": {
+          "api_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Api Version",
+            "type": "string"
+          },
+          "applied_filters": {
+            "additionalProperties": true,
+            "title": "Applied Filters",
+            "type": "object"
+          },
+          "coverage": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Coverage",
+            "type": "array"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CompaniesPage"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "null_reasons": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Null Reasons",
+            "type": "object"
+          },
+          "release_id": {
+            "format": "uuid",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "release_id",
+          "applied_filters",
+          "metadata",
+          "coverage",
+          "null_reasons",
+          "data"
+        ],
+        "title": "Envelope[CompaniesPage]",
+        "type": "object"
+      },
+      "Envelope_CompanyDetail_": {
+        "additionalProperties": false,
+        "properties": {
+          "api_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Api Version",
+            "type": "string"
+          },
+          "applied_filters": {
+            "additionalProperties": true,
+            "title": "Applied Filters",
+            "type": "object"
+          },
+          "coverage": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Coverage",
+            "type": "array"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CompanyDetail"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "null_reasons": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Null Reasons",
+            "type": "object"
+          },
+          "release_id": {
+            "format": "uuid",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "release_id",
+          "applied_filters",
+          "metadata",
+          "coverage",
+          "null_reasons",
+          "data"
+        ],
+        "title": "Envelope[CompanyDetail]",
+        "type": "object"
+      },
+      "Envelope_Comparison_": {
+        "additionalProperties": false,
+        "properties": {
+          "api_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Api Version",
+            "type": "string"
+          },
+          "applied_filters": {
+            "additionalProperties": true,
+            "title": "Applied Filters",
+            "type": "object"
+          },
+          "coverage": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Coverage",
+            "type": "array"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Comparison"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "null_reasons": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Null Reasons",
+            "type": "object"
+          },
+          "release_id": {
+            "format": "uuid",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "release_id",
+          "applied_filters",
+          "metadata",
+          "coverage",
+          "null_reasons",
+          "data"
+        ],
+        "title": "Envelope[Comparison]",
+        "type": "object"
+      },
+      "Envelope_Exploration_": {
+        "additionalProperties": false,
+        "properties": {
+          "api_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Api Version",
+            "type": "string"
+          },
+          "applied_filters": {
+            "additionalProperties": true,
+            "title": "Applied Filters",
+            "type": "object"
+          },
+          "coverage": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Coverage",
+            "type": "array"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Exploration"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "null_reasons": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Null Reasons",
+            "type": "object"
+          },
+          "release_id": {
+            "format": "uuid",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "release_id",
+          "applied_filters",
+          "metadata",
+          "coverage",
+          "null_reasons",
+          "data"
+        ],
+        "title": "Envelope[Exploration]",
+        "type": "object"
+      },
+      "Envelope_Meta_": {
+        "additionalProperties": false,
+        "properties": {
+          "api_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Api Version",
+            "type": "string"
+          },
+          "applied_filters": {
+            "additionalProperties": true,
+            "title": "Applied Filters",
+            "type": "object"
+          },
+          "coverage": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Coverage",
+            "type": "array"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Meta"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "null_reasons": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Null Reasons",
+            "type": "object"
+          },
+          "release_id": {
+            "format": "uuid",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "release_id",
+          "applied_filters",
+          "metadata",
+          "coverage",
+          "null_reasons",
+          "data"
+        ],
+        "title": "Envelope[Meta]",
+        "type": "object"
+      },
+      "Envelope_Postcode_": {
+        "additionalProperties": false,
+        "properties": {
+          "api_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Api Version",
+            "type": "string"
+          },
+          "applied_filters": {
+            "additionalProperties": true,
+            "title": "Applied Filters",
+            "type": "object"
+          },
+          "coverage": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Coverage",
+            "type": "array"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Postcode"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "null_reasons": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Null Reasons",
+            "type": "object"
+          },
+          "release_id": {
+            "format": "uuid",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "release_id",
+          "applied_filters",
+          "metadata",
+          "coverage",
+          "null_reasons",
+          "data"
+        ],
+        "title": "Envelope[Postcode]",
+        "type": "object"
+      },
+      "Envelope_VenueDetail_": {
+        "additionalProperties": false,
+        "properties": {
+          "api_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Api Version",
+            "type": "string"
+          },
+          "applied_filters": {
+            "additionalProperties": true,
+            "title": "Applied Filters",
+            "type": "object"
+          },
+          "coverage": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Coverage",
+            "type": "array"
+          },
+          "data": {
+            "$ref": "#/components/schemas/VenueDetail"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "null_reasons": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Null Reasons",
+            "type": "object"
+          },
+          "release_id": {
+            "format": "uuid",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "release_id",
+          "applied_filters",
+          "metadata",
+          "coverage",
+          "null_reasons",
+          "data"
+        ],
+        "title": "Envelope[VenueDetail]",
+        "type": "object"
+      },
+      "Envelope_list_Area__": {
+        "additionalProperties": false,
+        "properties": {
+          "api_version": {
+            "const": "v1",
+            "default": "v1",
+            "title": "Api Version",
+            "type": "string"
+          },
+          "applied_filters": {
+            "additionalProperties": true,
+            "title": "Applied Filters",
+            "type": "object"
+          },
+          "coverage": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Coverage",
+            "type": "array"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/Area"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          },
+          "null_reasons": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Null Reasons",
+            "type": "object"
+          },
+          "release_id": {
+            "format": "uuid",
+            "title": "Release Id",
+            "type": "string"
+          },
+          "request_id": {
+            "default": "",
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "release_id",
+          "applied_filters",
+          "metadata",
+          "coverage",
+          "null_reasons",
+          "data"
+        ],
+        "title": "Envelope[list[Area]]",
+        "type": "object"
+      },
+      "ErrorInfo": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "refresh_required": {
+            "default": false,
+            "title": "Refresh Required",
+            "type": "boolean"
+          },
+          "request_id": {
+            "title": "Request Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message",
+          "request_id"
+        ],
+        "title": "ErrorInfo",
+        "type": "object"
+      },
+      "ErrorResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorInfo"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse",
+        "type": "object"
+      },
+      "Exploration": {
+        "additionalProperties": false,
+        "properties": {
+          "category_mix": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "propertyNames": {
+              "enum": [
+                "cafe",
+                "restaurant",
+                "takeaway",
+                "bakery",
+                "pub_bar",
+                "food_service"
+              ]
+            },
+            "title": "Category Mix",
+            "type": "object"
+          },
+          "has_more": {
+            "title": "Has More",
+            "type": "boolean"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/Venue"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "map_points": {
+            "items": {
+              "$ref": "#/components/schemas/MapPoint"
+            },
+            "title": "Map Points",
+            "type": "array"
+          },
+          "map_truncated": {
+            "title": "Map Truncated",
+            "type": "boolean"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "partial_coverage": {
+            "title": "Partial Coverage",
+            "type": "boolean"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          },
+          "unknown_location_scope": {
+            "title": "Unknown Location Scope",
+            "type": "string"
+          }
+        },
+        "required": [
+          "total",
+          "items",
+          "has_more",
+          "map_points",
+          "map_truncated",
+          "category_mix",
+          "partial_coverage",
+          "unknown_location_scope"
+        ],
+        "title": "Exploration",
+        "type": "object"
+      },
+      "HealthResponse": {
+        "properties": {
+          "service": {
+            "const": "urbanlens-api",
+            "default": "urbanlens-api",
+            "title": "Service",
+            "type": "string"
+          },
+          "status": {
+            "const": "ok",
+            "default": "ok",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "title": "HealthResponse",
+        "type": "object"
+      },
+      "MapPoint": {
+        "additionalProperties": false,
+        "properties": {
+          "establishment_id": {
+            "format": "uuid",
+            "title": "Establishment Id",
+            "type": "string"
+          },
+          "latitude": {
+            "title": "Latitude",
+            "type": "number"
+          },
+          "longitude": {
+            "title": "Longitude",
+            "type": "number"
+          },
+          "primary_category": {
+            "enum": [
+              "cafe",
+              "restaurant",
+              "takeaway",
+              "bakery",
+              "pub_bar",
+              "food_service"
+            ],
+            "title": "Primary Category",
+            "type": "string"
+          }
+        },
+        "required": [
+          "establishment_id",
+          "primary_category",
+          "longitude",
+          "latitude"
+        ],
+        "title": "MapPoint",
+        "type": "object"
+      },
+      "Meta": {
+        "additionalProperties": false,
+        "properties": {
+          "categories": {
+            "items": {
+              "enum": [
+                "cafe",
+                "restaurant",
+                "takeaway",
+                "bakery",
+                "pub_bar",
+                "food_service"
+              ],
+              "type": "string"
+            },
+            "title": "Categories",
+            "type": "array"
+          },
+          "city": {
+            "title": "City",
+            "type": "string"
+          },
+          "default_radius": {
+            "enum": [
+              250,
+              500,
+              1000,
+              2000
+            ],
+            "title": "Default Radius",
+            "type": "integer"
+          },
+          "industry": {
+            "title": "Industry",
+            "type": "string"
+          },
+          "radii": {
+            "items": {
+              "enum": [
+                250,
+                500,
+                1000,
+                2000
+              ],
+              "type": "integer"
+            },
+            "title": "Radii",
+            "type": "array"
+          }
+        },
+        "required": [
+          "categories",
+          "radii",
+          "default_radius",
+          "city",
+          "industry"
+        ],
+        "title": "Meta",
+        "type": "object"
+      },
+      "Metadata": {
+        "additionalProperties": false,
+        "properties": {
+          "attribution": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Attribution",
+            "type": "array"
+          },
+          "geography_version": {
+            "title": "Geography Version",
+            "type": "string"
+          },
+          "population_edition": {
+            "title": "Population Edition",
+            "type": "string"
+          },
+          "population_reference_date": {
+            "title": "Population Reference Date",
+            "type": "string"
+          },
+          "published_at": {
+            "format": "date-time",
+            "title": "Published At",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "taxonomy_version": {
+            "title": "Taxonomy Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "published_at",
+          "geography_version",
+          "population_edition",
+          "population_reference_date",
+          "taxonomy_version",
+          "sources",
+          "attribution"
+        ],
+        "title": "Metadata",
+        "type": "object"
+      },
+      "Postcode": {
+        "additionalProperties": false,
+        "properties": {
+          "approximate": {
+            "const": true,
+            "default": true,
+            "title": "Approximate",
+            "type": "boolean"
+          },
+          "area_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Area Code"
+          },
+          "cache_hit": {
+            "default": false,
+            "title": "Cache Hit",
+            "type": "boolean"
+          },
+          "can_define_search": {
+            "default": false,
+            "title": "Can Define Search",
+            "type": "boolean"
+          },
+          "edition_note": {
+            "default": "Lookup time is not a dataset edition; coordinates describe an approximate postcode centre",
+            "title": "Edition Note",
+            "type": "string"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "fetched_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fetched At"
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "location_role": {
+            "const": "search-centre",
+            "default": "search-centre",
+            "title": "Location Role",
+            "type": "string"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "positional_quality": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Positional Quality"
+          },
+          "postcode": {
+            "title": "Postcode",
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "resolved",
+              "unmatched",
+              "outside",
+              "incompatible_geography",
+              "provider_failure",
+              "throttled"
+            ],
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "postcode",
+          "state"
+        ],
+        "title": "Postcode",
+        "type": "object"
+      },
+      "PremisesLink": {
+        "additionalProperties": false,
+        "properties": {
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "establishment_id": {
+            "format": "uuid",
+            "title": "Establishment Id",
+            "type": "string"
+          },
+          "evidence_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Url"
+          },
+          "primary_spatial_eligible": {
+            "title": "Primary Spatial Eligible",
+            "type": "boolean"
+          },
+          "relationship": {
+            "enum": [
+              "operator",
+              "franchisee"
+            ],
+            "title": "Relationship",
+            "type": "string"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          },
+          "reviewed_on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed On"
+          }
+        },
+        "required": [
+          "establishment_id",
+          "display_name",
+          "relationship",
+          "reviewed_at",
+          "reviewed_on",
+          "evidence_url",
+          "primary_spatial_eligible"
+        ],
+        "title": "PremisesLink",
+        "type": "object"
+      },
+      "Venue": {
+        "additionalProperties": false,
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "area_code": {
+            "title": "Area Code",
+            "type": "string"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "establishment_id": {
+            "format": "uuid",
+            "title": "Establishment Id",
+            "type": "string"
+          },
+          "last_observed_at": {
+            "format": "date-time",
+            "title": "Last Observed At",
+            "type": "string"
+          },
+          "latitude": {
+            "title": "Latitude",
+            "type": "number"
+          },
+          "location_quality": {
+            "title": "Location Quality",
+            "type": "string"
+          },
+          "longitude": {
+            "title": "Longitude",
+            "type": "number"
+          },
+          "name_unavailable": {
+            "title": "Name Unavailable",
+            "type": "boolean"
+          },
+          "observation_state": {
+            "title": "Observation State",
+            "type": "string"
+          },
+          "postcode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postcode"
+          },
+          "primary_category": {
+            "enum": [
+              "cafe",
+              "restaurant",
+              "takeaway",
+              "bakery",
+              "pub_bar",
+              "food_service"
+            ],
+            "title": "Primary Category",
+            "type": "string"
+          },
+          "secondary_categories": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Secondary Categories",
+            "type": "array"
+          },
+          "source_mix": {
+            "title": "Source Mix",
+            "type": "string"
+          }
+        },
+        "required": [
+          "establishment_id",
+          "display_name",
+          "name_unavailable",
+          "primary_category",
+          "secondary_categories",
+          "address",
+          "postcode",
+          "location_quality",
+          "area_code",
+          "observation_state",
+          "last_observed_at",
+          "source_mix",
+          "longitude",
+          "latitude"
+        ],
+        "title": "Venue",
+        "type": "object"
+      },
+      "VenueDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "area_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Area Code"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          },
+          "duplicate_status": {
+            "title": "Duplicate Status",
+            "type": "string"
+          },
+          "eligibility": {
+            "title": "Eligibility",
+            "type": "string"
+          },
+          "establishment_id": {
+            "format": "uuid",
+            "title": "Establishment Id",
+            "type": "string"
+          },
+          "exclusion_reasons": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Exclusion Reasons",
+            "type": "array"
+          },
+          "first_observed_at": {
+            "format": "date-time",
+            "title": "First Observed At",
+            "type": "string"
+          },
+          "hygiene": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Hygiene",
+            "type": "array"
+          },
+          "last_observed_at": {
+            "format": "date-time",
+            "title": "Last Observed At",
+            "type": "string"
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "location_quality": {
+            "title": "Location Quality",
+            "type": "string"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "name_unavailable": {
+            "title": "Name Unavailable",
+            "type": "boolean"
+          },
+          "null_reasons": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Null Reasons",
+            "type": "object"
+          },
+          "observation_state": {
+            "title": "Observation State",
+            "type": "string"
+          },
+          "postcode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postcode"
+          },
+          "primary_category": {
+            "anyOf": [
+              {
+                "enum": [
+                  "cafe",
+                  "restaurant",
+                  "takeaway",
+                  "bakery",
+                  "pub_bar",
+                  "food_service"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary Category"
+          },
+          "primary_spatial_eligible": {
+            "title": "Primary Spatial Eligible",
+            "type": "boolean"
+          },
+          "provenance": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Provenance",
+            "type": "object"
+          },
+          "secondary_categories": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Secondary Categories",
+            "type": "array"
+          },
+          "source_mix": {
+            "title": "Source Mix",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "verified_companies": {
+            "items": {
+              "$ref": "#/components/schemas/VerifiedCompany"
+            },
+            "title": "Verified Companies",
+            "type": "array"
+          }
+        },
+        "required": [
+          "establishment_id",
+          "display_name",
+          "name_unavailable",
+          "address",
+          "postcode",
+          "primary_category",
+          "secondary_categories",
+          "eligibility",
+          "duplicate_status",
+          "observation_state",
+          "primary_spatial_eligible",
+          "location_quality",
+          "longitude",
+          "latitude",
+          "area_code",
+          "first_observed_at",
+          "last_observed_at",
+          "source_mix",
+          "exclusion_reasons",
+          "hygiene",
+          "null_reasons",
+          "sources",
+          "provenance",
+          "verified_companies"
+        ],
+        "title": "VenueDetail",
+        "type": "object"
+      },
+      "VerifiedCompany": {
+        "additionalProperties": false,
+        "properties": {
+          "company_number": {
+            "pattern": "^[A-Z0-9]{8}$",
+            "title": "Company Number",
+            "type": "string"
+          },
+          "relationship": {
+            "enum": [
+              "operator",
+              "franchisee"
+            ],
+            "title": "Relationship",
+            "type": "string"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          },
+          "reviewed_on": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed On"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "company_number",
+          "relationship",
+          "reviewed_at",
+          "reviewed_on",
+          "url"
+        ],
+        "title": "VerifiedCompany",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "UrbanLens API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/activity": {
+      "get": {
+        "operationId": "activity_api_v1_activity_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 2048,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "entity_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "establishment",
+                    "company",
+                    "source"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Entity Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "event_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "newly_observed",
+                    "no_longer_observed",
+                    "reappeared",
+                    "source_changed",
+                    "company_incorporated",
+                    "company_dissolved",
+                    "processing_correction"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Event Type"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ActivityPage_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Activity"
+      }
+    },
+    "/api/v1/areas": {
+      "get": {
+        "operationId": "areas_api_v1_areas_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_Area__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Areas"
+      }
+    },
+    "/api/v1/areas/{code}/summary": {
+      "get": {
+        "operationId": "area_summary_api_v1_areas__code__summary_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "title": "Code",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "categories",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "cafe",
+                      "restaurant",
+                      "takeaway",
+                      "bakery",
+                      "pub_bar",
+                      "food_service"
+                    ],
+                    "type": "string"
+                  },
+                  "maxItems": 6,
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Categories"
+            }
+          },
+          {
+            "in": "query",
+            "name": "empty_categories",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Empty Categories",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AreaSummary_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Area Summary"
+      }
+    },
+    "/api/v1/companies": {
+      "get": {
+        "operationId": "companies_api_v1_companies_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 2048,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cohort",
+            "required": true,
+            "schema": {
+              "enum": [
+                "registered_office",
+                "verified_operator"
+              ],
+              "title": "Cohort",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "legal_status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 40,
+                  "minLength": 1,
+                  "pattern": "^[a-z-]+$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Legal Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sic_code",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^[0-9]{5}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Sic Code"
+            }
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 80,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Name"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CompaniesPage_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Companies"
+      }
+    },
+    "/api/v1/companies/{number}": {
+      "get": {
+        "operationId": "company_api_v1_companies__number__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "number",
+            "required": true,
+            "schema": {
+              "title": "Number",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CompanyDetail_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Company"
+      }
+    },
+    "/api/v1/compare": {
+      "get": {
+        "operationId": "compare_api_v1_compare_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "categories",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "cafe",
+                      "restaurant",
+                      "takeaway",
+                      "bakery",
+                      "pub_bar",
+                      "food_service"
+                    ],
+                    "type": "string"
+                  },
+                  "maxItems": 6,
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Categories"
+            }
+          },
+          {
+            "in": "query",
+            "name": "empty_categories",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Empty Categories",
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "area_codes",
+            "required": true,
+            "schema": {
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 2,
+              "minItems": 2,
+              "title": "Area Codes",
+              "type": "array"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_Comparison_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Compare"
+      }
+    },
+    "/api/v1/establishments": {
+      "get": {
+        "operationId": "establishments_api_v1_establishments_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "mode",
+            "required": false,
+            "schema": {
+              "default": "city",
+              "enum": [
+                "city",
+                "area",
+                "radius",
+                "bbox"
+              ],
+              "title": "Mode",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "categories",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "items": {
+                    "enum": [
+                      "cafe",
+                      "restaurant",
+                      "takeaway",
+                      "bakery",
+                      "pub_bar",
+                      "food_service"
+                    ],
+                    "type": "string"
+                  },
+                  "maxItems": 6,
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Categories"
+            }
+          },
+          {
+            "in": "query",
+            "name": "empty_categories",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Empty Categories",
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "area_code",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^E01[0-9]{6}$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Area Code"
+            }
+          },
+          {
+            "in": "query",
+            "name": "longitude",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 180,
+                  "minimum": -180,
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Longitude"
+            }
+          },
+          {
+            "in": "query",
+            "name": "latitude",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 90,
+                  "minimum": -90,
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Latitude"
+            }
+          },
+          {
+            "in": "query",
+            "name": "radius",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "enum": [
+                250,
+                500,
+                1000,
+                2000,
+                null
+              ],
+              "title": "Radius"
+            }
+          },
+          {
+            "in": "query",
+            "name": "bbox",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "number"
+                  },
+                  "maxItems": 4,
+                  "minItems": 4,
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Bbox"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "map_limit",
+            "required": false,
+            "schema": {
+              "default": 500,
+              "maximum": 1000,
+              "minimum": 1,
+              "title": "Map Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 2048,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_Exploration_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Establishments"
+      }
+    },
+    "/api/v1/establishments/{establishment_id}": {
+      "get": {
+        "operationId": "detail_api_v1_establishments__establishment_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "establishment_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Establishment Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_VenueDetail_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Detail"
+      }
+    },
+    "/api/v1/meta": {
+      "get": {
+        "operationId": "meta_api_v1_meta_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_Meta_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Meta"
+      }
+    },
+    "/api/v1/postcodes/{postcode}": {
+      "get": {
+        "operationId": "postcode_lookup_api_v1_postcodes__postcode__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "postcode",
+            "required": true,
+            "schema": {
+              "title": "Postcode",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "release_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Release Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_Postcode_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Postcode Lookup"
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "410": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Gone"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Unprocessable Content"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Too Many Requests"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Service Unavailable"
+          }
+        },
+        "summary": "Health"
+      }
+    }
+  }
+}

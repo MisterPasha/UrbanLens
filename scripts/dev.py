@@ -134,6 +134,19 @@ def main() -> None:
             "ingest",
             "pipeline",
             "bronze",
+            "database",
+            "silver",
+            "classify",
+            "locations",
+            "resolve",
+            "companies",
+            "history",
+            "maintenance",
+            "gold",
+            "release",
+            "api-schema",
+            "api-acceptance",
+            "api-check",
             "fsa-fetch",
             "fsa-check",
             "osm-fetch",
@@ -160,8 +173,27 @@ def main() -> None:
     )
     parser.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args()
-    if args.arguments and args.task not in {"ingest", "pipeline", "bronze"}:
-        parser.error("Additional arguments are supported only for ingest, pipeline and bronze")
+    if args.arguments and args.task not in {
+        "ingest",
+        "pipeline",
+        "bronze",
+        "database",
+        "silver",
+        "classify",
+        "locations",
+        "resolve",
+        "companies",
+        "history",
+        "maintenance",
+        "gold",
+        "release",
+        "api-schema",
+        "dbt-debug",
+    }:
+        parser.error(
+            "Additional arguments require ingest, pipeline, bronze, database, "
+            "silver, classify, locations, resolve, companies, history, gold or dbt-debug"
+        )
     match args.task:
         case "setup":
             setup()
@@ -179,7 +211,13 @@ def main() -> None:
             in_environment("urbanlens", "doctor")
         case "api":
             in_environment(
-                "uvicorn", "urbanlens.api.app:app", "--host", "127.0.0.1", "--port", "8000"
+                "uvicorn",
+                "urbanlens.api.app:app",
+                "--host",
+                "127.0.0.1",
+                "--port",
+                "8000",
+                "--no-access-log",
             )
         case "web":
             run([tool("npm"), "run", "dev"], cwd=ROOT / "web")
@@ -195,7 +233,7 @@ def main() -> None:
         case "db-check":
             in_environment("pytest", "-m", "database")
         case "dbt-debug":
-            in_environment("urbanlens", "dbt-debug")
+            in_environment("urbanlens", "dbt-debug", *args.arguments)
         case "geography-fetch":
             in_environment("python", "scripts/geography.py", "fetch")
         case "geography-check":
@@ -208,6 +246,40 @@ def main() -> None:
             in_environment("python", "-m", "scripts.source_pipeline", *args.arguments)
         case "bronze":
             in_environment("python", "-m", "scripts.bronze", *args.arguments)
+        case "database":
+            in_environment("python", "-m", "scripts.database", *args.arguments)
+        case "silver":
+            in_environment("python", "-m", "scripts.silver", *args.arguments)
+        case "classify":
+            in_environment("python", "-m", "scripts.classify", *args.arguments)
+        case "locations":
+            in_environment("python", "-m", "scripts.locations", *args.arguments)
+        case "resolve":
+            in_environment("python", "-m", "scripts.resolve", *args.arguments)
+        case "companies":
+            in_environment("python", "-m", "scripts.companies", *args.arguments)
+        case "history":
+            in_environment("python", "-m", "scripts.history", *args.arguments)
+        case "maintenance":
+            in_environment("python", "-m", "scripts.maintenance", *args.arguments)
+        case "gold":
+            in_environment("python", "-m", "scripts.gold", *args.arguments)
+        case "release":
+            in_environment("python", "-m", "scripts.release", *args.arguments)
+        case "api-schema":
+            in_environment("python", "-m", "scripts.api_schema", *args.arguments)
+        case "api-acceptance":
+            in_environment("python", "-m", "scripts.api_acceptance", *args.arguments)
+        case "api-check":
+            in_environment(
+                "pytest",
+                "tests/test_published_api.py",
+                "-q",
+                "-p",
+                "no:cacheprovider",
+                "--basetemp",
+                str(ROOT / ".cache" / ("api-check-" + secrets.token_hex(6))),
+            )
         case "fsa-fetch" | "fsa-check":
             in_environment("python", "-m", "scripts.fsa_source", args.task.removeprefix("fsa-"))
         case "osm-fetch" | "osm-check":

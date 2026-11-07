@@ -1,0 +1,13 @@
+{
+  "version": "identity-rules-v1",
+  "candidate_radius_metres": 150,
+  "candidate_name_similarity": 0.8,
+  "postcode_name_similarity": 0.65,
+  "reference_radius_metres": 75,
+  "reference_name_similarity": 0.65,
+  "osm_duplicate_radius_metres": 30,
+  "location_agreement_metres": 75,
+  "reuse_distance_metres": 500,
+  "reuse_name_similarity": 0.35,
+  "accept_guarded_references": true
+}

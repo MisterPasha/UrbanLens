@@ -1,0 +1,73 @@
+version: 2
+models:
+  - name: stg_establishment
+    description: One current canonical candidate per establishment_id, including excluded/unresolved candidates.
+  - name: stg_observation
+    description: One current typed observation per identity_id/scope_id; retired generations excluded.
+  - name: int_venue
+    description: One canonical candidate per establishment_id with aggregated accepted evidence, provenance and independent exclusion reasons.
+  - name: mart_release
+    description: One private candidate per release_id, with exact input snapshots, semantic state, code/rule/adapter versions and reference editions. published_at is null until step 33.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id]}
+  - name: mart_establishment
+    description: One precise, resolved, supported eligible establishment-location per release_id/establishment_id. Missing names stay null; name_unavailable is explicit. All primary categories, including food_service, contribute once.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, establishment_id]}
+  - name: mart_venue_context
+    description: One non-primary candidate per release_id/establishment_id, retaining approximate/unlocated, eligibility, duplication and source uncertainty. Not a spatial competitor population.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, establishment_id]}
+  - name: mart_coverage
+    description: One release/universe/dimension/bucket measure. Denominator is explicit; exclusion_reason rows overlap and must never be added together.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, universe, dimension, bucket]}
+  - name: mart_category
+    description: One row per release_id/category, including zero-count categories. Shares use all primary spatial venues, including broader food_service; no secondary-category double counting.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, category]}
+  - name: dim_area
+    description: One pinned LSOA per release_id/area_code. official_land_km2 comes from AREALHECT/100 in accepted ONS evidence, never polygon area. Population/ages retain edition and reference date.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, area_code]}
+  - name: mart_area
+    description: One release_id/area_code/category row; category=all is a total, not a seventh additive category. Rates preserve null reasons and valid zero counts. Age shares describe residents, not customers.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, area_code, category]}
+  - name: mart_city
+    description: One release_id/category benchmark from summed compatible LSOA numerators/denominators. Never the mean LSOA rate. category=all must not be added to category rows.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, category]}
+  - name: mart_company
+    description: One legal company per release_id/company_number. Cohort basis, legal-date states and source observation times stay separate; registered office is not a trading premises.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, company_number]}
+  - name: mart_company_link
+    description: One reviewed active operator/franchisee relationship per release_id/link_id, with reviewer, evidence and dates; includes eligible non-spatial venues. Zero links is valid.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, link_id]}
+  - name: mart_activity
+    description: One retained event per release_id/event_id. Entity type separates venue, company and source histories. Includes before/after values, observation/source event dates and durable evidence; no inferred opening/closure dates.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, event_id]}
+  - name: mart_activity_status
+    description: One release_id/entity_type state. Missing baseline produces null count/baseline_unavailable; an established baseline with zero events means no_observed_changes. Source health separately reports freshness/failures.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, entity_type]}
+  - name: mart_source_health
+    description: One release_id/provider/scope_key check. Monthly next-due plus 48-hour grace, never elapsed age of statistical reference year. Failed/rejected attempt manifests preserve actual attempt times. Unchanged compatible editions are valid; candidate publish time is null. Postcode lookup evidence is not a fabricated collection snapshot.
+    data_tests:
+      - grain:
+          arguments: {columns: [release_id, provider, scope_key]}

@@ -1,0 +1,33 @@
+version: 2
+sources:
+  - name: silver
+    schema: ul_silver
+    description: Private typed, accepted evidence and reviewed canonical identities; never raw provider payloads.
+    tables:
+      - name: current_establishment
+      - name: observation_version
+      - name: source_identity
+      - name: identity_scope_state
+      - name: establishment_source_link
+      - name: field_provenance
+      - name: area
+      - name: population
+      - name: company
+      - name: company_cohort
+      - name: company_establishment_link
+      - name: change_event
+      - name: history_baseline
+      - name: history_scope
+      - name: history_attempt
+      - name: postcode_cache
+      - name: establishment_coverage
+  - name: control
+    schema: ul_control
+    tables:
+      - name: source_scope
+      - name: source_head
+      - name: source_snapshot
+      - name: collection_cycle
+      - name: ingestion_run
+      - name: review
+      - name: artifact

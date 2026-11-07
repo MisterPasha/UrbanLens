@@ -4,3 +4,23 @@ config-version: 2
 profile: urbanlens
 model-paths: ["models"]
 clean-targets: ["target", "dbt_packages"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+on-run-start: ["{{ require_candidate() }}"]
+models:
+  urbanlens:
+    +materialized: table
+    +grants:
+      select: [urbanlens_migrator]
+    staging:
+      +materialized: ephemeral
+    intermediate:
+      +materialized: ephemeral
+vars:
+  release_id: "00000000-0000-0000-0000-000000000000"
+  assessed_at: "2026-11-06T00:00:00+00:00"
+  geography_version: "LSOA-2021"
+  population_edition: "unset"
+  population_reference_date: "2024-06-30"
+  input_manifest: {}
+  failed_attempts: []

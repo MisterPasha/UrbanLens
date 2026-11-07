@@ -1,0 +1,237 @@
+{
+  "$defs": {
+    "Artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "uri": {
+          "title": "Uri",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "byte_count": {
+          "minimum": 0,
+          "title": "Byte Count",
+          "type": "integer"
+        },
+        "media_type": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Media Type",
+          "type": "string"
+        },
+        "compression": {
+          "default": "none",
+          "enum": [
+            "none",
+            "gzip",
+            "zip"
+          ],
+          "title": "Compression",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256",
+        "byte_count",
+        "media_type"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "DecisionMapping": {
+      "additionalProperties": false,
+      "properties": {
+        "review_id": {
+          "title": "Review Id",
+          "type": "string"
+        },
+        "left": {
+          "$ref": "#/$defs/Ref"
+        },
+        "right": {
+          "$ref": "#/$defs/Ref"
+        },
+        "decision": {
+          "enum": [
+            "same place",
+            "different places",
+            "unsure"
+          ],
+          "title": "Decision",
+          "type": "string"
+        },
+        "notes": {
+          "title": "Notes",
+          "type": "string"
+        },
+        "evidence_urls": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Urls",
+          "type": "array"
+        },
+        "reviewed_on": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Reviewed On"
+        },
+        "confirmed_on": {
+          "format": "date",
+          "title": "Confirmed On",
+          "type": "string"
+        },
+        "pair_id": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Pair Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "review_id",
+        "left",
+        "right",
+        "decision",
+        "notes",
+        "evidence_urls",
+        "reviewed_on",
+        "confirmed_on",
+        "pair_id"
+      ],
+      "title": "DecisionMapping",
+      "type": "object"
+    },
+    "Ref": {
+      "additionalProperties": false,
+      "properties": {
+        "provider": {
+          "enum": [
+            "fsa",
+            "osm"
+          ],
+          "title": "Provider",
+          "type": "string"
+        },
+        "scope": {
+          "title": "Scope",
+          "type": "string"
+        },
+        "source_key": {
+          "title": "Source Key",
+          "type": "string"
+        },
+        "generation": {
+          "minimum": 1,
+          "title": "Generation",
+          "type": "integer"
+        },
+        "record_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Record Hash",
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider",
+        "scope",
+        "source_key",
+        "generation",
+        "record_hash"
+      ],
+      "title": "Ref",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "title": "Version",
+      "type": "string"
+    },
+    "confirmed_on": {
+      "format": "date",
+      "title": "Confirmed On",
+      "type": "string"
+    },
+    "reviewer": {
+      "minLength": 1,
+      "title": "Reviewer",
+      "type": "string"
+    },
+    "status": {
+      "title": "Status",
+      "type": "string"
+    },
+    "review_file": {
+      "title": "Review File",
+      "type": "string"
+    },
+    "review_file_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Review File Sha256",
+      "type": "string"
+    },
+    "resolution_manifest": {
+      "$ref": "#/$defs/Artifact"
+    },
+    "hospitality_scope_policy": {
+      "additionalProperties": true,
+      "title": "Hospitality Scope Policy",
+      "type": "object"
+    },
+    "name_selection_policy": {
+      "additionalProperties": true,
+      "title": "Name Selection Policy",
+      "type": "object"
+    },
+    "reviews": {
+      "items": {
+        "$ref": "#/$defs/DecisionMapping"
+      },
+      "title": "Reviews",
+      "type": "array"
+    },
+    "replacement_reports": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Replacement Reports",
+      "type": "array"
+    },
+    "unresolved_pairs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved Pairs",
+      "type": "array"
+    }
+  },
+  "required": [
+    "version",
+    "confirmed_on",
+    "reviewer",
+    "status",
+    "review_file",
+    "review_file_sha256",
+    "resolution_manifest",
+    "hospitality_scope_policy",
+    "name_selection_policy",
+    "reviews",
+    "replacement_reports",
+    "unresolved_pairs"
+  ],
+  "title": "DecisionBatch",
+  "type": "object"
+}

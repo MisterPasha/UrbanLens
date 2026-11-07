@@ -1,0 +1,29 @@
+{
+  "version": "eligibility-reviews-v1",
+  "reviews": [
+    {
+      "review_id": "M091-hospitality-scope",
+      "provider": "fsa",
+      "scope": "brighton-hove-e06000043",
+      "source_key": "1938251",
+      "expected_record_hash": "275dc28d5a19fedebc2d1d8fc31e4196d66b7d3b4d29d8356984b4ef8c28cde5",
+      "reviewer": "project-owner",
+      "reviewed_on": "2026-11-02",
+      "eligibility": "excluded",
+      "reason": "Owner confirmed Stoneham News is not a hospitality venue; this excludes only the FSA record, not Stoneham Bakehouse.",
+      "evidence": "Project-owner annotation on venue_match_review.json M091 and conversation; owner-supplied assessment, not external verification."
+    },
+    {
+      "review_id": "M092-hospitality-scope",
+      "provider": "fsa",
+      "scope": "brighton-hove-e06000043",
+      "source_key": "1833215",
+      "expected_record_hash": "cb3df0ebc789d49c907ea50652f288efb2bfe0a6889a03f0755080fb6514bc93",
+      "reviewer": "project-owner",
+      "reviewed_on": "2026-11-02",
+      "eligibility": "excluded",
+      "reason": "Owner confirmed Sweetielicious is not a hospitality venue; this excludes only the FSA record, not Foodielicious.",
+      "evidence": "Project-owner annotation on venue_match_review.json M092 and conversation; owner-supplied assessment, not external verification."
+    }
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "$defs": {
+    "Artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "uri": {
+          "title": "Uri",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "byte_count": {
+          "minimum": 0,
+          "title": "Byte Count",
+          "type": "integer"
+        },
+        "media_type": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Media Type",
+          "type": "string"
+        },
+        "compression": {
+          "default": "none",
+          "enum": [
+            "none",
+            "gzip",
+            "zip"
+          ],
+          "title": "Compression",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256",
+        "byte_count",
+        "media_type"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "Link": {
+      "additionalProperties": false,
+      "properties": {
+        "company_number": {
+          "pattern": "^[A-Z0-9]{8}$",
+          "title": "Company Number",
+          "type": "string"
+        },
+        "establishment_id": {
+          "format": "uuid",
+          "title": "Establishment Id",
+          "type": "string"
+        },
+        "company_record_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Company Record Hash",
+          "type": "string"
+        },
+        "establishment_hash": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Establishment Hash",
+          "type": "string"
+        },
+        "relationship": {
+          "default": "operator",
+          "enum": [
+            "operator",
+            "franchisee"
+          ],
+          "title": "Relationship",
+          "type": "string"
+        },
+        "decision": {
+          "enum": [
+            "approved",
+            "rejected"
+          ],
+          "title": "Decision",
+          "type": "string"
+        },
+        "reviewer": {
+          "minLength": 1,
+          "title": "Reviewer",
+          "type": "string"
+        },
+        "reviewed_on": {
+          "format": "date",
+          "title": "Reviewed On",
+          "type": "string"
+        },
+        "evidence_url": {
+          "pattern": "^https://[^\\s]+$",
+          "title": "Evidence Url",
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/Artifact"
+        },
+        "operating_statement": {
+          "minLength": 20,
+          "title": "Operating Statement",
+          "type": "string"
+        },
+        "reason": {
+          "minLength": 10,
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "company_number",
+        "establishment_id",
+        "company_record_hash",
+        "establishment_hash",
+        "decision",
+        "reviewer",
+        "reviewed_on",
+        "evidence_url",
+        "evidence",
+        "operating_statement",
+        "reason"
+      ],
+      "title": "Link",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "pattern": "^company-links-v[0-9]+$",
+      "title": "Version",
+      "type": "string"
+    },
+    "links": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Link"
+      },
+      "title": "Links",
+      "type": "array"
+    },
+    "note": {
+      "title": "Note",
+      "type": "string"
+    }
+  },
+  "required": [
+    "version",
+    "note"
+  ],
+  "title": "Register",
+  "type": "object"
+}

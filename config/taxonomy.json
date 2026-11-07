@@ -1,0 +1,32 @@
+{
+  "version": "hospitality-taxonomy-v1",
+  "categories": ["cafe", "restaurant", "takeaway", "bakery", "pub_bar", "food_service"],
+  "osm_categories": {
+    "amenity": {"cafe": "cafe", "restaurant": "restaurant", "fast_food": "takeaway", "pub": "pub_bar", "bar": "pub_bar"},
+    "shop": {"bakery": "bakery"}
+  },
+  "osm_broad": ["ice_cream", "food_court", "canteen"],
+  "osm_institutions": ["school", "college", "university", "kindergarten", "childcare", "hospital", "nursing_home", "social_facility"],
+  "osm_retail": ["convenience", "supermarket", "newsagent", "confectionery", "alcohol", "wine", "greengrocer", "health_food", "butcher", "deli", "chemist", "pharmacy", "gift", "books", "tea", "coffee", "chocolate", "cheese", "department_store", "variety_store", "hardware", "interior_decoration"],
+  "osm_accommodation": ["hotel", "guest_house", "hostel", "motel", "apartment", "chalet"],
+  "osm_production": {"craft": ["bakery", "brewery", "distillery"], "industrial": ["bakery", "brewery", "food_processing"]},
+  "private_access": ["no", "private", "employees", "staff", "members"],
+  "public_access": ["yes", "permissive", "customers"],
+  "lifecycle_prefixes": ["disused:", "abandoned:", "demolished:", "removed:", "was:", "proposed:", "construction:"],
+  "fsa_rules": {
+    "1": {"eligibility": "unresolved", "reason": "restaurant_cafe_canteen_requires_public_venue_evidence", "candidates": ["cafe", "restaurant"]},
+    "7843": {"eligibility": "unresolved", "reason": "pub_bar_nightclub_requires_specific_venue_evidence", "candidates": ["pub_bar"]},
+    "7844": {"eligibility": "eligible", "primary_category": "takeaway", "reason": "takeaway_or_sandwich_shop", "candidates": ["takeaway"]},
+    "4613": {"eligibility": "unresolved", "reason": "retailer_other_does_not_prove_hospitality_or_bakery"},
+    "7841": {"eligibility": "unresolved", "reason": "other_catering_requires_public_venue_evidence"},
+    "7846": {"eligibility": "unresolved", "reason": "mobile_caterer_requires_supported_establishment_location"},
+    "5": {"eligibility": "excluded", "reason": "institution_only_without_distinct_public_venue_evidence"},
+    "7845": {"eligibility": "excluded", "reason": "education_only_without_distinct_public_venue_evidence"},
+    "7840": {"eligibility": "excluded", "reason": "general_food_retail_only"},
+    "7842": {"eligibility": "excluded", "reason": "accommodation_only_without_distinct_public_venue_evidence"},
+    "7839": {"eligibility": "excluded", "reason": "production_only_without_public_venue_evidence"},
+    "7": {"eligibility": "excluded", "reason": "distribution_only"},
+    "7838": {"eligibility": "excluded", "reason": "farming_only"},
+    "14": {"eligibility": "excluded", "reason": "import_export_only"}
+  }
+}

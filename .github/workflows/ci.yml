@@ -28,13 +28,21 @@ jobs:
         run: python scripts/dev.py setup
       - name: Python and frontend checks
         run: python scripts/dev.py check
+      - name: Check generated API and TypeScript contracts
+        run: python scripts/dev.py api-schema --check
       - name: Start disposable PostGIS
         id: database
         run: python scripts/dev.py db-up
+      - name: Migrate local schemas and verify scoped roles
+        run: python scripts/dev.py database setup --target local
       - name: Test real database connection and spatial extension
         run: python scripts/dev.py db-check
       - name: Check dbt adapter and local connection
         run: python scripts/dev.py dbt-debug
+      - name: Check Gold rate and monthly health examples on local PostGIS
+        run: python scripts/dev.py gold fixtures
+      - name: Check atomic releases and read API on disposable PostGIS
+        run: python scripts/dev.py api-check
       - name: Install browser and OS dependencies
         working-directory: web
         run: npm exec -- playwright install --with-deps chromium

@@ -33,6 +33,22 @@ Resources:
             Status: Enabled
             AbortIncompleteMultipartUpload:
               DaysAfterInitiation: 1
+          - Id: NeonDailyBackups7Days
+            Status: Enabled
+            Prefix: backups/neon/daily/
+            ExpirationInDays: 7
+          - Id: NeonWeeklyBackups28Days
+            Status: Enabled
+            Prefix: backups/neon/weekly/
+            ExpirationInDays: 28
+          - Id: LocalDailyBackups7Days
+            Status: Enabled
+            Prefix: backups/local/daily/
+            ExpirationInDays: 7
+          - Id: LocalWeeklyBackups28Days
+            Status: Enabled
+            Prefix: backups/local/weekly/
+            ExpirationInDays: 28
       Tags:
         - Key: Project
           Value: UrbanLens
@@ -207,11 +223,17 @@ Resources:
             Action: [cloudformation:DescribeStacks, cloudformation:DescribeStackEvents, cloudformation:GetTemplate]
             Resource: !Ref AWS::StackId
           - Effect: Allow
-            Action: [s3:ListBucket, s3:GetBucketLocation, s3:GetBucketPublicAccessBlock, s3:GetEncryptionConfiguration, s3:GetLifecycleConfiguration, s3:GetBucketOwnershipControls, s3:GetBucketPolicyStatus, s3:GetBucketPolicy]
+            Action: [s3:ListBucket, s3:GetBucketLocation, s3:GetBucketPublicAccessBlock, s3:GetEncryptionConfiguration, s3:GetLifecycleConfiguration, s3:PutLifecycleConfiguration, s3:GetBucketOwnershipControls, s3:GetBucketPolicyStatus, s3:GetBucketPolicy]
             Resource: !GetAtt Artifacts.Arn
           - Effect: Allow
             Action: [s3:GetObject, s3:PutObject]
             Resource: !Sub '${Artifacts.Arn}/*'
+          - Effect: Allow
+            Action: s3:DeleteObject
+            Resource:
+              - !Sub '${Artifacts.Arn}/silver/*'
+              - !Sub '${Artifacts.Arn}/evidence/history/*'
+              - !Sub '${Artifacts.Arn}/backups/*'
           - Effect: Allow
             Action: [lambda:GetFunction, lambda:GetFunctionConfiguration, lambda:UpdateFunctionCode, lambda:UpdateFunctionConfiguration, lambda:InvokeFunction]
             Resource: !GetAtt Collector.Arn

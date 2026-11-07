@@ -1,7 +1,7 @@
 # Local configuration and credentials
 .env
 .env.*
-!.env.example
+.env.example
 .aws/
 .codex/
 .agents/
@@ -61,6 +61,9 @@ backups/
 *.tfplan
 *.tfvars
 *.tfvars.json
+*.sql
+!src/urbanlens/database/sql/*.sql
+!dbt/**/*.sql
 # Keep dependency lockfiles, including .terraform.lock.hcl, versioned.
 
 # Machine/editor files

@@ -1,0 +1,791 @@
+{
+  "$defs": {
+    "Address": {
+      "additionalProperties": false,
+      "properties": {
+        "raw": {
+          "anyOf": [
+            {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "state": {
+          "default": "missing",
+          "enum": [
+            "published",
+            "missing",
+            "null",
+            "withheld",
+            "invalid",
+            "unavailable"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "title": "Address",
+      "type": "object"
+    },
+    "Area": {
+      "additionalProperties": false,
+      "properties": {
+        "authority_code": {
+          "title": "Authority Code",
+          "type": "string"
+        },
+        "geography_version": {
+          "title": "Geography Version",
+          "type": "string"
+        },
+        "population_edition": {
+          "title": "Population Edition",
+          "type": "string"
+        },
+        "reference_date": {
+          "format": "date",
+          "title": "Reference Date",
+          "type": "string"
+        },
+        "population": {
+          "minimum": 0,
+          "title": "Population",
+          "type": "integer"
+        },
+        "age_0_15": {
+          "minimum": 0,
+          "title": "Age 0 15",
+          "type": "integer"
+        },
+        "age_16_64": {
+          "minimum": 0,
+          "title": "Age 16 64",
+          "type": "integer"
+        },
+        "age_65_plus": {
+          "minimum": 0,
+          "title": "Age 65 Plus",
+          "type": "integer"
+        },
+        "official_land_km2": {
+          "title": "Official Land Km2",
+          "type": "string"
+        },
+        "geometry": {
+          "additionalProperties": true,
+          "title": "Geometry",
+          "type": "object"
+        },
+        "editions": {
+          "additionalProperties": true,
+          "title": "Editions",
+          "type": "object"
+        }
+      },
+      "required": [
+        "authority_code",
+        "geography_version",
+        "population_edition",
+        "reference_date",
+        "population",
+        "age_0_15",
+        "age_16_64",
+        "age_65_plus",
+        "official_land_km2",
+        "geometry",
+        "editions"
+      ],
+      "title": "Area",
+      "type": "object"
+    },
+    "Artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "uri": {
+          "title": "Uri",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "byte_count": {
+          "minimum": 0,
+          "title": "Byte Count",
+          "type": "integer"
+        },
+        "media_type": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Media Type",
+          "type": "string"
+        },
+        "compression": {
+          "default": "none",
+          "enum": [
+            "none",
+            "gzip",
+            "zip"
+          ],
+          "title": "Compression",
+          "type": "string"
+        }
+      },
+      "required": [
+        "uri",
+        "sha256",
+        "byte_count",
+        "media_type"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "Company": {
+      "additionalProperties": false,
+      "properties": {
+        "legal_status": {
+          "$ref": "#/$defs/Text"
+        },
+        "company_type": {
+          "$ref": "#/$defs/Text"
+        },
+        "sic_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Sic Codes",
+          "type": "array"
+        },
+        "sic_state": {
+          "default": "published",
+          "enum": [
+            "published",
+            "missing",
+            "invalid"
+          ],
+          "title": "Sic State",
+          "type": "string"
+        },
+        "incorporated_on": {
+          "$ref": "#/$defs/DateValue"
+        },
+        "ceased_on": {
+          "$ref": "#/$defs/DateValue"
+        },
+        "registered_office_cohort": {
+          "default": false,
+          "title": "Registered Office Cohort",
+          "type": "boolean"
+        },
+        "profile": {
+          "default": false,
+          "title": "Profile",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "legal_status",
+        "company_type",
+        "sic_codes",
+        "incorporated_on",
+        "ceased_on"
+      ],
+      "title": "Company",
+      "type": "object"
+    },
+    "DateValue": {
+      "additionalProperties": false,
+      "properties": {
+        "raw": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "state": {
+          "default": "missing",
+          "enum": [
+            "published",
+            "missing",
+            "null",
+            "withheld",
+            "invalid",
+            "unavailable"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "title": "DateValue",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact": {
+          "$ref": "#/$defs/Artifact"
+        },
+        "locator": {
+          "minLength": 1,
+          "title": "Locator",
+          "type": "string"
+        }
+      },
+      "required": [
+        "artifact",
+        "locator"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "Location": {
+      "additionalProperties": false,
+      "properties": {
+        "longitude": {
+          "anyOf": [
+            {
+              "maximum": 180,
+              "minimum": -180,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Longitude"
+        },
+        "latitude": {
+          "anyOf": [
+            {
+              "maximum": 90,
+              "minimum": -90,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Latitude"
+        },
+        "srid": {
+          "const": 4326,
+          "default": 4326,
+          "title": "Srid",
+          "type": "integer"
+        },
+        "quality": {
+          "default": "missing",
+          "enum": [
+            "source_point",
+            "point_on_surface",
+            "postcode_fallback",
+            "missing",
+            "invalid",
+            "withheld",
+            "unresolved"
+          ],
+          "title": "Quality",
+          "type": "string"
+        },
+        "role": {
+          "default": "none",
+          "enum": [
+            "premises",
+            "registered_office",
+            "postcode_centroid",
+            "none"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "primary_spatial_eligible": {
+          "default": false,
+          "title": "Primary Spatial Eligible",
+          "type": "boolean"
+        }
+      },
+      "title": "Location",
+      "type": "object"
+    },
+    "Postcode": {
+      "additionalProperties": false,
+      "properties": {
+        "state": {
+          "enum": [
+            "invalid",
+            "unmatched",
+            "outside",
+            "incompatible-geography",
+            "resolved",
+            "throttled",
+            "unavailable"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "authority_code": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Authority Code"
+        },
+        "lsoa21": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lsoa21"
+        },
+        "quality": {
+          "anyOf": [
+            {
+              "maximum": 9,
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quality"
+        },
+        "dataset_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Dataset Version"
+        },
+        "edition_note": {
+          "title": "Edition Note",
+          "type": "string"
+        },
+        "expires_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expires At"
+        }
+      },
+      "required": [
+        "state",
+        "edition_note"
+      ],
+      "title": "Postcode",
+      "type": "object"
+    },
+    "Provider": {
+      "enum": [
+        "fsa",
+        "osm",
+        "companies-house",
+        "postcodes-io",
+        "ons"
+      ],
+      "title": "Provider",
+      "type": "string"
+    },
+    "Rating": {
+      "additionalProperties": false,
+      "properties": {
+        "raw": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw"
+        },
+        "score": {
+          "anyOf": [
+            {
+              "maximum": 5,
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Score"
+        },
+        "state": {
+          "enum": [
+            "rated",
+            "awaiting_inspection",
+            "awaiting_publication",
+            "exempt",
+            "unknown",
+            "missing"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "assessed_on": {
+          "$ref": "#/$defs/DateValue"
+        }
+      },
+      "required": [
+        "state",
+        "assessed_on"
+      ],
+      "title": "Rating",
+      "type": "object"
+    },
+    "Text": {
+      "additionalProperties": false,
+      "properties": {
+        "raw": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Raw"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "state": {
+          "default": "missing",
+          "enum": [
+            "published",
+            "missing",
+            "null",
+            "withheld",
+            "invalid",
+            "unavailable"
+          ],
+          "title": "State",
+          "type": "string"
+        }
+      },
+      "title": "Text",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "silver-observation-v1",
+      "default": "silver-observation-v1",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "normalisation_version": {
+      "const": "silver-normalisation-v1",
+      "default": "silver-normalisation-v1",
+      "title": "Normalisation Version",
+      "type": "string"
+    },
+    "provider": {
+      "$ref": "#/$defs/Provider"
+    },
+    "source_key": {
+      "title": "Source Key",
+      "type": "string"
+    },
+    "record_kind": {
+      "enum": [
+        "venue",
+        "company",
+        "area",
+        "postcode"
+      ],
+      "title": "Record Kind",
+      "type": "string"
+    },
+    "scope": {
+      "title": "Scope",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Snapshot Id"
+    },
+    "cycle_id": {
+      "anyOf": [
+        {
+          "format": "uuid",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Cycle Id"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    },
+    "ingested_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Ingested At"
+    },
+    "source_published_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Published At"
+    },
+    "source_extracted_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Extracted At"
+    },
+    "source_extract_date": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Extract Date"
+    },
+    "source_event_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Event At"
+    },
+    "name": {
+      "$ref": "#/$defs/Text"
+    },
+    "address": {
+      "$ref": "#/$defs/Address"
+    },
+    "postcode": {
+      "$ref": "#/$defs/Text"
+    },
+    "location": {
+      "$ref": "#/$defs/Location"
+    },
+    "rating": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Rating"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "company": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Company"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "area": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Area"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "postcode_result": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Postcode"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "tags_raw": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Tags Raw",
+      "type": "object"
+    },
+    "tags": {
+      "additionalProperties": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "title": "Tags",
+      "type": "object"
+    },
+    "source_values": {
+      "additionalProperties": true,
+      "title": "Source Values",
+      "type": "object"
+    },
+    "evidence": {
+      "items": {
+        "$ref": "#/$defs/Evidence"
+      },
+      "minItems": 1,
+      "title": "Evidence",
+      "type": "array"
+    },
+    "field_sources": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Field Sources",
+      "type": "object"
+    },
+    "record_hash": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Record Hash",
+      "type": "string"
+    }
+  },
+  "required": [
+    "provider",
+    "source_key",
+    "record_kind",
+    "scope",
+    "snapshot_id",
+    "cycle_id",
+    "observed_at",
+    "evidence",
+    "field_sources",
+    "record_hash"
+  ],
+  "title": "Observation",
+  "type": "object"
+}

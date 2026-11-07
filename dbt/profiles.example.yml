@@ -1,4 +1,5 @@
-# Local owner access only. Neon roles/connections are a later, separate configuration.
+# Initial local foundation profile, before scoped database setup.
+# After database setup, dev.py dbt-debug uses the scoped .env URL and a temporary profile.
 urbanlens:
   target: local
   outputs:

@@ -1267,6 +1267,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "fastapi" },
+    { name = "httpx" },
     { name = "mangum" },
     { name = "psycopg", extra = ["binary"] },
     { name = "pydantic" },
@@ -1300,6 +1301,7 @@ requires-dist = [
     { name = "dbt-core", marker = "extra == 'pipeline'", specifier = "==1.12.6" },
     { name = "dbt-postgres", marker = "extra == 'pipeline'", specifier = "==1.11.0" },
     { name = "fastapi", specifier = "==0.162.0" },
+    { name = "httpx", specifier = "==0.28.1" },
     { name = "httpx", marker = "extra == 'pipeline'", specifier = "==0.28.1" },
     { name = "mangum", specifier = "==0.22.0" },
     { name = "openpyxl", marker = "extra == 'pipeline'", specifier = "==3.1.5" },
