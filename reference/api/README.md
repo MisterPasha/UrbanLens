@@ -54,6 +54,7 @@ Company lists require a cohort and allow `legal_status`, five-digit `sic_code`, 
 - `scripts/release.py`, `database/releases.py`: freezing, atomic pointers, rollback and safe cleanup.
 - Migration `0013_published_gateway.sql`: release registry and curated database read gateway; API has no direct Silver/candidate access.
 - Migrations `0014_context_api.sql` and `0015_area_provenance.sql`: summary/comparison, cohort companies, activity and reference provenance.
+- Migration `0016_nonexcluded_match_coverage.sql`: matching coverage excludes already excluded non-hospitality records. Counts derive from the pinned frozen roster; source records and draft reviews are unchanged. Local/Neon report 286 unresolved out of 2,478 non-excluded records (139 excluded unresolved records omitted). The previous all-roster match count remains only in retained audit tables.
 - `src/urbanlens/api/`: request/response contracts, routes, read-only queries and postcode cache.
 - `reference/api/openapi.json`, `web/src/api/contracts.ts`: generated from Python contracts. CI checks they match; regenerate with `api-schema` after contract changes.
 - `web/src/api/client.ts`: typed fetch helper; no handwritten duplicate response types.

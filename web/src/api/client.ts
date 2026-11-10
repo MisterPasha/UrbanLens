@@ -24,7 +24,16 @@ export async function apiGet<R extends keyof ApiRoutes>(
     else search.append(key, String(value));
   }
   const response = await fetch(`${path}?${search}`, { signal, headers: { Accept: 'application/json' } });
-  const body: unknown = await response.json();
-  if (!response.ok) throw new ApiError(response.status, body as ErrorResponse);
+  let body: unknown;
+  try { body = await response.json(); }
+  catch { throw new ApiError(response.status || 503, { error: {
+    code: 'service_unavailable', message: 'Data is temporarily unavailable. Please try again.', request_id: '',
+  } }); }
+  if (!response.ok) {
+    const error = body as Partial<ErrorResponse> | null;
+    throw new ApiError(response.status, error?.error?.message ? error as ErrorResponse : { error: {
+      code: 'service_unavailable', message: 'Data is temporarily unavailable. Please try again.', request_id: '',
+    } });
+  }
   return body as ApiRoutes[R]['response'];
 }

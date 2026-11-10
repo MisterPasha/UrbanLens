@@ -69,6 +69,14 @@ UPDATE __SCHEMA__.mart_venue_context SET establishment_id=md5('4')::uuid,
  address=null,postcode=null,location=null,area_code=null,primary_spatial_eligible=false,
  eligibility='unresolved',location_quality='withheld',
  exclusion_reasons=ARRAY['not_primary_spatial'];
+INSERT INTO __SCHEMA__.mart_venue_context SELECT * FROM __SCHEMA__.mart_venue_context LIMIT 1;
+UPDATE __SCHEMA__.mart_venue_context SET establishment_id=md5('5')::uuid,
+ duplicate_status='unresolved'
+ WHERE ctid=(SELECT ctid FROM __SCHEMA__.mart_venue_context ORDER BY ctid DESC LIMIT 1);
+INSERT INTO __SCHEMA__.mart_venue_context SELECT * FROM __SCHEMA__.mart_venue_context
+ WHERE establishment_id=md5('5')::uuid;
+UPDATE __SCHEMA__.mart_venue_context SET establishment_id=md5('6')::uuid,eligibility='excluded'
+ WHERE ctid=(SELECT ctid FROM __SCHEMA__.mart_venue_context ORDER BY ctid DESC LIMIT 1);
 ALTER TABLE __SCHEMA__.dim_area ADD COLUMN population_edition text DEFAULT 'fixture',
  ADD COLUMN geography_artifact_id uuid,
  ADD COLUMN population_reference_date date DEFAULT '2024-06-30',
@@ -345,6 +353,28 @@ def test_context_reconciliation_pinned_browsing_and_cohort_privacy(lab: Lab) -> 
         pin = {"release_id": str(lab.base)}
         summary = client.get("/api/v1/areas/E01000001/summary", params=pin)
         assert summary.status_code == 200, summary.text
+        coverage = summary.json()["coverage"]
+        matching = [row for row in coverage if row["dimension"] == "duplicates"]
+        assert matching == [
+            {
+                "universe": "non-excluded venue records",
+                "dimension": "duplicates",
+                "bucket": "resolved",
+                "n": 4,
+                "denominator": 5,
+                "percent": 80,
+                "reasons_overlap": False,
+            },
+            {
+                "universe": "non-excluded venue records",
+                "dimension": "duplicates",
+                "bucket": "unresolved",
+                "n": 1,
+                "denominator": 5,
+                "percent": 20,
+                "reasons_overlap": False,
+            },
+        ]
         data = summary.json()["data"]
         assert data["area"]["establishment_count"] == 3
         assert data["city_benchmark"]["establishments_per_land_km2"] == 0.75

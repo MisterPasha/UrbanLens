@@ -51,6 +51,8 @@ Using a scoped database connection, `selected_venues(categories, area_codes, lon
 
 Monthly warnings begin **more than 48 hours after the next due time**; the age of a statistical reference year does not make a source stale. Reference/bulk/postcode monthly checks remain manual until step 49; existing FSA/OSM/profile schedules are unchanged.
 
+Match-review coverage uses the **non-excluded venue records** population. Non-hospitality exclusions stay outside both its numerator and denominator; draft match/address answers are not used. Migration 0016 applies the same definition to retained releases without rebuilding their venue data.
+
 [Measured results and validation](../../docs/evidence/gold-models.md). dbt reference: [data tests](https://docs.getdbt.com/docs/build/data-tests).
 
 [Publication and read API](../api/README.md): steps 33?36 freeze verified candidates into retained releases; the development workspace stays separate.

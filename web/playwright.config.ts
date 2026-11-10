@@ -9,6 +9,8 @@ const python = fileURLToPath(new URL(
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
+  // Focused checks share dev servers; serial startup avoids local contention.
+  workers: 1,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: 'list',
@@ -16,7 +18,8 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: [
     {
-      command: `"${python}" -m uvicorn urbanlens.api.app:app --host 127.0.0.1 --port 8000`,
+      command: `"${python}" -m uvicorn urbanlens.api.app:app --host 127.0.0.1 --port 8000 --no-access-log`,
+      cwd: fileURLToPath(new URL('..', import.meta.url)),
       url: 'http://127.0.0.1:8000/health',
       reuseExistingServer: !process.env.CI,
       timeout: 60_000,

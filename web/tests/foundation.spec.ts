@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test('anonymous browser can reach the app and proxied API without a database', async ({ page, request }) => {
   const errors: string[] = [];
+  await page.route('https://tile.openstreetmap.org/**', route => route.abort());
   page.on('pageerror', error => errors.push(error.message));
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1, name: 'UrbanLens' })).toBeVisible();

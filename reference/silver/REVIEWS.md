@@ -56,3 +56,12 @@ For a later correction or undo, create a new version of the mapping, preserve
 source bindings/evidence, run `review-check`, apply locally, inspect the report,
 then apply the same packet/registry to Neon. Generate the strict JSON schemas with
 `python scripts/dev.py resolve review-schema`. Reports remain in `data/silver/`.
+
+Draft review, 10 November 2026: `data/reviews/unresolved-records-2026-11-10.json` contains six genuine pending pairs and five location conflicts. Enter a decision/correct address and set `reviewed` to `true`; defaults are placeholders. The 270 remaining address-only checks are in `unresolved-address-checks-2026-11-10.json`, since no comparison partner can be invented for missing FSA references. Previous files and source bindings are retained. **Neither file is an applied configuration; explicit owner approval is still required.**
+
+Approved category review, 10 November 2026: all 67 decisions in
+`data/reviews/other-food-service-review-2026-11-10.json` are recorded in
+`config/eligibility-reviews.json` (`eligibility-reviews-v2`). Each override binds
+the source record hash and cites the approved file checksum. Existing inactive
+sources remain inactive. These are category/scope corrections; they do not approve
+pending venue matches or change source observation dates.
