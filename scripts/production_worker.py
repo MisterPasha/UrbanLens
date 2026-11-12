@@ -14,6 +14,7 @@ import traceback
 from datetime import UTC, datetime
 from typing import Any
 
+from psycopg import sql
 from psycopg.conninfo import conninfo_to_dict
 
 from scripts.database import credential
@@ -63,6 +64,22 @@ def classification_preflight() -> None:
             ).fetchone()
             if existing is not None and existing != (digest(definition.model_dump(mode="json")),):
                 raise ValueError(f"Changed {kind} definition requires a new version")
+
+
+def cleanup_workspaces() -> None:
+    """Remove automated scratch schemas only; frozen/registered releases are protected."""
+    with connect(credential("neon", "migration")) as connection:
+        connection.execute("SELECT pg_advisory_xact_lock(192020,1)")
+        connection.execute("SELECT pg_advisory_xact_lock(192033,0)")
+        schemas = connection.execute(
+            "SELECT nspname FROM pg_namespace n "
+            "WHERE nspname ~ '^ul_candidate_auto_[0-9a-f]{20}$' "
+            "AND pg_get_userbyid(nspowner)='urbanlens_migrator' "
+            "AND NOT EXISTS (SELECT 1 FROM ul_control.data_release d "
+            "WHERE d.model_schema=n.nspname)"
+        ).fetchall()
+        for (schema,) in schemas:
+            connection.execute(sql.SQL("DROP SCHEMA {} CASCADE").format(sql.Identifier(schema)))
 
 
 def allowed() -> None:
@@ -391,6 +408,7 @@ def main() -> None:
             "freeze",
             lambda: command("release", "prepare", "--target", "neon", "--source-schema", schema),
         )
+        stage("candidate-cleanup", cleanup_workspaces)
 
         from scripts.backup import run as backup
 

@@ -18,6 +18,35 @@ from urbanlens.silver.operations import cutoff, prune
 
 
 @pytest.mark.database
+def test_workspace_cleanup_preserves_release_names_and_other_owners(
+    silver_roles: dict[str, str],
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from psycopg.conninfo import conninfo_to_dict, make_conninfo
+
+    from scripts import production_worker as worker
+    from scripts.database import administrator
+
+    database = conninfo_to_dict(silver_roles["migration"])["dbname"]
+    scratch = "ul_candidate_auto_" + "a" * 20
+    other_owner = "ul_candidate_auto_" + "b" * 20
+    frozen = "ul_candidate_" + "c" * 32
+    with connect(make_conninfo(administrator("local"), dbname=database)) as connection:
+        connection.execute(f"CREATE SCHEMA {scratch} AUTHORIZATION urbanlens_migrator")
+        connection.execute(f"CREATE SCHEMA {other_owner} AUTHORIZATION urbanlens_dbt")
+        connection.execute(f"CREATE SCHEMA {frozen} AUTHORIZATION urbanlens_migrator")
+    monkeypatch.setattr(worker, "credential", lambda *args: silver_roles["migration"])
+    worker.cleanup_workspaces()
+    with connect(silver_roles["migration"]) as connection:
+        assert set(
+            connection.execute(
+                "SELECT nspname FROM pg_namespace WHERE nspname IN (%s,%s,%s)",
+                (scratch, other_owner, frozen),
+            ).fetchall()
+        ) == {(other_owner,), (frozen,)}
+
+
+@pytest.mark.database
 def test_expired_history_is_removed_but_current_and_retained_event_support_survives(
     tmp_path: Path, silver_roles: dict[str, str]
 ) -> None:
