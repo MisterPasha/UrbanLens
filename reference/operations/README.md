@@ -100,28 +100,27 @@ stored images per repository; review cleanup while protecting deployed/rollback
 digests. Untagged images expire after seven days. Data rollback is independent:
 `python scripts/dev.py release rollback --target neon`.
 
-The pipeline registry currently contains nine manifest records: the final local
-Docker push also added an image index and attestation. The deployed AMD64 manifest
-is valid. New image uploads are blocked by the retention guard until unused records
-are reviewed/removed; protect deployed and rollback digests. Deployment builds now
-disable provenance indexes to produce Lambda-compatible single-platform images.
+Obsolete rehearsal images were removed after checking deployed and rollback
+versions. Deployment builds disable provenance indexes to produce Lambda-compatible
+single-platform images. Review retention before the registry reaches eight records.
 
 ## Current verification — 12 November 2026
 
-Private infrastructure, migrations, API smoke checks, checksum-verified backup,
-real cutoff/resume and email delivery passed. The monthly retry stopped at
-classification loading; the published release remains unchanged at 1,178 venues.
-Windows/Linux JSON encoding caused the version conflict. UTF-8 parsing and a new
-immutable review version fix it; a read-only preflight now catches such conflicts
-before collection. No pending owner reviews were applied.
+Private infrastructure, migrations, API smoke checks, checksum-verified backups,
+real cutoff/resume and email delivery passed. The fourth monthly attempt completed
+collection, Silver, classification, matching, history, Gold, release preparation,
+backup and atomic publication. The new release contains 1,178 venues.
 
-The owner approved one additional private recovery attempt on 12 November. It
-completed Gold and all 16 dbt tests, then stopped at release preparation: the worker
-had omitted its run-specific source schema. The code now passes `--source-schema`
-explicitly. This latest handoff fix has not been verified by another cloud run.
-The published release remains unchanged; schedules and public access remain disabled.
+The replacement monthly refresh and daily backup schedules are enabled. Three legacy
+Bronze schedules remain disabled; public API access remains disabled until step 59.
+Neon measured approximately 529 MB with two connections. A newer reference edition
+is staged for compatibility review; the accepted reference date remains unchanged.
 
-The recovery approval is bound to the failed-state hash and deployed software in
-`operations/recovery-approvals/`; attempt 2 is archived in `recovery-history/`.
-It permits attempt 3 only. Reuse cannot start attempt 4. No retry counter was reset.
-GitHub's first deployment also remains unverified until changes are committed/pushed.
+Owner-authorised recovery approvals are bound to each previous failed state and
+deployed software. Earlier attempts are archived without resetting counters. A
+previous approval cannot authorise another attempt. Normal scheduled triggers
+still never retry failures automatically.
+
+Verification runs: [Foundation checks](https://github.com/MisterPasha/UrbanLens/actions/runs/43200306869)
+and [controlled private deployment](https://github.com/MisterPasha/UrbanLens/actions/runs/43201062385).
+The deployment uses tested runtime commit `ec953f0468d0a2acbe69f52cf9306753cad60ad3`.
