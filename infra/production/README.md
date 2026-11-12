@@ -11,6 +11,8 @@ Create `urbanlens-production-access` in CloudFormation, **Europe (London)**, usi
 `foundation.yaml`. Set `ArtifactsBucket` to the existing Bronze bucket and
 `DeveloperUser` to `urbanlens_dev`. Keep `GitHubRepository=MisterPasha/UrbanLens`.
 Supply `ExistingOidcProviderArn` only if this account already has GitHub OIDC.
+Keep the verified `GitHubOwnerId` and `GitHubRepositoryId` defaults for this repository.
+Its OIDC subject includes these immutable IDs and the protected production environment.
 Acknowledge named IAM resources. This stack creates no running compute.
 
 The administrator access stack is already deployed. These instructions are for

@@ -12,6 +12,16 @@ Parameters:
     Type: String
     Default: MisterPasha/UrbanLens
     AllowedPattern: '[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+'
+  GitHubOwnerId:
+    Type: String
+    Default: '91219601'
+    AllowedPattern: '[0-9]+'
+    Description: Immutable GitHub owner ID, verified through the repository API.
+  GitHubRepositoryId:
+    Type: String
+    Default: '1445666959'
+    AllowedPattern: '[0-9]+'
+    Description: Immutable GitHub repository ID, verified through the repository API.
   ExistingOidcProviderArn:
     Type: String
     Default: ''
@@ -479,7 +489,16 @@ Resources:
             StringEquals:
               token.actions.githubusercontent.com:aud: sts.amazonaws.com
               token.actions.githubusercontent.com:sub:
-                Fn::Sub: repo:${GitHubRepository}:environment:production
+                Fn::Sub:
+                - repo:${Owner}@${GitHubOwnerId}/${Repo}@${GitHubRepositoryId}:environment:production
+                - Owner:
+                    Fn::Select:
+                    - 0
+                    - Fn::Split: ['/', {Ref: GitHubRepository}]
+                  Repo:
+                    Fn::Select:
+                    - 1
+                    - Fn::Split: ['/', {Ref: GitHubRepository}]
       Policies:
       - PolicyName: DeployReviewedSoftware
         PolicyDocument:
