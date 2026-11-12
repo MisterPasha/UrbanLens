@@ -4,7 +4,7 @@ import hashlib
 import json
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
-from typing import Any
+from typing import Any, Self
 
 import pytest
 
@@ -25,8 +25,8 @@ def test_monthly_postcodes_refresh_even_when_february_cache_has_not_expired(
 
     class Clock(datetime):
         @classmethod
-        def now(cls, tz: Any = None) -> datetime:
-            return now
+        def now(cls, tz: Any = None) -> Self:
+            return cls.fromtimestamp(now.timestamp(), tz)
 
     store = LocalArtifactStore(tmp_path / "objects")
     response = store.put_immutable(
