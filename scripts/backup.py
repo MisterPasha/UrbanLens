@@ -31,7 +31,11 @@ from urbanlens.silver.operations import fingerprint, retained_schemas
 
 def code_archive(store: ArtifactStore) -> Artifact:
     paths: list[Path] = []
-    for directory in ("src", "scripts", "config", "dbt"):
+    directories = ["src", "scripts", "config", "dbt"]
+    packaged = not (ROOT / "src").is_dir() and (ROOT / "urbanlens").is_dir()
+    if packaged:
+        directories.append("urbanlens")
+    for directory in directories:
         paths.extend(
             p
             for p in (ROOT / directory).rglob("*")
@@ -41,7 +45,12 @@ def code_archive(store: ArtifactStore) -> Artifact:
             and p.name != "profiles.yml"
         )
     paths.extend(ROOT / name for name in ("pyproject.toml", "uv.lock"))
-    content = {p.relative_to(ROOT).as_posix(): p.read_bytes() for p in sorted(set(paths))}
+    content = {}
+    for path in sorted(set(paths)):
+        name = path.relative_to(ROOT).as_posix()
+        if packaged and name.startswith("urbanlens/"):
+            name = "src/" + name
+        content[name] = path.read_bytes()
     hashes = {name: hashlib.sha256(body).hexdigest() for name, body in content.items()}
     buffer = io.BytesIO()
     with gzip.GzipFile(fileobj=buffer, mode="wb", mtime=0) as zipped:
@@ -82,6 +91,20 @@ def native(
     arguments: list[str], env: dict[str, str], output: Path | None = None, data: bytes | None = None
 ) -> None:
     """Keep credentials in a temporary ignored env file and remove it on every path."""
+    if os.environ.get("URBANLENS_CLOUD_RUNTIME") == "1":
+        with output.open("wb") if output else io.BytesIO() as stream:
+            completed = subprocess.run(
+                arguments,
+                input=data,
+                env={**os.environ, **env},
+                stdout=stream if output else subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                timeout=300,
+                check=False,
+            )
+        if completed.returncode:
+            raise RuntimeError("Native backup command failed; private details withheld")
+        return
     docker = tool("docker")
     cache = ROOT / ".cache"
     cache.mkdir(exist_ok=True)
@@ -178,7 +201,9 @@ def restore_check(
     )
 
 
-def run(target: str, store: ArtifactStore, *, tier: str = "both") -> dict[str, Any]:
+def run(
+    target: str, store: ArtifactStore, *, tier: str = "both", verify_restore: bool = True
+) -> dict[str, Any]:
     now = datetime.now(UTC)
     daily = f"backups/{target}/daily/{now.date()}"
     weekly = f"backups/{target}/weekly/{now.isocalendar().year}-W{now.isocalendar().week:02d}"
@@ -247,12 +272,18 @@ def run(target: str, store: ArtifactStore, *, tier: str = "both") -> dict[str, A
     for manifest in manifests:
         artifact = Artifact.model_validate(manifest["artifact"])
         if artifact.sha256 not in verified:
-            checks.append(restore_check(store, artifact, manifest["logical_contents"]))
+            if verify_restore:
+                checks.append(restore_check(store, artifact, manifest["logical_contents"]))
+            else:
+                for _ in store.read_verified(artifact):
+                    pass
             verified.add(artifact.sha256)
     report = dict(
         target=target,
         manifests=manifests,
         restore_checks=checks,
+        restore_verification="passed" if verify_restore and checks else "not_run",
+        verified_backup_artifacts=len(verified),
         existing_points_reused=len(keys) - len(missing),
         verification_code=archive.model_dump(mode="json"),
         scheduled=False,

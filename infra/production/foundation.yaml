@@ -1,0 +1,600 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: UrbanLens production registries and scoped software-deployment access.
+  No application endpoint or schedules.
+Parameters:
+  ArtifactsBucket:
+    Type: String
+    AllowedPattern: '[a-z0-9.-]+'
+  DeveloperUser:
+    Type: String
+    AllowedPattern: '[A-Za-z0-9+=,.@_-]+'
+  GitHubRepository:
+    Type: String
+    Default: MisterPasha/UrbanLens
+    AllowedPattern: '[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+'
+  ExistingOidcProviderArn:
+    Type: String
+    Default: ''
+    Description: Set to an existing GitHub OIDC provider ARN if this account already
+      has one.
+Conditions:
+  CreateOidc:
+    Fn::Equals:
+    - Ref: ExistingOidcProviderArn
+    - ''
+Resources:
+  ApiRepository:
+    Type: AWS::ECR::Repository
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      RepositoryName: urbanlens-api
+      ImageTagMutability: IMMUTABLE
+      EncryptionConfiguration:
+        EncryptionType: AES256
+      ImageScanningConfiguration:
+        ScanOnPush: true
+      LifecyclePolicy:
+        LifecyclePolicyText: '{"rules": [{"rulePriority": 1, "description": "Expire
+          untagged images after seven days", "selection": {"tagStatus": "untagged",
+          "countType": "sinceImagePushed", "countUnit": "days", "countNumber": 7},
+          "action": {"type": "expire"}}]}'
+  PipelineRepository:
+    Type: AWS::ECR::Repository
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      RepositoryName: urbanlens-pipeline
+      ImageTagMutability: IMMUTABLE
+      EncryptionConfiguration:
+        EncryptionType: AES256
+      ImageScanningConfiguration:
+        ScanOnPush: true
+      LifecyclePolicy:
+        LifecyclePolicyText: '{"rules": [{"rulePriority": 1, "description": "Expire
+          untagged images after seven days", "selection": {"tagStatus": "untagged",
+          "countType": "sinceImagePushed", "countUnit": "days", "countNumber": 7},
+          "action": {"type": "expire"}}]}'
+  GithubOidc:
+    Type: AWS::IAM::OIDCProvider
+    Condition: CreateOidc
+    Properties:
+      Url: https://token.actions.githubusercontent.com
+      ClientIdList:
+      - sts.amazonaws.com
+  RuntimeBoundary:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName: UrbanLensProductionRuntimeBoundary
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - s3:ListBucket
+          - s3:GetBucketLocation
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}
+        - Effect: Allow
+          Action:
+          - s3:GetObject
+          - s3:PutObject
+          - s3:DeleteObject
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}/*
+        - Effect: Allow
+          Action:
+          - ssm:GetParameter
+          Resource:
+          - Fn::Sub: arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/urbanlens/production/*
+          - Fn::Sub: arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/urbanlens/companies-house-api-key
+        - Effect: Allow
+          Action:
+          - logs:CreateLogStream
+          - logs:PutLogEvents
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/*/urbanlens-production-*:*
+        - Effect: Allow
+          Action:
+          - lambda:InvokeFunction
+          - lambda:PutFunctionConcurrency
+          - lambda:GetFunction
+          - lambda:GetFunctionConfiguration
+          Resource:
+          - Fn::Sub: arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:urbanlens-production-*
+          - Fn::Sub: arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:urbanlens-bronze-collect
+        - Effect: Allow
+          Action:
+          - codebuild:StartBuild
+          - codebuild:BatchGetBuilds
+          - codebuild:ListBuildsForProject
+          - codebuild:StopBuild
+          Resource:
+          - Fn::Sub: arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:project/urbanlens-production-pipeline
+          - Fn::Sub: arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:build/urbanlens-production-pipeline:*
+        - Effect: Allow
+          Action:
+          - events:DisableRule
+          - events:EnableRule
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:events:${AWS::Region}:${AWS::AccountId}:rule/urbanlens-*
+        - Effect: Allow
+          Action:
+          - ecr:GetAuthorizationToken
+          Resource: '*'
+        - Effect: Allow
+          Action:
+          - ecr:BatchGetImage
+          - ecr:GetDownloadUrlForLayer
+          - ecr:BatchCheckLayerAvailability
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:ecr:${AWS::Region}:${AWS::AccountId}:repository/urbanlens-*
+        - Effect: Allow
+          Action:
+          - sns:Publish
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:sns:${AWS::Region}:${AWS::AccountId}:urbanlens-production-*
+        - Effect: Allow
+          Action:
+          - cloudwatch:PutMetricData
+          Resource: '*'
+          Condition:
+            StringEquals:
+              cloudwatch:namespace: UrbanLens
+        - Effect: Allow
+          Action:
+          - cloudformation:DescribeStacks
+          - cloudformation:UpdateStack
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/urbanlens-production/*
+  CloudFormationRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: urbanlens-production-cloudformation
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: cloudformation.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName: ProductionStackOnly
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - iam:CreateRole
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:iam::${AWS::AccountId}:role/urbanlens-production-*
+            Condition:
+              StringEquals:
+                iam:PermissionsBoundary:
+                  Ref: RuntimeBoundary
+          - Effect: Allow
+            Action:
+            - iam:GetRole
+            - iam:DeleteRole
+            - iam:PutRolePolicy
+            - iam:GetRolePolicy
+            - iam:DeleteRolePolicy
+            - iam:TagRole
+            - iam:UntagRole
+            - iam:ListRolePolicies
+            - iam:ListAttachedRolePolicies
+            - iam:UpdateRole
+            - iam:UpdateRoleDescription
+            - iam:UpdateAssumeRolePolicy
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:iam::${AWS::AccountId}:role/urbanlens-production-*
+          - Effect: Allow
+            Action:
+            - iam:PassRole
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:iam::${AWS::AccountId}:role/urbanlens-production-*
+            Condition:
+              StringEquals:
+                iam:PassedToService:
+                - lambda.amazonaws.com
+                - codebuild.amazonaws.com
+          - Effect: Allow
+            Action:
+            - lambda:CreateFunction
+            - lambda:UpdateFunctionCode
+            - lambda:UpdateFunctionConfiguration
+            - lambda:GetFunction
+            - lambda:GetFunctionConfiguration
+            - lambda:DeleteFunction
+            - lambda:PutFunctionConcurrency
+            - lambda:DeleteFunctionConcurrency
+            - lambda:TagResource
+            - lambda:UntagResource
+            - lambda:AddPermission
+            - lambda:RemovePermission
+            - lambda:GetPolicy
+            - lambda:PublishVersion
+            - lambda:CreateAlias
+            - lambda:UpdateAlias
+            - lambda:GetAlias
+            - lambda:DeleteAlias
+            - lambda:PutFunctionEventInvokeConfig
+            - lambda:GetFunctionEventInvokeConfig
+            - lambda:UpdateFunctionEventInvokeConfig
+            - lambda:DeleteFunctionEventInvokeConfig
+            - lambda:GetFunctionConcurrency
+            - lambda:GetFunctionCodeSigningConfig
+            - lambda:GetFunctionRecursionConfig
+            - lambda:GetRuntimeManagementConfig
+            - lambda:GetFunctionScalingConfig
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:urbanlens-production-*
+          - Effect: Allow
+            Action:
+            - codebuild:CreateProject
+            - codebuild:UpdateProject
+            - codebuild:DeleteProject
+            - codebuild:BatchGetProjects
+            - codebuild:UpdateProjectVisibility
+            - codebuild:CreateWebhook
+            - codebuild:UpdateWebhook
+            - codebuild:DeleteWebhook
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:project/urbanlens-production-pipeline
+          - Effect: Allow
+            Action:
+            - events:PutRule
+            - events:DeleteRule
+            - events:PutTargets
+            - events:RemoveTargets
+            - events:DescribeRule
+            - events:ListTargetsByRule
+            - events:TagResource
+            - events:ListTagsForResource
+            - events:UntagResource
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:events:${AWS::Region}:${AWS::AccountId}:rule/urbanlens-*
+          - Effect: Allow
+            Action:
+            - logs:CreateLogGroup
+            - logs:DeleteLogGroup
+            - logs:PutRetentionPolicy
+            - logs:DescribeLogGroups
+            - logs:ListTagsForResource
+            - logs:TagResource
+            - logs:UntagResource
+            - logs:GetDataProtectionPolicy
+            - logs:DeleteDataProtectionPolicy
+            - logs:DeleteRetentionPolicy
+            - logs:DescribeIndexPolicies
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/*/urbanlens-production-*
+          - Effect: Allow
+            Action:
+            - sns:CreateTopic
+            - sns:DeleteTopic
+            - sns:GetTopicAttributes
+            - sns:SetTopicAttributes
+            - sns:Subscribe
+            - sns:Unsubscribe
+            - sns:TagResource
+            - sns:ListTagsForResource
+            - sns:GetSubscriptionAttributes
+            - sns:SetSubscriptionAttributes
+            - sns:ListSubscriptionsByTopic
+            - sns:GetDataProtectionPolicy
+            - sns:UntagResource
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:sns:${AWS::Region}:${AWS::AccountId}:urbanlens-production-*
+          - Effect: Allow
+            Action:
+            - cloudwatch:PutMetricAlarm
+            - cloudwatch:DeleteAlarms
+            - cloudwatch:DescribeAlarms
+            - cloudwatch:PutDashboard
+            - cloudwatch:DeleteDashboards
+            - cloudwatch:GetDashboard
+            - cloudwatch:TagResource
+            - cloudwatch:UntagResource
+            - cloudwatch:ListTagsForResource
+            Resource: '*'
+          - Effect: Allow
+            Action:
+            - budgets:ModifyBudget
+            - budgets:ViewBudget
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:budgets::${AWS::AccountId}:budget/urbanlens-production-*
+          - Effect: Allow
+            Action:
+            - apigateway:GET
+            - apigateway:POST
+            - apigateway:PUT
+            - apigateway:PATCH
+            - apigateway:DELETE
+            Resource:
+            - Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}::/apis*
+            - Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}::/tags/*
+          - Effect: Allow
+            Action:
+            - ecr:BatchGetImage
+            - ecr:GetDownloadUrlForLayer
+            - ecr:GetRepositoryPolicy
+            - ecr:SetRepositoryPolicy
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:ecr:${AWS::Region}:${AWS::AccountId}:repository/urbanlens-*
+          - Effect: Allow
+            Action:
+            - logs:DescribeLogGroups
+            Resource: '*'
+          - Effect: Allow
+            Action:
+            - iam:PutRolePermissionsBoundary
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:iam::${AWS::AccountId}:role/urbanlens-production-*
+            Condition:
+              StringEquals:
+                iam:PermissionsBoundary:
+                  Ref: RuntimeBoundary
+  DeveloperPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Users:
+      - Ref: DeveloperUser
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - ecr:GetAuthorizationToken
+          Resource: '*'
+        - Effect: Allow
+          Action:
+          - ecr:DescribeRepositories
+          - ecr:DescribeImages
+          - ecr:BatchDeleteImage
+          - ecr:BatchGetImage
+          - ecr:BatchCheckLayerAvailability
+          - ecr:GetDownloadUrlForLayer
+          - ecr:InitiateLayerUpload
+          - ecr:UploadLayerPart
+          - ecr:CompleteLayerUpload
+          - ecr:PutImage
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:ecr:${AWS::Region}:${AWS::AccountId}:repository/urbanlens-*
+        - Effect: Allow
+          Action:
+          - ssm:PutParameter
+          - ssm:GetParameter
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/urbanlens/production/*
+        - Effect: Allow
+          Action:
+          - s3:ListBucket
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}
+        - Effect: Allow
+          Action:
+          - s3:GetObject
+          - s3:PutObject
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}/*
+        - Effect: Allow
+          Action:
+          - cloudformation:ValidateTemplate
+          Resource: '*'
+        - Effect: Allow
+          Action:
+          - cloudformation:CreateStack
+          - cloudformation:UpdateStack
+          - cloudformation:DescribeStacks
+          - cloudformation:DescribeStackEvents
+          - cloudformation:GetTemplate
+          - cloudformation:DescribeStackResources
+          - cloudformation:DeleteStack
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/urbanlens-production/*
+        - Effect: Allow
+          Action:
+          - iam:PassRole
+          Resource:
+            Fn::GetAtt:
+            - CloudFormationRole
+            - Arn
+          Condition:
+            StringEquals:
+              iam:PassedToService: cloudformation.amazonaws.com
+        - Effect: Allow
+          Action:
+          - lambda:GetFunction
+          - lambda:GetFunctionConfiguration
+          - lambda:InvokeFunction
+          - lambda:UpdateAlias
+          - lambda:CreateAlias
+          - lambda:DeleteFunction
+          - lambda:UpdateFunctionCode
+          - lambda:PublishVersion
+          - lambda:PutFunctionConcurrency
+          - lambda:DeleteFunctionConcurrency
+          - lambda:ListVersionsByFunction
+          - lambda:GetAlias
+          - lambda:GetFunctionConcurrency
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:urbanlens-production-*
+        - Effect: Allow
+          Action:
+          - codebuild:StartBuild
+          - codebuild:BatchGetBuilds
+          - codebuild:ListBuildsForProject
+          - codebuild:StopBuild
+          Resource:
+          - Fn::Sub: arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:project/urbanlens-production-pipeline
+          - Fn::Sub: arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:build/urbanlens-production-pipeline:*
+        - Effect: Allow
+          Action:
+          - events:DescribeRule
+          - events:DisableRule
+          - events:EnableRule
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:events:${AWS::Region}:${AWS::AccountId}:rule/urbanlens-*
+        - Effect: Allow
+          Action:
+          - lambda:GetAccountSettings
+          Resource: '*'
+        - Effect: Allow
+          Action:
+          - cloudformation:DescribeStacks
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/urbanlens-production-access/*
+        - Effect: Allow
+          Action:
+          - logs:DescribeLogStreams
+          - logs:GetLogEvents
+          - logs:FilterLogEvents
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/*/urbanlens-production-*:*
+        - Effect: Allow
+          Action:
+          - sns:GetTopicAttributes
+          - sns:GetSubscriptionAttributes
+          - sns:ListSubscriptionsByTopic
+          - sns:Publish
+          Resource:
+            Fn::Sub: arn:${AWS::Partition}:sns:${AWS::Region}:${AWS::AccountId}:urbanlens-production-*
+  GithubDeployRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: urbanlens-production-github
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Federated:
+              Fn::If:
+              - CreateOidc
+              - Ref: GithubOidc
+              - Ref: ExistingOidcProviderArn
+          Action: sts:AssumeRoleWithWebIdentity
+          Condition:
+            StringEquals:
+              token.actions.githubusercontent.com:aud: sts.amazonaws.com
+              token.actions.githubusercontent.com:sub:
+                Fn::Sub: repo:${GitHubRepository}:environment:production
+      Policies:
+      - PolicyName: DeployReviewedSoftware
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - ecr:GetAuthorizationToken
+            Resource: '*'
+          - Effect: Allow
+            Action:
+            - ecr:DescribeRepositories
+            - ecr:DescribeImages
+            - ecr:BatchGetImage
+            - ecr:BatchCheckLayerAvailability
+            - ecr:GetDownloadUrlForLayer
+            - ecr:InitiateLayerUpload
+            - ecr:UploadLayerPart
+            - ecr:CompleteLayerUpload
+            - ecr:PutImage
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:ecr:${AWS::Region}:${AWS::AccountId}:repository/urbanlens-*
+          - Effect: Allow
+            Action:
+            - s3:ListBucket
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}
+          - Effect: Allow
+            Action:
+            - s3:GetObject
+            - s3:PutObject
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}/*
+          - Effect: Allow
+            Action:
+            - cloudformation:ValidateTemplate
+            Resource: '*'
+          - Effect: Allow
+            Action:
+            - cloudformation:CreateStack
+            - cloudformation:UpdateStack
+            - cloudformation:DescribeStacks
+            - cloudformation:DescribeStackEvents
+            - cloudformation:GetTemplate
+            - cloudformation:DescribeStackResources
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/urbanlens-production/*
+          - Effect: Allow
+            Action:
+            - iam:PassRole
+            Resource:
+              Fn::GetAtt:
+              - CloudFormationRole
+              - Arn
+            Condition:
+              StringEquals:
+                iam:PassedToService: cloudformation.amazonaws.com
+          - Effect: Allow
+            Action:
+            - lambda:GetFunction
+            - lambda:GetFunctionConfiguration
+            - lambda:InvokeFunction
+            - lambda:UpdateAlias
+            - lambda:CreateAlias
+            - lambda:DeleteFunction
+            - lambda:UpdateFunctionCode
+            - lambda:PublishVersion
+            - lambda:PutFunctionConcurrency
+            - lambda:DeleteFunctionConcurrency
+            - lambda:ListVersionsByFunction
+            - lambda:GetAlias
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:urbanlens-production-*
+          - Effect: Allow
+            Action:
+            - codebuild:StartBuild
+            - codebuild:BatchGetBuilds
+            - codebuild:ListBuildsForProject
+            - codebuild:StopBuild
+            Resource:
+            - Fn::Sub: arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:project/urbanlens-production-pipeline
+            - Fn::Sub: arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:build/urbanlens-production-pipeline:*
+          - Effect: Allow
+            Action:
+            - events:DescribeRule
+            - events:DisableRule
+            - events:EnableRule
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:events:${AWS::Region}:${AWS::AccountId}:rule/urbanlens-*
+          - Effect: Allow
+            Action:
+            - cloudformation:DescribeStacks
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/urbanlens-production-access/*
+Outputs:
+  ApiRepository:
+    Value:
+      Fn::GetAtt:
+      - ApiRepository
+      - RepositoryUri
+  PipelineRepository:
+    Value:
+      Fn::GetAtt:
+      - PipelineRepository
+      - RepositoryUri
+  BoundaryArn:
+    Value:
+      Ref: RuntimeBoundary
+  CloudFormationRole:
+    Value:
+      Fn::GetAtt:
+      - CloudFormationRole
+      - Arn
+  GithubRole:
+    Value:
+      Fn::GetAtt:
+      - GithubDeployRole
+      - Arn

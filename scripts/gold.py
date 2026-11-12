@@ -224,6 +224,12 @@ def build(target: str, schema: str, release_id: UUID | None = None) -> dict[str,
             if s.run.mode == "collect"
         ]
         now = datetime.now(UTC).isoformat()
+        reference_path = ROOT / ".cache/reference-check.json"
+        reference_check = (
+            json.loads(reference_path.read_bytes())
+            if os.environ.get("URBANLENS_CLOUD_RUNTIME") == "1" and reference_path.is_file()
+            else {}
+        )
         manifest = dict(
             version="gold-inputs-v1",
             silver_state=state,
@@ -232,6 +238,7 @@ def build(target: str, schema: str, release_id: UUID | None = None) -> dict[str,
             classification_definitions=definitions,
             review_definitions=reviews,
             failed_attempts=failures,
+            reference_check=reference_check,
             dbt_core=importlib.metadata.version("dbt-core"),
             dbt_postgres=importlib.metadata.version("dbt-postgres"),
             code=code_archive(store).model_dump(mode="json"),
@@ -248,6 +255,8 @@ def build(target: str, schema: str, release_id: UUID | None = None) -> dict[str,
             population_reference_date=reference_date.isoformat(),
             input_manifest=manifest,
             failed_attempts=failures,
+            reference_check=reference_check.get("report", {}),
+            automated_workflow=os.environ.get("URBANLENS_CLOUD_RUNTIME") == "1",
         )
         # Release relation locks acquired by the previous-candidate check. The session
         # advisory lock still excludes Silver writers until this connection closes.

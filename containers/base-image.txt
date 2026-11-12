@@ -1,0 +1,1 @@
+public.ecr.aws/lambda/python@sha256:d0acb0bce6c7b14a193a911f800bee8ff73fd28bc8d01e953db2f5aea32d270e

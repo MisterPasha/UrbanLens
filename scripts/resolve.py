@@ -70,8 +70,8 @@ def main() -> None:
             lifecycle_event_created=False,
         )
     else:
-        rules = Rules.model_validate_json((ROOT / "config/identity-rules.json").read_text())
-        reviews = Reviews.model_validate_json((ROOT / "config/identity-reviews.json").read_text())
+        rules = Rules.model_validate_json((ROOT / "config/identity-rules.json").read_bytes())
+        reviews = Reviews.model_validate_json((ROOT / "config/identity-reviews.json").read_bytes())
         application = None
         if args.apply_reviews or args.task == "review-check":
             application = Application(

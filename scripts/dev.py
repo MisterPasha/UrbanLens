@@ -134,6 +134,7 @@ def main() -> None:
             "ingest",
             "pipeline",
             "bronze",
+            "production",
             "database",
             "silver",
             "classify",
@@ -177,6 +178,7 @@ def main() -> None:
         "ingest",
         "pipeline",
         "bronze",
+        "production",
         "database",
         "silver",
         "classify",
@@ -246,6 +248,8 @@ def main() -> None:
             in_environment("python", "-m", "scripts.source_pipeline", *args.arguments)
         case "bronze":
             in_environment("python", "-m", "scripts.bronze", *args.arguments)
+        case "production":
+            in_environment("python", "-m", "scripts.production", *args.arguments)
         case "database":
             in_environment("python", "-m", "scripts.database", *args.arguments)
         case "silver":

@@ -13,10 +13,17 @@ from psycopg.types.json import Jsonb
 
 from urbanlens.ingestion.contracts import Artifact, Contract, Provider
 from urbanlens.ingestion.interfaces import ArtifactStore
-from urbanlens.ingestion.storage import chunks, gzip_chunks
+from urbanlens.ingestion.storage import gzip_chunks
 from urbanlens.silver.eligibility import Decision, Reviews, Taxonomy, classify, digest
 from urbanlens.silver.load import artifact_id
-from urbanlens.silver.pipeline import Batch, Bundle, json_line, read_records, verified_observations
+from urbanlens.silver.pipeline import (
+    Batch,
+    Bundle,
+    json_line,
+    read_records,
+    retained_gzip,
+    verified_observations,
+)
 
 
 class DecisionBatch(Contract):
@@ -127,9 +134,7 @@ def build(
                 + checksum.hexdigest()
                 + ".jsonl.gz"
             )
-            artifact = store.put_immutable(
-                key, chunks(stream), media_type="application/x-ndjson", compression="gzip"
-            )
+            artifact = retained_gzip(store, key, stream, checksum.hexdigest())
         batches.append(
             DecisionBatch(
                 provider=batch.provider,

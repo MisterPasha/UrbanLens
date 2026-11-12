@@ -1,6 +1,8 @@
 """Source meaning, deterministic hashes and traceable immutable Silver artifacts."""
 
+import gzip
 import hashlib
+import io
 import json
 from collections.abc import Iterator
 from datetime import UTC, date, datetime, timedelta
@@ -22,7 +24,29 @@ from urbanlens.ingestion.registry import Registry, SQLiteStateBackend
 from urbanlens.ingestion.storage import LocalArtifactStore
 from urbanlens.silver import normalise as n
 from urbanlens.silver.models import Evidence, Observation
-from urbanlens.silver.pipeline import Bundle, build, verified_observations
+from urbanlens.silver.pipeline import Bundle, build, retained_gzip, verified_observations
+
+
+def test_compressed_content_replay_across_windows_and_linux(tmp_path: Path) -> None:
+    store = LocalArtifactStore(tmp_path)
+    content = b'{"source_key":"unchanged"}\n'
+    windows = bytearray(gzip.compress(content, mtime=0))
+    windows[9] = 10
+    linux = bytearray(windows)
+    linux[9] = 3
+    old = store.put_immutable(
+        "silver/content.jsonl.gz",
+        iter([bytes(windows)]),
+        media_type="application/x-ndjson",
+        compression="gzip",
+    )
+    replay = retained_gzip(
+        store, "silver/content.jsonl.gz", io.BytesIO(linux), hashlib.sha256(content).hexdigest()
+    )
+    assert replay == old
+    assert b"".join(store.read_verified(replay)) == windows
+    with pytest.raises(ValueError, match="different decoded content"):
+        retained_gzip(store, "silver/content.jsonl.gz", io.BytesIO(linux), "0" * 64)
 
 
 def context() -> dict[str, Any]:

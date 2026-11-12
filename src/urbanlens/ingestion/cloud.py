@@ -61,11 +61,12 @@ class CloudProfileBudget:
         raise IngestionError(FailureClass.BUDGET, "profile-budget-contention")
 
 
-def collect(provider: str, bucket: str, catalog_key: str) -> Snapshot:
+def collect(provider: str, bucket: str, catalog_key: str, *, root: Path | None = None) -> Snapshot:
+    root = root or ROOT
     client = sdk_client("s3")
     store = load_catalog(S3ArtifactStore(client, bucket), catalog_key)
     registry = Registry(S3StateBackend(client, bucket), lease_seconds=360)
-    policy = json.loads((ROOT / "config/source-acceptance.json").read_text())
+    policy = json.loads((root / "config/source-acceptance.json").read_text())
     if policy["version"] != "source-acceptance-v1":
         raise ValueError("Unsupported acceptance policy")
     gate = AcceptanceService(
@@ -74,14 +75,14 @@ def collect(provider: str, bucket: str, catalog_key: str) -> Snapshot:
     today = datetime.now(UTC).date()
     collector = Collector(store, registry, acceptance=gate, max_seconds=280)
     if provider == "fsa":
-        config = FsaConfig.model_validate_json((ROOT / "config/fsa-source.json").read_text())
+        config = FsaConfig.model_validate_json((root / "config/fsa-source.json").read_text())
         cycle = config.cycle(today)
         legacy = legacy_month_snapshot(registry, cycle, config, "fsa-authority-v1")
         return legacy or collector.collect(
             cycle, FsaAdapter(config), config.rules(), pipeline_version=FSA_PIPELINE
         )
     if provider == "osm":
-        osm_config, source = local_source(ROOT)
+        osm_config, source = local_source(root)
         cycle = osm_config.cycle(today)
         legacy = legacy_month_snapshot(registry, cycle, osm_config, "osm-venues-v1")
         return legacy or collector.collect(
@@ -89,7 +90,7 @@ def collect(provider: str, bucket: str, catalog_key: str) -> Snapshot:
         )
     if provider == "companies-house-profiles":
         company_config = CompanyConfig.model_validate_json(
-            (ROOT / "config/companies-source.json").read_text()
+            (root / "config/companies-source.json").read_text()
         )
         numbers = ProfileAdapter(company_config).numbers
         digest = hashlib.sha256("\n".join(numbers).encode()).hexdigest()

@@ -117,8 +117,18 @@ def environment(
     ca = ROOT / ".cache/aws-system-ca.pem"
     if ca.exists():
         os.environ.setdefault("AWS_CA_BUNDLE", str(ca))
-    client = sdk_client("s3", profile="urbanlens_dev")
+    client = sdk_client(
+        "s3", profile=None if os.environ.get("URBANLENS_CLOUD_RUNTIME") == "1" else "urbanlens_dev"
+    )
     remote = S3ArtifactStore(client, state["outputs"]["Bucket"])
+    if os.environ.get("URBANLENS_CLOUD_RUNTIME") != "1":
+        active = S3StateBackend(client, state["outputs"]["Bucket"], "operations").load(
+            "active.json"
+        )
+        if active and json.loads(active[0]).get("run_key"):
+            raise ValueError(
+                "A production workflow is active; wait before running manual pipeline operations"
+            )
     cached = CachedEvidence(remote, state["catalog_key"])
     registry = Registry(S3StateBackend(client, state["outputs"]["Bucket"]))
     snapshots = []

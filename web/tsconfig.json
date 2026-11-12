@@ -18,5 +18,5 @@
     "types": ["vite/client", "node"],
     "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo"
   },
-  "include": ["src", "tests", "vite.config.ts", "playwright.config.ts"]
+  "include": ["src", "tests", "functions", "vite.config.ts", "playwright.config.ts"]
 }

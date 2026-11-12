@@ -5,5 +5,16 @@
 !src/**
 !containers/
 !containers/**
+!scripts/
+!scripts/**
+!config/
+!config/**
+!dbt/
+!dbt/**
+!reference/
+!reference/**
+dbt/target/
+dbt/logs/
+dbt/profiles.yml
 **/__pycache__/
 **/*.pyc

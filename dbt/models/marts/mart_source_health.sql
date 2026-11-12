@@ -20,7 +20,8 @@ with failed_attempts as (
       when 'osm' then interval '1 hour'
       when 'companies-house' then interval '2 hours' when 'ons' then interval '3 hours'
       else interval '4 hours' end as next_due_at,
-   case when sc.provider in ('fsa','osm') or sc.scope_key like '%-profiles'
+   case when {{ 'true' if var('automated_workflow', false) else 'false' }} then 'deployed_monthly'
+        when sc.provider in ('fsa','osm') or sc.scope_key like '%-profiles'
         then 'deployed_monthly' else 'monthly_manual_until_step49' end as scheduling
  from {{ source('control','source_scope') }} sc
  left join {{ source('control','source_head') }} h using(scope_id)
@@ -35,14 +36,27 @@ with failed_attempts as (
    count(*)::bigint as accepted_count,0::bigint as rejected_count,
    count(*)::bigint as raw_count,count(*)::bigint as parsed_count,
    {{ next_monthly_due('max(observed_at)',12) }} as next_due_at,
-   'monthly_manual_until_step49'::text as scheduling
+   '{{ "deployed_monthly" if var("automated_workflow", false) else "monthly_manual_until_step49" }}'::text as scheduling
  from {{ source('silver','postcode_cache') }}
-), all_sources as (select * from scopes union all select * from postcodes)
+), all_sources as (select * from scopes union all select * from postcodes), checked_sources as (
+ select *, case when provider='ons' then
+   '{{ var("reference_check", {}).get("checked_at", "") }}'::text end as edition_checked_at,
+   case when provider='ons' then {{ 'true' if var('reference_check', {}).get('check_passed') else 'false' }}
+        else false end as edition_check_passed
+ from all_sources
+), dated_sources as (
+ select provider,scope_key,cadence,snapshot_id,last_success_at,last_attempt_at,attempt_status,
+   source_published_at,source_extract_date,source_edition,accepted_count,rejected_count,raw_count,parsed_count,
+   case when edition_check_passed then {{ next_monthly_due("nullif(edition_checked_at,'')::timestamptz",11) }}
+        else next_due_at end as next_due_at,
+   scheduling,edition_checked_at,edition_check_passed
+ from checked_sources
+)
 select '{{ var("release_id") }}'::uuid as release_id,*,
-   {{ health_state('last_success_at','attempt_status','last_attempt_at','next_due_at',
+   {{ health_state("case when edition_check_passed then nullif(edition_checked_at,'')::timestamptz else last_success_at end",'attempt_status','last_attempt_at','next_due_at',
                    "'" ~ var('assessed_at') ~ "'::timestamptz") }} as status,
    coalesce(last_attempt_at>last_success_at and attempt_status in ('failed','rejected'),false)
       as retained_older_snapshot,
    '{{ var("assessed_at") }}'::timestamptz as assessed_at,
    null::timestamptz as current_release_published_at
-from all_sources
+from dated_sources

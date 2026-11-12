@@ -30,7 +30,13 @@ pipeline = [
 ]
 
 [dependency-groups]
-dev = ["httpx==0.28.1", "mypy==2.4.1", "pytest==9.2.0", "ruff==0.17.3"]
+dev = [
+    "cfn-lint==1.60.0",
+    "httpx==0.28.1",
+    "mypy==2.4.1",
+    "pytest==9.2.0",
+    "ruff==0.17.3",
+]
 
 [project.scripts]
 urbanlens = "urbanlens.cli:main"

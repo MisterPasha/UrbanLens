@@ -1,0 +1,925 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: UrbanLens bounded production runtime. Public API and monthly workflow
+  remain disabled until explicitly enabled.
+Parameters:
+  ArtifactsBucket:
+    Type: String
+    AllowedPattern: '[a-z0-9.-]+'
+  BoundaryArn:
+    Type: String
+  ApiImage:
+    Type: String
+    AllowedPattern: .+@sha256:[a-f0-9]{64}
+  PipelineImage:
+    Type: String
+    AllowedPattern: .+@sha256:[a-f0-9]{64}
+  RuntimeConfigKey:
+    Type: String
+    AllowedPattern: deployment/config/[a-f0-9]{64}.json
+  SoftwareVersion:
+    Type: String
+    AllowedPattern: '[a-f0-9]{40}'
+  AlertEmail:
+    Type: String
+    AllowedPattern: '[^@\s]+@[^@\s]+\.[^@\s]+'
+  ApiEnabled:
+    Type: String
+    Default: 'false'
+    AllowedValues:
+    - 'true'
+    - 'false'
+  SchedulesEnabled:
+    Type: String
+    Default: 'false'
+    AllowedValues:
+    - 'true'
+    - 'false'
+  ReserveFunctionConcurrency:
+    Type: String
+    Default: 'false'
+    AllowedValues:
+    - 'true'
+    - 'false'
+    Description: Enable only after Lambda regional concurrency is at least 104 (100
+      unreserved + four reserved). Required before public API release.
+Conditions:
+  ServeApi:
+    Fn::And:
+    - Fn::Equals:
+      - Ref: ApiEnabled
+      - 'true'
+    - Condition: ReserveFunctions
+  RunSchedules:
+    Fn::Equals:
+    - Ref: SchedulesEnabled
+    - 'true'
+  ReserveFunctions:
+    Fn::Equals:
+    - Ref: ReserveFunctionConcurrency
+    - 'true'
+Resources:
+  ApiLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/urbanlens-production-api
+      RetentionInDays: 7
+  CollectLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/urbanlens-production-collect
+      RetentionInDays: 7
+  ControlLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/urbanlens-production-control
+      RetentionInDays: 7
+  PipelineLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/codebuild/urbanlens-production-pipeline
+      RetentionInDays: 7
+  Alerts:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: urbanlens-production-alerts
+  Cutoff:
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: urbanlens-production-cutoff
+  AlertSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn:
+        Ref: Alerts
+      Protocol: email
+      Endpoint:
+        Ref: AlertEmail
+  ApiRole:
+    Type: AWS::IAM::Role
+    Properties:
+      PermissionsBoundary:
+        Ref: BoundaryArn
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName: ScopedRuntime
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/*/urbanlens-production-*:*
+          - Effect: Allow
+            Action:
+            - ssm:GetParameter
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/urbanlens/production/database/api
+  CollectorRole:
+    Type: AWS::IAM::Role
+    Properties:
+      PermissionsBoundary:
+        Ref: BoundaryArn
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName: ScopedRuntime
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/*/urbanlens-production-*:*
+          - Effect: Allow
+            Action:
+            - s3:ListBucket
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}
+          - Effect: Allow
+            Action:
+            - s3:GetObject
+            - s3:PutObject
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}/*
+          - Effect: Allow
+            Action:
+            - ssm:GetParameter
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/urbanlens/companies-house-api-key
+  PipelineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      PermissionsBoundary:
+        Ref: BoundaryArn
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: codebuild.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName: ScopedRuntime
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/*/urbanlens-production-*:*
+          - Effect: Allow
+            Action:
+            - s3:ListBucket
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}
+          - Effect: Allow
+            Action:
+            - s3:GetObject
+            - s3:PutObject
+            - s3:DeleteObject
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}/*
+          - Effect: Allow
+            Action:
+            - ssm:GetParameter
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/urbanlens/production/*
+          - Effect: Allow
+            Action:
+            - lambda:InvokeFunction
+            Resource:
+              Fn::GetAtt:
+              - Collector
+              - Arn
+          - Effect: Allow
+            Action:
+            - ecr:GetAuthorizationToken
+            Resource: '*'
+          - Effect: Allow
+            Action:
+            - ecr:BatchGetImage
+            - ecr:GetDownloadUrlForLayer
+            - ecr:BatchCheckLayerAvailability
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:ecr:${AWS::Region}:${AWS::AccountId}:repository/urbanlens-*
+  ControlRole:
+    Type: AWS::IAM::Role
+    Properties:
+      PermissionsBoundary:
+        Ref: BoundaryArn
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
+      Policies:
+      - PolicyName: ScopedRuntime
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/*/urbanlens-production-*:*
+          - Effect: Allow
+            Action:
+            - s3:ListBucket
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}
+          - Effect: Allow
+            Action:
+            - s3:GetObject
+            - s3:PutObject
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:s3:::${ArtifactsBucket}/*
+          - Effect: Allow
+            Action:
+            - codebuild:StartBuild
+            - codebuild:BatchGetBuilds
+            - codebuild:ListBuildsForProject
+            - codebuild:StopBuild
+            Resource:
+            - Fn::Sub: arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:project/urbanlens-production-pipeline
+            - Fn::Sub: arn:${AWS::Partition}:codebuild:${AWS::Region}:${AWS::AccountId}:build/urbanlens-production-pipeline:*
+          - Effect: Allow
+            Action:
+            - events:DisableRule
+            - events:EnableRule
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:events:${AWS::Region}:${AWS::AccountId}:rule/urbanlens-*
+          - Effect: Allow
+            Action:
+            - lambda:PutFunctionConcurrency
+            Resource:
+            - Fn::GetAtt:
+              - Api
+              - Arn
+            - Fn::GetAtt:
+              - Collector
+              - Arn
+            - Fn::Sub: arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:urbanlens-bronze-collect
+          - Effect: Allow
+            Action:
+            - sns:Publish
+            Resource:
+              Ref: Alerts
+          - Effect: Allow
+            Action:
+            - cloudformation:DescribeStacks
+            - cloudformation:UpdateStack
+            Resource:
+              Fn::Sub: arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/urbanlens-production/*
+  Api:
+    Type: AWS::Lambda::Function
+    DependsOn:
+    - ApiLogs
+    Properties:
+      FunctionName: urbanlens-production-api
+      PackageType: Image
+      Code:
+        ImageUri:
+          Ref: ApiImage
+      Role:
+        Fn::GetAtt:
+        - ApiRole
+        - Arn
+      Architectures:
+      - x86_64
+      MemorySize: 512
+      Timeout: 10
+      ReservedConcurrentExecutions:
+        Fn::If:
+        - ServeApi
+        - 2
+        - Ref: AWS::NoValue
+      Environment:
+        Variables:
+          API_DATABASE_PARAMETER: /urbanlens/production/database/api
+  ApiAsyncLimits:
+    Type: AWS::Lambda::EventInvokeConfig
+    Properties:
+      FunctionName:
+        Ref: Api
+      Qualifier: $LATEST
+      MaximumRetryAttempts: 0
+      MaximumEventAgeInSeconds: 3600
+  Collector:
+    Type: AWS::Lambda::Function
+    DependsOn:
+    - CollectLogs
+    Properties:
+      FunctionName: urbanlens-production-collect
+      PackageType: Image
+      Code:
+        ImageUri:
+          Ref: PipelineImage
+      Role:
+        Fn::GetAtt:
+        - CollectorRole
+        - Arn
+      Architectures:
+      - x86_64
+      MemorySize: 1024
+      Timeout: 300
+      ReservedConcurrentExecutions:
+        Fn::If:
+        - ReserveFunctions
+        - 1
+        - Ref: AWS::NoValue
+      Environment:
+        Variables:
+          BRONZE_BUCKET:
+            Ref: ArtifactsBucket
+          RUNTIME_CONFIG_KEY:
+            Ref: RuntimeConfigKey
+      EphemeralStorage:
+        Size: 1024
+  CollectorAsyncLimits:
+    Type: AWS::Lambda::EventInvokeConfig
+    Properties:
+      FunctionName:
+        Ref: Collector
+      Qualifier: $LATEST
+      MaximumRetryAttempts: 0
+      MaximumEventAgeInSeconds: 3600
+  Control:
+    Type: AWS::Lambda::Function
+    DependsOn:
+    - ControlLogs
+    Properties:
+      FunctionName: urbanlens-production-control
+      PackageType: Image
+      Code:
+        ImageUri:
+          Ref: PipelineImage
+      Role:
+        Fn::GetAtt:
+        - ControlRole
+        - Arn
+      Architectures:
+      - x86_64
+      MemorySize: 256
+      Timeout: 60
+      ReservedConcurrentExecutions:
+        Fn::If:
+        - ReserveFunctions
+        - 1
+        - Ref: AWS::NoValue
+      Environment:
+        Variables:
+          BRONZE_BUCKET:
+            Ref: ArtifactsBucket
+          RUNTIME_CONFIG_KEY:
+            Ref: RuntimeConfigKey
+          BUILD_PROJECT: urbanlens-production-pipeline
+          API_FUNCTION: urbanlens-production-api
+          COLLECTOR_FUNCTION: urbanlens-production-collect
+          ALERT_TOPIC:
+            Ref: Alerts
+          PAID_RULES: '["urbanlens-production-refresh", "urbanlens-production-backup",
+            "urbanlens-bronze-fsa-monthly", "urbanlens-bronze-osm-monthly", "urbanlens-bronze-profiles-monthly"]'
+          SOFTWARE_VERSION:
+            Ref: SoftwareVersion
+          PRODUCTION_STACK: urbanlens-production
+      ImageConfig:
+        Command:
+        - urbanlens.operations.aws.handler
+  ControlAsyncLimits:
+    Type: AWS::Lambda::EventInvokeConfig
+    Properties:
+      FunctionName:
+        Ref: Control
+      Qualifier: $LATEST
+      MaximumRetryAttempts: 0
+      MaximumEventAgeInSeconds: 3600
+  Pipeline:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: urbanlens-production-pipeline
+      ServiceRole:
+        Fn::GetAtt:
+        - PipelineRole
+        - Arn
+      ConcurrentBuildLimit: 1
+      TimeoutInMinutes: 30
+      QueuedTimeoutInMinutes: 5
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image:
+          Ref: PipelineImage
+        ImagePullCredentialsType: SERVICE_ROLE
+        PrivilegedMode: false
+        EnvironmentVariables:
+        - Name: BRONZE_BUCKET
+          Value:
+            Ref: ArtifactsBucket
+          Type: PLAINTEXT
+        - Name: RUNTIME_CONFIG_KEY
+          Value:
+            Ref: RuntimeConfigKey
+          Type: PLAINTEXT
+        - Name: BUILD_PROJECT
+          Value: urbanlens-production-pipeline
+          Type: PLAINTEXT
+        - Name: COLLECTOR_FUNCTION
+          Value: urbanlens-production-collect
+          Type: PLAINTEXT
+        - Name: SOFTWARE_VERSION
+          Value:
+            Ref: SoftwareVersion
+          Type: PLAINTEXT
+        - Name: URBANLENS_CLOUD_RUNTIME
+          Value: '1'
+          Type: PLAINTEXT
+      Source:
+        Type: NO_SOURCE
+        BuildSpec: "version: 0.2\nphases:\n  build:\n    commands:\n      - cd /var/task\n\
+          \      - /var/lang/bin/python -m scripts.production_worker\n"
+      LogsConfig:
+        CloudWatchLogs:
+          Status: ENABLED
+          GroupName:
+            Ref: PipelineLogs
+  RefreshRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: urbanlens-production-refresh
+      ScheduleExpression: cron(0 8 7 * ? *)
+      State:
+        Fn::If:
+        - RunSchedules
+        - ENABLED
+        - DISABLED
+      Targets:
+      - Id: control
+        Arn:
+          Fn::GetAtt:
+          - Control
+          - Arn
+        Input: '{"action": "start", "kind": "refresh"}'
+        RetryPolicy:
+          MaximumRetryAttempts: 0
+          MaximumEventAgeInSeconds: 3600
+  RefreshPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Ref: Control
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn:
+        Fn::GetAtt:
+        - RefreshRule
+        - Arn
+  BackupRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: urbanlens-production-backup
+      ScheduleExpression: cron(0 3 * * ? *)
+      State:
+        Fn::If:
+        - RunSchedules
+        - ENABLED
+        - DISABLED
+      Targets:
+      - Id: control
+        Arn:
+          Fn::GetAtt:
+          - Control
+          - Arn
+        Input: '{"action": "start", "kind": "backup"}'
+        RetryPolicy:
+          MaximumRetryAttempts: 0
+          MaximumEventAgeInSeconds: 3600
+  BackupPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Ref: Control
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn:
+        Fn::GetAtt:
+        - BackupRule
+        - Arn
+  HealthRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: urbanlens-production-health
+      ScheduleExpression: cron(0 13 * * ? *)
+      State: ENABLED
+      Targets:
+      - Id: control
+        Arn:
+          Fn::GetAtt:
+          - Control
+          - Arn
+        Input: '{"action": "health"}'
+        RetryPolicy:
+          MaximumRetryAttempts: 0
+          MaximumEventAgeInSeconds: 3600
+  HealthPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Ref: Control
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn:
+        Fn::GetAtt:
+        - HealthRule
+        - Arn
+  BuildCompletion:
+    Type: AWS::Events::Rule
+    Properties:
+      Name: urbanlens-production-completion
+      EventPattern:
+        source:
+        - aws.codebuild
+        detail-type:
+        - CodeBuild Build State Change
+        detail:
+          project-name:
+          - urbanlens-production-pipeline
+          build-status:
+          - SUCCEEDED
+          - FAILED
+          - STOPPED
+          - FAULT
+          - TIMED_OUT
+      State: ENABLED
+      Targets:
+      - Id: control
+        Arn:
+          Fn::GetAtt:
+          - Control
+          - Arn
+        RetryPolicy:
+          MaximumRetryAttempts: 2
+          MaximumEventAgeInSeconds: 3600
+  BuildPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Ref: Control
+      Action: lambda:InvokeFunction
+      Principal: events.amazonaws.com
+      SourceArn:
+        Fn::GetAtt:
+        - BuildCompletion
+        - Arn
+  CutoffSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      TopicArn:
+        Ref: Cutoff
+      Protocol: lambda
+      Endpoint:
+        Fn::GetAtt:
+        - Control
+        - Arn
+  CutoffPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName:
+        Ref: Control
+      Action: lambda:InvokeFunction
+      Principal: sns.amazonaws.com
+      SourceArn:
+        Ref: Cutoff
+  MonthlyBudget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: urbanlens-production-monthly
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit:
+          Amount: 20
+          Unit: USD
+        CostTypes:
+          IncludeTax: true
+          IncludeCredit: false
+          IncludeRefund: false
+          IncludeSubscription: true
+          IncludeSupport: true
+          IncludeUpfront: true
+          UseBlended: false
+      NotificationsWithSubscribers:
+      - Notification:
+          NotificationType: ACTUAL
+          ComparisonOperator: GREATER_THAN
+          ThresholdType: ABSOLUTE_VALUE
+          Threshold: 5
+        Subscribers:
+        - SubscriptionType: SNS
+          Address:
+            Ref: Alerts
+      - Notification:
+          NotificationType: ACTUAL
+          ComparisonOperator: GREATER_THAN
+          ThresholdType: ABSOLUTE_VALUE
+          Threshold: 10
+        Subscribers:
+        - SubscriptionType: SNS
+          Address:
+            Ref: Alerts
+      - Notification:
+          NotificationType: FORECASTED
+          ComparisonOperator: GREATER_THAN
+          ThresholdType: ABSOLUTE_VALUE
+          Threshold: 5
+        Subscribers:
+        - SubscriptionType: SNS
+          Address:
+            Ref: Alerts
+      - Notification:
+          NotificationType: FORECASTED
+          ComparisonOperator: GREATER_THAN
+          ThresholdType: ABSOLUTE_VALUE
+          Threshold: 10
+        Subscribers:
+        - SubscriptionType: SNS
+          Address:
+            Ref: Alerts
+    DependsOn: AlertsPolicy
+  HttpApi:
+    Type: AWS::ApiGatewayV2::Api
+    Condition: ServeApi
+    Properties:
+      Name: UrbanLens
+      ProtocolType: HTTP
+  Integration:
+    Type: AWS::ApiGatewayV2::Integration
+    Condition: ServeApi
+    Properties:
+      ApiId:
+        Ref: HttpApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri:
+        Fn::GetAtt:
+        - Api
+        - Arn
+      PayloadFormatVersion: '2.0'
+      TimeoutInMillis: 10000
+  Route:
+    Type: AWS::ApiGatewayV2::Route
+    Condition: ServeApi
+    Properties:
+      ApiId:
+        Ref: HttpApi
+      RouteKey: GET /{proxy+}
+      Target:
+        Fn::Join:
+        - /
+        - - integrations
+          - Ref: Integration
+  Stage:
+    Type: AWS::ApiGatewayV2::Stage
+    Condition: ServeApi
+    Properties:
+      ApiId:
+        Ref: HttpApi
+      StageName: $default
+      AutoDeploy: true
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 4
+        ThrottlingRateLimit: 2.0
+  GatewayPermission:
+    Type: AWS::Lambda::Permission
+    Condition: ServeApi
+    Properties:
+      FunctionName:
+        Ref: Api
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Sub: arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${HttpApi}/*
+  ApiErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: urbanlens-production-apierrors
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: urbanlens-production-api
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 5
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+      - Ref: Alerts
+  ApiThrottlesAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: urbanlens-production-apithrottles
+      Namespace: AWS/Lambda
+      MetricName: Throttles
+      Dimensions:
+      - Name: FunctionName
+        Value: urbanlens-production-api
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 20
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+      - Ref: Alerts
+  CollectorErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: urbanlens-production-collectorerrors
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: urbanlens-production-collect
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+      - Ref: Alerts
+  ControlErrorsAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: urbanlens-production-controlerrors
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+      - Name: FunctionName
+        Value: urbanlens-production-control
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 1
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+      - Ref: Alerts
+  ApiLatencyAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: urbanlens-production-api-latency
+      Namespace: AWS/Lambda
+      MetricName: Duration
+      Dimensions:
+      - Name: FunctionName
+        Value: urbanlens-production-api
+      ExtendedStatistic: p95
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 2000
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+      AlarmActions:
+      - Ref: Alerts
+  Dashboard:
+    Type: AWS::CloudWatch::Dashboard
+    Properties:
+      DashboardName: UrbanLens
+      DashboardBody:
+        Fn::Sub: '{"widgets":[{"type": "metric", "x": 0, "y": 0, "width": 12, "height":
+          6, "properties": {"region": "${AWS::Region}", "title": "Public API errors,
+          throttles and duration", "metrics": [["AWS/Lambda", "Errors", "FunctionName",
+          "urbanlens-production-api"], ["AWS/Lambda", "Throttles", "FunctionName",
+          "urbanlens-production-api"], ["AWS/Lambda", "Duration", "FunctionName",
+          "urbanlens-production-api"]], "period": 300, "stat": "Sum"}}, {"type": "metric",
+          "x": 12, "y": 0, "width": 12, "height": 6, "properties": {"region": "${AWS::Region}",
+          "title": "Pipeline builds and duration", "metrics": [["AWS/CodeBuild", "FailedBuilds",
+          "ProjectName", "urbanlens-production-pipeline"], ["AWS/CodeBuild", "Duration",
+          "ProjectName", "urbanlens-production-pipeline"]], "period": 3600, "stat":
+          "Sum"}}, {"type": "metric", "x": 0, "y": 6, "width": 12, "height": 6, "properties":
+          {"region": "${AWS::Region}", "title": "Artifact growth (AWS daily storage
+          measurement)", "metrics": [["AWS/S3", "BucketSizeBytes", "BucketName", "${ArtifactsBucket}",
+          "StorageType", "StandardStorage"]], "period": 86400, "stat": "Average"}}]}'
+  CutoffBudget:
+    Type: AWS::Budgets::Budget
+    Properties:
+      Budget:
+        BudgetName: urbanlens-production-cutoff
+        BudgetType: COST
+        TimeUnit: MONTHLY
+        BudgetLimit:
+          Amount: 20
+          Unit: USD
+        CostTypes:
+          IncludeTax: true
+          IncludeCredit: false
+          IncludeRefund: false
+          IncludeSubscription: true
+          IncludeSupport: true
+          IncludeUpfront: true
+          UseBlended: false
+      NotificationsWithSubscribers:
+      - Notification:
+          NotificationType: ACTUAL
+          ComparisonOperator: GREATER_THAN
+          ThresholdType: ABSOLUTE_VALUE
+          Threshold: 15
+        Subscribers:
+        - SubscriptionType: SNS
+          Address:
+            Ref: Cutoff
+      - Notification:
+          NotificationType: FORECASTED
+          ComparisonOperator: GREATER_THAN
+          ThresholdType: ABSOLUTE_VALUE
+          Threshold: 15
+        Subscribers:
+        - SubscriptionType: SNS
+          Address:
+            Ref: Cutoff
+    DependsOn: CutoffPolicy
+  AlertsPolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      Topics:
+      - Ref: Alerts
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - budgets.amazonaws.com
+            - cloudwatch.amazonaws.com
+          Action: SNS:Publish
+          Resource:
+            Ref: Alerts
+          Condition:
+            StringEquals:
+              aws:SourceAccount:
+                Ref: AWS::AccountId
+  CutoffPolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      Topics:
+      - Ref: Cutoff
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - budgets.amazonaws.com
+            - cloudwatch.amazonaws.com
+          Action: SNS:Publish
+          Resource:
+            Ref: Cutoff
+          Condition:
+            StringEquals:
+              aws:SourceAccount:
+                Ref: AWS::AccountId
+Outputs:
+  ControlFunction:
+    Value:
+      Ref: Control
+  ApiFunction:
+    Value:
+      Ref: Api
+  PipelineProject:
+    Value:
+      Ref: Pipeline
+  AlertTopic:
+    Value:
+      Ref: Alerts
+  CutoffTopic:
+    Value:
+      Ref: Cutoff
+  ApiUrl:
+    Condition: ServeApi
+    Value:
+      Fn::GetAtt:
+      - HttpApi
+      - ApiEndpoint

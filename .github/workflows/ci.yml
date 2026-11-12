@@ -26,6 +26,10 @@ jobs:
           cache-dependency-path: web/package-lock.json
       - name: Install locked dependencies and private local configuration
         run: python scripts/dev.py setup
+      - name: Scan source for accidentally included credentials
+        run: python -m scripts.secret_scan
+      - name: Validate production CloudFormation schemas
+        run: .venv/bin/cfn-lint infra/production/foundation.yaml infra/production/template.yaml --regions eu-west-2
       - name: Python and frontend checks
         run: python scripts/dev.py check
       - name: Check generated API and TypeScript contracts
@@ -48,6 +52,41 @@ jobs:
         run: npm exec -- playwright install --with-deps chromium
       - name: Browser/API integration smoke check
         run: python scripts/dev.py browser-test
+      - name: Check the Cloudflare API proxy
+        working-directory: web
+        run: node --test tests/proxy.test.mjs
+      - name: Preserve the static frontend build
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: frontend-${{ github.sha }}
+          path: web/dist
+          retention-days: 3
       - name: Stop local services, preserving no running CI containers
         if: ${{ always() && steps.database.outcome && steps.database.outcome != 'skipped' }}
         run: docker compose down
+
+  images:
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        target: [api, pipeline]
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Build a separate locked Linux image
+        env:
+          IMAGE_TARGET: ${{ matrix.target }}
+        run: |
+          docker build --platform linux/amd64 --target "$IMAGE_TARGET" \
+            --build-arg LAMBDA_BASE_IMAGE="$(cat containers/base-image.txt)" \
+            -f containers/Dockerfile -t "urbanlens-$IMAGE_TARGET:check" .
+      - name: Verify required runtime imports without cloud credentials
+        env:
+          IMAGE_TARGET: ${{ matrix.target }}
+        run: |
+          if [ "$IMAGE_TARGET" = api ]; then
+            docker run --rm --entrypoint /var/lang/bin/python urbanlens-api:check -c 'from urbanlens.api.lambda_entry import handler; assert callable(handler)'
+          else
+            docker run --rm --network none --entrypoint /var/lang/bin/python urbanlens-pipeline:check -c 'import io,tarfile; from scripts.production_worker import main; from urbanlens.operations.aws import handler; from scripts.backup import code_archive; sink=type("Sink",(),{"put_immutable":lambda self,key,parts,**kwargs:b"".join(parts)})(); archive=tarfile.open(fileobj=io.BytesIO(code_archive(sink)),mode="r:gz"); assert "src/urbanlens/operations/control.py" in archive.getnames(); assert callable(main) and callable(handler)'
+          fi

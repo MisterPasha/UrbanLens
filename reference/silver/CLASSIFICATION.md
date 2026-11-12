@@ -42,7 +42,7 @@ Rules/reviews are copied to immutable S3 evidence. Changing a registered definit
 
 The build writes a local `data/silver/eligibility-review-<manifest hash>.json` queue. Existing answers are preserved. For a clear case, fill `decision`, `primary_category` when eligible, `public_venue_confirmed`, `notes` and `evidence`. Reviewed answers can then be promoted to a new version of `config/eligibility-reviews.json` and rebuilt. Leave uncertain cases unresolved.
 
-The queue need not be completed before step 22. Many coarse FSA cases may gain evidence after accepted matching in step 23. Identity/name/co-location reviews are separate from category overrides and integrate during matching/review work. The approved 10 November category review is recorded in `eligibility-reviews-v2`; see [review decisions](REVIEWS.md).
+The queue need not be completed before step 22. Many coarse FSA cases may gain evidence after accepted matching in step 23. Identity/name/co-location reviews are separate from category overrides. The approved 10 November category review is preserved in `eligibility-reviews-v3`, which corrects note encoding without changing decisions; see [review decisions](REVIEWS.md).
 
 Fine-category coverage is **eligible observations with a specific primary category / all eligible observations**, including broad/ambiguous ones. The report also shows all candidates and unresolved counts: this is provisional source-level coverage, with duplicates still present. It is not city-wide venue accuracy or a count of unique competitors.
 

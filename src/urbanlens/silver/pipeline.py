@@ -8,7 +8,7 @@ import tempfile
 import xml.etree.ElementTree as ET
 from collections.abc import Callable, Iterator
 from datetime import datetime
-from typing import Any, Literal
+from typing import Any, Literal, Protocol
 
 from urbanlens.ingestion.companies import csv_rows
 from urbanlens.ingestion.contracts import Artifact, Contract, Partition, Provider, Snapshot, Stage
@@ -16,7 +16,7 @@ from urbanlens.ingestion.engine import load_model, metadata_key
 from urbanlens.ingestion.interfaces import ArtifactStore
 from urbanlens.ingestion.payload import payload
 from urbanlens.ingestion.postcodes import CacheEntry, Lookup, validate_result
-from urbanlens.ingestion.storage import chunks, gzip_chunks
+from urbanlens.ingestion.storage import ByteReader, chunks, gzip_chunks
 from urbanlens.silver import normalise
 from urbanlens.silver.models import VERSION, Evidence, Observation
 
@@ -254,6 +254,31 @@ def cache_observations(
         )
 
 
+class SeekableReader(ByteReader, Protocol):
+    def seek(self, offset: int) -> int: ...
+
+
+def retained_gzip(
+    store: ArtifactStore, key: str, stream: SeekableReader, decoded_sha256: str
+) -> Artifact:
+    """Reuse verified content despite platform-dependent gzip headers or encoders."""
+    existing = store.stat(key)
+    if existing:
+        if existing.compression != "gzip":
+            raise ValueError("Expected a retained gzip artifact")
+        checksum = hashlib.sha256()
+        with payload(store, existing, max_bytes=128 * 1024 * 1024) as retained:
+            for block in chunks(retained):
+                checksum.update(block)
+        if checksum.hexdigest() != decoded_sha256:
+            raise ValueError("Retained compressed artifact has different decoded content")
+        return existing.model_copy(update={"media_type": "application/x-ndjson"})
+    stream.seek(0)
+    return store.put_immutable(
+        key, chunks(stream), media_type="application/x-ndjson", compression="gzip"
+    )
+
+
 def write_batch(
     output: ArtifactStore, key: str, records: Iterator[Observation], **metadata: Any
 ) -> Batch:
@@ -275,9 +300,7 @@ def write_batch(
             stream.write(block)
         stream.seek(0)
         addressed = key.removesuffix(".jsonl.gz") + "/" + digest.hexdigest() + ".jsonl.gz"
-        artifact = output.put_immutable(
-            addressed, chunks(stream), media_type="application/x-ndjson", compression="gzip"
-        )
+        artifact = retained_gzip(output, addressed, stream, digest.hexdigest())
     return Batch(**metadata, records=artifact, count=count, decoded_sha256=digest.hexdigest())
 
 

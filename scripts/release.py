@@ -178,10 +178,11 @@ def main() -> None:
     parser.add_argument("task", choices=["prepare", "publish", "rollback", "cleanup", "status"])
     parser.add_argument("--target", choices=["local", "neon"], default="local")
     parser.add_argument("--release-id", type=UUID)
+    parser.add_argument("--source-schema", default="ul_candidate_gold")
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
     if args.task == "prepare":
-        report = prepare(args.target)
+        report = prepare(args.target, args.source_schema)
     else:
         with connect(credential(args.target, "migration")) as c:
             if args.task == "cleanup":

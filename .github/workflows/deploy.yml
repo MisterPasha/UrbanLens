@@ -1,0 +1,119 @@
+name: Deploy reviewed software
+
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: Full 40-character commit SHA with passing Foundation checks (also used for rollback).
+        required: true
+        type: string
+      publish_frontend:
+        description: Publish the Cloudflare Pages frontend (step 59 only).
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  actions: read
+  id-token: write
+
+concurrency:
+  group: urbanlens-production-software
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REVISION: ${{ inputs.revision }}
+      BRONZE_BUCKET: ${{ vars.BRONZE_BUCKET }}
+      RUNTIME_CONFIG_KEY: ${{ vars.RUNTIME_CONFIG_KEY }}
+    steps:
+      - name: Require a tested commit from this repository
+        env:
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          [[ "$REVISION" =~ ^[a-f0-9]{40}$ ]]
+          gh api "repos/$REPOSITORY/actions/workflows/ci.yml/runs?head_sha=$REVISION&status=success" --jq '.workflow_runs | any(.event == "push")' | grep -qx true
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ inputs.revision }}
+          persist-credentials: false
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install locked build tools
+        run: python scripts/dev.py setup
+      - name: Recheck secret patterns before deployment
+        run: .venv/bin/python -m scripts.secret_scan
+      - uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
+          aws-region: eu-west-2
+          role-session-name: urbanlens-reviewed-software
+          mask-aws-account-id: true
+      - name: Build and push digest-pinned API and pipeline images
+        id: images
+        run: |
+          ACCOUNT=$(aws sts get-caller-identity --query Account --output text)
+          REGISTRY="$ACCOUNT.dkr.ecr.eu-west-2.amazonaws.com"
+          aws ecr get-login-password | docker login --username AWS --password-stdin "$REGISTRY"
+          for target in api pipeline; do
+            repo="urbanlens-$target"
+            if ! aws ecr describe-images --repository-name "$repo" --image-ids "imageTag=$REVISION" >/dev/null 2>&1; then
+              count=$(aws ecr describe-images --repository-name "$repo" --query 'length(imageDetails)' --output text)
+              if [ "$count" -ge 8 ]; then echo 'Image retention review required before pushing another image'; exit 1; fi
+              docker build --platform linux/amd64 --provenance=false --target "$target" --build-arg LAMBDA_BASE_IMAGE="$(cat containers/base-image.txt)" -f containers/Dockerfile -t "$REGISTRY/$repo:$REVISION" .
+              docker push "$REGISTRY/$repo:$REVISION"
+            fi
+            digest=$(aws ecr describe-images --repository-name "$repo" --image-ids "imageTag=$REVISION" --query 'imageDetails[0].imageDigest' --output text)
+            echo "$target=$REGISTRY/$repo@$digest" >> "$GITHUB_OUTPUT"
+          done
+      - name: Update pipeline while retaining the current API
+        env:
+          API_IMAGE: ${{ steps.images.outputs.api }}
+          PIPELINE_IMAGE: ${{ steps.images.outputs.pipeline }}
+        run: |
+          .venv/bin/python -m scripts.production deploy --wait --pipeline-only --api-image "$API_IMAGE" --pipeline-image "$PIPELINE_IMAGE" --runtime-config-key "$RUNTIME_CONFIG_KEY" --bucket "$BRONZE_BUCKET"
+      - name: Run compatible forward migrations before changing readers
+        run: |
+          .venv/bin/python -m scripts.production start --job migrate > migration-job.json
+          BUILD=$(python -c 'import json; print(json.load(open("migration-job.json"))["build_id"])')
+          .venv/bin/python -m scripts.production wait --build-id "$BUILD"
+      - name: Deploy the tested API image
+        env:
+          API_IMAGE: ${{ steps.images.outputs.api }}
+          PIPELINE_IMAGE: ${{ steps.images.outputs.pipeline }}
+        run: |
+          .venv/bin/python -m scripts.production deploy --wait --api-image "$API_IMAGE" --pipeline-image "$PIPELINE_IMAGE" --runtime-config-key "$RUNTIME_CONFIG_KEY" --bucket "$BRONZE_BUCKET"
+      - name: Smoke-test the deployed API through IAM
+        run: .venv/bin/python -m scripts.production smoke --private
+      - name: Smoke-test an enabled HTTPS API
+        env:
+          API_URL: ${{ vars.API_URL }}
+        if: vars.API_URL != ''
+        run: .venv/bin/python -m scripts.production smoke --url "$API_URL"
+      - name: Build static frontend
+        working-directory: web
+        run: npm run build
+      - name: Publish Pages only under the reviewed public-release procedure
+        if: inputs.publish_frontend
+        working-directory: web
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_PROJECT: ${{ vars.CLOUDFLARE_PROJECT }}
+          FREE_PLAN_CONFIRMED: ${{ vars.CLOUDFLARE_FREE_PLAN_CONFIRMED }}
+        run: |
+          test "$FREE_PLAN_CONFIRMED" = true
+          test -n "$CLOUDFLARE_PROJECT"
+          npm exec -- wrangler pages deploy dist --project-name "$CLOUDFLARE_PROJECT" --branch main

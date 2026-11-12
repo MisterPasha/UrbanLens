@@ -25,9 +25,9 @@ def main() -> None:
     index = ROOT / f".cache/classification-{args.storage}.json"
     if args.task == "build":
         source, source_manifest = bundle_for(store, args.storage)
-        taxonomy = Taxonomy.model_validate_json((ROOT / "config/taxonomy.json").read_text())
+        taxonomy = Taxonomy.model_validate_json((ROOT / "config/taxonomy.json").read_bytes())
         reviews = Reviews.model_validate_json(
-            (ROOT / "config/eligibility-reviews.json").read_text()
+            (ROOT / "config/eligibility-reviews.json").read_bytes()
         )
         bundle, manifest, summary, rows = build(store, source, source_manifest, taxonomy, reviews)
         report = {**summary, **check(store, bundle)}

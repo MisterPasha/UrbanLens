@@ -61,7 +61,9 @@ Draft review, 10 November 2026: `data/reviews/unresolved-records-2026-11-10.json
 
 Approved category review, 10 November 2026: all 67 decisions in
 `data/reviews/other-food-service-review-2026-11-10.json` are recorded in
-`config/eligibility-reviews.json` (`eligibility-reviews-v2`). Each override binds
+`config/eligibility-reviews.json` (`eligibility-reviews-v3`). Version 3 preserves
+the same 141 approved overrides and corrects UTF-8 review-note encoding; previous
+immutable definitions remain retained. Each override binds
 the source record hash and cites the approved file checksum. Existing inactive
 sources remain inactive. These are category/scope corrections; they do not approve
 pending venue matches or change source observation dates.
