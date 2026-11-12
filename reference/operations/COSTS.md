@@ -6,7 +6,8 @@ forecast before free allowances, tax and currency conversion, not an invoice or 
 
 Measured: full refresh approximately 5.5 minutes, standalone backup 45 seconds,
 Neon 528,556,032 bytes and two connections after publication. Daily backups are
-checksum-verified; isolated production restore is step 54.
+checksum-verified; isolated production restore is step 54. Current S3 objects total
+1.25 GB across 835 objects; noncurrent versions are excluded from that measurement.
 
 | Monthly scenario | Estimated USD |
 | --- | ---: |

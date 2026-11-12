@@ -121,6 +121,13 @@ deployed software. Earlier attempts are archived without resetting counters. A
 previous approval cannot authorise another attempt. Normal scheduled triggers
 still never retry failures automatically.
 
-Verification runs: [Foundation checks](https://github.com/MisterPasha/UrbanLens/actions/runs/43200306869)
-and [controlled private deployment](https://github.com/MisterPasha/UrbanLens/actions/runs/43201062385).
-The deployment uses tested runtime commit `ec953f0468d0a2acbe69f52cf9306753cad60ad3`.
+Automated scratch schemas are removed after release freezing and before backup.
+Cleanup is restricted to the exact automated naming pattern, expected owner and
+unregistered schemas; frozen releases remain intact. A disposable-database safety
+check and live cleanup of two obsolete schemas preserved the published API release.
+
+Runtime commit: `195fc47dbde829d6f41a81330b5ae8f4a29c019e`.
+Verification runs: [Foundation checks](https://github.com/MisterPasha/UrbanLens/actions/runs/43203906465)
+and [controlled private deployment](https://github.com/MisterPasha/UrbanLens/actions/runs/43204830275).
+GitHub trust matches the repository's verified immutable owner/repository IDs;
+no AWS access keys or database credentials are stored in GitHub.
