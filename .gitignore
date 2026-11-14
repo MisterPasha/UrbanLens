@@ -1,6 +1,7 @@
 # Local configuration and credentials
 .env
 .env.*
+.vercel/
 !.env.example
 .aws/
 .codex/

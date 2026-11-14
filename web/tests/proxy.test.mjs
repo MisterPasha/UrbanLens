@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import process from 'node:process';
+import { URL } from 'node:url';
 import { onRequestGet } from '../functions/api/[[path]].ts';
+import vercel from '../api/[...path].ts';
+import health from '../api/health.ts';
 const { Request, Response } = globalThis;
 
 test('service cutoff and invalid origins never forward paid API requests', async () => {
@@ -30,4 +34,40 @@ test('proxy forwards queries without browser credentials and preserves errors', 
     assert.equal(response.status, 503);
     assert.equal(response.headers.get('Cache-Control'), 'no-store');
   } finally { globalThis.fetch = original; }
+});
+
+test('Vercel adapter uses server settings, allows only reads, and forwards health', async () => {
+  const original = globalThis.fetch;
+  const saved = { API_ORIGIN: process.env.API_ORIGIN, SERVICE_ENABLED: process.env.SERVICE_ENABLED };
+  let calls = 0;
+  globalThis.fetch = async (url, init) => {
+    calls++;
+    assert.equal(init.redirect, 'error');
+    assert.deepEqual(init.headers, { Accept: 'application/json' });
+    assert.equal(new URL(url).origin, 'https://abc123.execute-api.eu-west-2.amazonaws.com');
+    if (new URL(url).pathname === '/health') return Response.json({ status: 'ok', service: 'urbanlens-api' });
+    assert.equal(new URL(url).pathname, '/api/v1/meta');
+    return Response.json({ release_id: 'published' });
+  };
+  try {
+    process.env.API_ORIGIN = 'https://abc123.execute-api.eu-west-2.amazonaws.com';
+    process.env.SERVICE_ENABLED = 'false';
+    const request = new Request('https://urbanlens.vercel.app/api/v1/meta');
+    assert.equal((await vercel.fetch(request)).status, 503);
+    assert.equal(calls, 0);
+    process.env.SERVICE_ENABLED = 'true';
+    assert.equal((await vercel.fetch(new Request(request.url, { method: 'POST' }))).status, 405);
+    assert.equal(calls, 0);
+    const response = await vercel.fetch(request);
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get('Cache-Control'), 'no-store');
+    assert.equal((await response.json()).release_id, 'published');
+    assert.equal((await health.fetch(new Request('https://urbanlens.vercel.app/health'))).status, 200);
+    assert.equal(calls, 2);
+  } finally {
+    globalThis.fetch = original;
+    for (const [key, value] of Object.entries(saved)) {
+      if (value === undefined) delete process.env[key]; else process.env[key] = value;
+    }
+  }
 });

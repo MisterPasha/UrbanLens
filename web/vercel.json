@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "regions": ["lhr1"],
+  "functions": {
+    "api/*.ts": { "maxDuration": 15 }
+  },
+  "rewrites": [
+    { "source": "/health", "destination": "/api/health" }
+  ],
+  "git": { "deploymentEnabled": false }
+}

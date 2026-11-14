@@ -52,7 +52,7 @@ jobs:
         run: npm exec -- playwright install --with-deps chromium
       - name: Browser/API integration smoke check
         run: python scripts/dev.py browser-test
-      - name: Check the Cloudflare API proxy
+      - name: Check the hosting API proxy and Vercel adapter
         working-directory: web
         run: node --test tests/proxy.test.mjs
       - name: Preserve the static frontend build

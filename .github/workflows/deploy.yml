@@ -8,7 +8,7 @@ on:
         required: true
         type: string
       publish_frontend:
-        description: Publish the Cloudflare Pages frontend (step 59 only).
+        description: Publish the Vercel frontend (requires configured project and public AWS API).
         default: false
         type: boolean
 
@@ -55,6 +55,20 @@ jobs:
         run: python scripts/dev.py setup
       - name: Recheck secret patterns before deployment
         run: .venv/bin/python -m scripts.secret_scan
+      - name: Require configured Vercel delivery before changing AWS
+        if: inputs.publish_frontend
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+          API_URL: ${{ vars.API_URL }}
+          WEBSITE_URL: ${{ vars.WEBSITE_URL }}
+        run: |
+          test -n "$VERCEL_TOKEN"
+          test -n "$VERCEL_ORG_ID"
+          test -n "$VERCEL_PROJECT_ID"
+          test -n "$API_URL"
+          test -n "$WEBSITE_URL"
       - uses: aws-actions/configure-aws-credentials@v6.3.0
         with:
           role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
@@ -105,15 +119,20 @@ jobs:
       - name: Build static frontend
         working-directory: web
         run: npm run build
-      - name: Publish Pages only under the reviewed public-release procedure
+      - name: Build and publish the reviewed Vercel frontend
         if: inputs.publish_frontend
-        working-directory: web
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_PROJECT: ${{ vars.CLOUDFLARE_PROJECT }}
-          FREE_PLAN_CONFIRMED: ${{ vars.CLOUDFLARE_FREE_PLAN_CONFIRMED }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
         run: |
-          test "$FREE_PLAN_CONFIRMED" = true
-          test -n "$CLOUDFLARE_PROJECT"
-          npm exec -- wrangler pages deploy dist --project-name "$CLOUDFLARE_PROJECT" --branch main
+          npx --yes vercel@65.16.0 pull --yes --environment=production --token "$VERCEL_TOKEN"
+          npx --yes vercel@65.16.0 build --prod --token "$VERCEL_TOKEN"
+          npx --yes vercel@65.16.0 deploy --prebuilt --prod --token "$VERCEL_TOKEN" > vercel-url.txt
+      - name: Verify the public website and its AWS data connection
+        if: inputs.publish_frontend
+        env:
+          WEBSITE_URL: ${{ vars.WEBSITE_URL }}
+        run: |
+          curl --fail --silent --show-error "$WEBSITE_URL/" > /dev/null
+          .venv/bin/python -m scripts.production smoke --url "$WEBSITE_URL"
