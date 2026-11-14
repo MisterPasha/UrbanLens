@@ -34,15 +34,22 @@ class Coordinator:
         retry: bool = False,
         recovery_approval: str | None = None,
     ) -> dict[str, Any]:
-        if kind not in {"refresh", "backup", "migrate"}:
+        if kind not in {"refresh", "backup", "migrate", "publish"}:
             raise ValueError("Unsupported production job")
         switches, _ = self.read("switches.json")
         if switches.get("paused", True):
             return {"status": "service_limited"}
+        if kind == "refresh" and self.read("pending-publication.json")[0].get("release_id"):
+            raise ValueError("Finish the pending reuse publication before another refresh")
         self.reconcile(now)
         period = now.strftime("%Y-%m" if kind == "refresh" else "%Y-%m-%d")
         if kind == "migrate":
             period = self.software_version
+        if kind == "publish":
+            from uuid import UUID
+
+            pending, _ = self.read("pending-publication.json")
+            period = str(UUID(pending["release_id"]))
         key = f"runs/{kind}/{period}.json"
         state, version = self.read(key)
         if state.get("status") == "SUCCEEDED":
@@ -177,6 +184,10 @@ class Coordinator:
             alerts.append("database_connection_headroom_low")
         if measurements.get("reference_update_pending"):
             alerts.append("reference_edition_requires_review")
+        if measurements.get("reference_source_check_failed"):
+            alerts.append("reference_source_check_failed")
+        if self.read("pending-publication.json")[0].get("release_id"):
+            alerts.append("reuse_publication_pending")
         return {
             "checked_at": now.isoformat(),
             "paused": switches.get("paused", True),

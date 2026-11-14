@@ -1,0 +1,52 @@
+UrbanLens — Brighton & Hove public derived database
+
+Database rights: Open Database Licence 1.0 (ODbL).
+https://opendatacommons.org/licenses/odbl/1-0/
+The licence applies to the derived database; source contents retain their rights.
+Application code, credentials and private working evidence are not distributed.
+
+FSA: Contains public sector information licensed under the Open Government
+Licence v3.0. Ratings are dated observations of the linked FSA record, not a
+guarantee of current hygiene or evidence about a replacement business.
+https://ratings.food.gov.uk/terms-and-conditions
+
+OSM: © OpenStreetMap contributors. ODbL 1.0.
+https://www.openstreetmap.org/copyright
+
+ONS: Source: Office for National Statistics licensed under the Open Government
+Licence v.3.0. Contains OS data © Crown copyright and database right 2026.
+Area measurements have been created by the Office for National Statistics.
+Crown Copyright. All rights reserved 2022.
+Population reference date and geography editions are recorded in manifest.json.
+https://www.ons.gov.uk/methodology/geography/licences
+
+Postcodes.io-derived GB geography:
+Contains Ordnance Survey data © Crown copyright and database right 2025.
+Contains Royal Mail data © Royal Mail copyright and database right 2025.
+Contains National Statistics data © Crown copyright and database right 2025.
+Contains NRS data © Crown copyright and database right 2025.
+Northern Ireland postcode data is not included. Centres are approximate.
+https://postcodes.io/docs/licences/
+
+Companies House: source of factual public-register company information.
+Registered offices are not evidence of trading premises or ownership.
+No filings, officers, PSCs, logos or creative documents are reproduced.
+Source/third-party rights remain applicable; no universal OGL grant is claimed.
+https://www.gov.uk/government/publications/companies-house-accreditation-to-information-fair-traders-scheme/public-task-copyright-and-crown-copyright
+
+Owner corrections and source crosswalks describe factual processing decisions,
+not independently verified business openings/closures or current operators.
+No forecasts, complete business census or footfall estimates are provided.
+
+Format: each public relation has CSV and canonical JSONL; nested CSV cells are
+JSON, \N denotes null. Read identifiers as text, preserving leading zeroes.
+Use schema.json, areas.geojson and SHA256SUMS to interpret and verify the files.
+The exact analytical geometry is stored once in dim_area/areas.geojson;
+mart_area joins it by geography_version and area_code.
+Excluded businesses contribute aggregate coverage, not public detail records.
+Private notes, source contacts and withheld locations are not public data fields.
+
+Corrections/privacy: https://github.com/MisterPasha/UrbanLens/issues
+Supply record IDs only; do not post private addresses or other personal details.
+Business/register facts can identify individuals. Processing is limited to
+location research and source transparency, with no personal enrichment or marketing.

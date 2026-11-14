@@ -66,8 +66,13 @@ test('anonymous desktop/mobile journey preserves filters and exposes accessible 
   await page.screenshot({ path: testInfo.outputPath('methodology-mobile.png'), fullPage: true });
   await page.getByRole('link', { name: 'Data reuse and downloadable-data status' }).click();
   await expect(page.getByRole('heading', { name: 'Data reuse', exact: true })).toBeVisible();
-  await expect(page.getByText(/no UrbanLens data bundle is published yet/)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Download data ZIP' })).toHaveAttribute('href',
+    `https://github.com/MisterPasha/UrbanLens/releases/download/data-${firstRelease}/urbanlens-${firstRelease}.zip`);
   await audit('reuse page');
+  await page.route('**/api/v1/meta**', route => route.fulfill({ status: 503, json: {} }));
+  await page.reload();
+  await expect(page.getByRole('link', { name: 'Download data ZIP' })).toHaveAttribute('href',
+    'https://github.com/MisterPasha/UrbanLens/releases/download/data-4948727a-c526-4f8d-a2ea-206b16bba518/urbanlens-4948727a-c526-4f8d-a2ea-206b16bba518.zip');
   expect(requests.filter(url => !url.pathname.endsWith('/meta')).every(url => url.searchParams.get('release_id') === firstRelease)).toBeTruthy();
   expect(errors).toEqual([]);
   await testInfo.attach('accessibility-report', { body: JSON.stringify(reports, null, 2), contentType: 'application/json' });

@@ -1,6 +1,7 @@
 {% macro install_queries() %}
-{% set venues=ref('mart_establishment') %}
-{% set areas=ref('dim_area') %}
+{# Function bodies must survive restore into a different database name. #}
+{% set venues=adapter.quote(target.schema) ~ '.' ~ adapter.quote('mart_establishment') %}
+{% set areas=adapter.quote(target.schema) ~ '.' ~ adapter.quote('dim_area') %}
 {% set selected=adapter.quote(target.schema) ~ '.selected_venues' %}
 {% call statement('selected_venues', auto_begin=True) %}
 create or replace function {{ selected }}(

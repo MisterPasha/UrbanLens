@@ -97,6 +97,21 @@ def setup(tmp_path: Path) -> tuple[Coordinator, Builds]:
     return engine, builds
 
 
+def test_publication_is_bound_to_pending_release_and_holds_next_refresh(tmp_path: Path) -> None:
+    engine, builds = setup(tmp_path)
+    identifier = "4948727a-c526-4f8d-a2ea-206b16bba518"
+    engine.write("pending-publication.json", None, {"release_id": identifier})
+    with pytest.raises(ValueError, match="pending reuse publication"):
+        engine.start("refresh", NOW)
+    started = engine.start("publish", NOW)
+    assert started["period"] == identifier
+    assert engine.start("publish", NOW) == started
+    assert engine.start("backup", NOW)["status"] == "overlap_prevented"
+    builds.items[started["build_id"]]["buildStatus"] = "SUCCEEDED"
+    engine.finish(started["build_id"], NOW)
+    assert engine.read("last-publish.json")[0]["period"] == identifier
+
+
 def test_duplicate_schedule_overlap_and_duplicate_completion(tmp_path: Path) -> None:
     engine, builds = setup(tmp_path)
     started = engine.start("refresh", NOW)
@@ -188,6 +203,11 @@ def test_health_grace_and_running_job_deadline(tmp_path: Path) -> None:
     assert "monthly_refresh_overdue" in engine.health(NOW + timedelta(days=3))["alerts"]
     engine.write("measurements.json", None, {"reference_update_pending": True})
     assert "reference_edition_requires_review" in engine.health(NOW)["alerts"]
+    _, revision = engine.read("measurements.json")
+    engine.write("measurements.json", revision, {"reference_source_check_failed": True})
+    alerts = engine.health(NOW)["alerts"]
+    assert "reference_source_check_failed" in alerts
+    assert "reference_edition_requires_review" not in alerts
     engine.write("last-refresh.json", None, {"period": "2026-11", "ended_at": NOW.isoformat()})
     assert "monthly_refresh_overdue" not in engine.health(NOW + timedelta(days=3))["alerts"]
 

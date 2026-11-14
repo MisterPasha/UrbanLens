@@ -27,6 +27,38 @@ from urbanlens.silver.models import Evidence, Observation
 from urbanlens.silver.pipeline import Bundle, build, retained_gzip, verified_observations
 
 
+def test_optional_cache_outside_workspace_uses_s3_but_in_root_corruption_fails(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from types import SimpleNamespace
+
+    from scripts.silver import CachedEvidence
+    from urbanlens.ingestion.errors import IngestionError
+
+    remote = MemoryStore()
+    evidence = remote.put_immutable(
+        "raw.json", iter([b"{}"]), media_type="application/json", compression="none"
+    )
+    outside = LocalArtifactStore(tmp_path / "previous-workspace").put_immutable(
+        "raw.json", iter([b"{}"]), media_type="application/json", compression="none"
+    )
+    local = LocalArtifactStore(tmp_path / "current-workspace")
+    cache = CachedEvidence.__new__(CachedEvidence)
+    monkeypatch.setattr(cache, "remote", remote, raising=False)
+    monkeypatch.setattr(cache, "local", local, raising=False)
+    monkeypatch.setattr(cache, "relocated", SimpleNamespace(aliases={}), raising=False)
+    monkeypatch.setattr(cache, "originals", {evidence.uri: outside}, raising=False)
+    assert b"".join(cache.read_verified(evidence)) == b"{}"
+    inside = local.put_immutable(
+        "raw.json", iter([b"{}"]), media_type="application/json", compression="none"
+    )
+    local.path("raw.json").write_bytes(b"xx")
+    cache.originals[evidence.uri] = inside
+    with pytest.raises(IngestionError):
+        b"".join(cache.read_verified(evidence))
+
+
 def test_compressed_content_replay_across_windows_and_linux(tmp_path: Path) -> None:
     store = LocalArtifactStore(tmp_path)
     content = b'{"source_key":"unchanged"}\n'
@@ -437,6 +469,12 @@ def test_changed_reference_values_cannot_reuse_a_pinned_edition(
             media_type="application/json",
             compression="none",
         )
+        workbook = output.put_immutable(
+            "bronze/ons/population.xlsx",
+            iter([b"synthetic retained workbook"]),
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            compression="none",
+        )
         population = 101 if changed and change == "population" else 100
         east = -0.12 if changed and change == "geography" else -0.13
         row = dict(
@@ -465,7 +503,10 @@ def test_changed_reference_values_cannot_reuse_a_pinned_edition(
                 "scope": snapshot.cycle.scope,
                 "snapshot_id": snapshot.snapshot_id,
                 "cycle_id": snapshot.cycle.cycle_id,
-                "evidence": (Evidence(artifact=evidence, locator="LSOA21CD=E01000001"),),
+                "evidence": (
+                    Evidence(artifact=evidence, locator="LSOA21CD=E01000001"),
+                    Evidence(artifact=workbook, locator="LSOA code=E01000001"),
+                ),
             },
         )
         batch = write_batch(
@@ -493,6 +534,10 @@ def test_changed_reference_values_cannot_reuse_a_pinned_edition(
         assert connection.execute(
             "SELECT count(*) FROM ul_silver.observation_version"
         ).fetchone() == (1,)
+        assert connection.execute(
+            "SELECT a.uri FROM ul_silver.population p "
+            "JOIN ul_control.artifact a ON a.artifact_id=p.source_artifact_id"
+        ).fetchone() == ("s3://synthetic/bronze/ons/population.xlsx",)
 
 
 @pytest.mark.database

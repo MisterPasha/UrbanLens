@@ -1,0 +1,49 @@
+name: Publish reviewed data reuse download
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 9 7 * *'
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: urbanlens-reuse-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BRONZE_BUCKET: ${{ vars.BRONZE_BUCKET }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version-file: .node-version
+      - run: python scripts/dev.py setup
+      - uses: aws-actions/configure-aws-credentials@v6.3.0
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE }}
+          aws-region: eu-west-2
+          mask-aws-account-id: true
+      - name: Publish prepared archive without database credentials
+        id: offer
+        run: .venv/bin/python -m scripts.publish_reuse
+      - name: Activate matching frozen data after verifying its offer
+        if: steps.offer.outputs.ready == 'true'
+        run: |
+          .venv/bin/python -m scripts.production start --job publish > publication-job.json
+          BUILD=$(python -c 'import json; print(json.load(open("publication-job.json"))["build_id"])')
+          .venv/bin/python -m scripts.production wait --build-id "$BUILD"

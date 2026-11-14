@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 from datetime import UTC, datetime
-from typing import Any
+from typing import Any, cast
 from uuid import UUID, uuid4
 
 import psycopg
@@ -186,6 +186,18 @@ def main() -> None:
     else:
         with connect(credential(args.target, "migration")) as c:
             if args.task == "cleanup":
+                if args.target == "neon":
+                    from urbanlens.ingestion.registry import S3StateBackend
+                    from urbanlens.ingestion.storage import S3ArtifactStore
+                    from urbanlens.operations.control import Coordinator
+
+                    _, artifacts, *_ = environment("s3")
+                    remote = cast(S3ArtifactStore, artifacts)
+                    pending, _ = Coordinator(
+                        S3StateBackend(remote.client, remote.bucket, "operations"), None, ""
+                    ).read("pending-publication.json")
+                    if pending.get("release_id"):
+                        raise ValueError("Preserve the frozen candidate awaiting reuse publication")
                 report = cleanup(c, apply=args.apply)
             elif args.task == "status":
                 report = dict(
@@ -204,6 +216,11 @@ def main() -> None:
                 if identifier is None:
                     parser.error("Provide a validated --release-id")
                 _, store, *_ = environment("s3")
+                from scripts.publish_reuse import receipt
+
+                # Disposable local rehearsals must never publish synthetic/private data.
+                # The reuse offer is required before activating the production database.
+                reuse = receipt(store, str(identifier)) if args.target == "neon" else None
                 now = datetime.now(UTC)
                 row = c.execute(
                     (
@@ -226,6 +243,7 @@ def main() -> None:
                         quality=row[1],
                         contents=row[2],
                         preparation_evidence=row[3],
+                        reuse=reuse,
                     ),
                 )
                 report = publish(

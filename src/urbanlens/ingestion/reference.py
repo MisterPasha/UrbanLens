@@ -291,15 +291,23 @@ def check_editions(
             )
             indicators: bool | None = None
             changed_fields: list[str] = []
-            if name.endswith(".json") and baseline_directory is not None:
+            source_error = None
+            if name.endswith(".json"):
                 stream.seek(0)
                 observed = json.load(stream)
-                original = json.loads((baseline_directory / name).read_text())
-                fields = ("id", "modified", "title", "url")
-                changed_fields = [
-                    field for field in fields if original.get(field) != observed.get(field)
-                ]
-                indicators = not changed_fields
+                if not isinstance(observed, dict) or "error" in observed:
+                    error = observed.get("error", {}) if isinstance(observed, dict) else {}
+                    source_error = dict(
+                        kind="upstream_metadata_error",
+                        code=error.get("code") if isinstance(error, dict) else None,
+                    )
+                elif baseline_directory is not None:
+                    original = json.loads((baseline_directory / name).read_text())
+                    fields = ("id", "modified", "title", "url")
+                    changed_fields = [
+                        field for field in fields if original.get(field) != observed.get(field)
+                    ]
+                    indicators = not changed_fields
         results.append(
             {
                 "product": name,
@@ -308,6 +316,7 @@ def check_editions(
                 "bytes_unchanged": artifact.sha256 == old["sha256"],
                 "edition_indicators_unchanged": indicators,
                 "changed_indicator_fields": changed_fields,
+                "source_error": source_error,
                 "candidate_artifact": artifact.model_dump(mode="json"),
             }
         )
@@ -360,6 +369,19 @@ def check_editions(
         "cadence": "calendar-monthly",
         "pinned_baseline_unchanged": True,
         "products": results,
+        "source_check_failed": any(item["source_error"] for item in results),
+        "edition_update_pending": different
+        or any(
+            not item["source_error"]
+            and not (item["bytes_unchanged"] or item["edition_indicators_unchanged"] is True)
+            for item in results
+        ),
+        "check_passed": not different
+        and all(
+            not item["source_error"]
+            and (item["bytes_unchanged"] or item["edition_indicators_unchanged"] is True)
+            for item in results
+        ),
         "population_discovery": {
             "listing_artifact": listing.model_dump(mode="json"),
             "latest_listed_download": latest,
@@ -367,5 +389,6 @@ def check_editions(
             "candidate_artifact": candidate_artifact,
         },
         "action": "Stage changed candidates for explicit compatibility review; "
+        "upstream errors are unavailable checks, not edition changes; "
         "metadata byte changes alone do not prove an edition change",
     }

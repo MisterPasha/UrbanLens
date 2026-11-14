@@ -388,6 +388,13 @@ def load(
                     if r.area is None:
                         continue
                     a = r.area
+                    population_evidence = [
+                        e.artifact
+                        for e in r.evidence
+                        if e.artifact.uri.endswith("/population.xlsx")
+                    ]
+                    if len(population_evidence) != 1:
+                        raise ValueError("ONS population requires one retained population workbook")
                     area_rows.append(
                         (
                             a.geography_version,
@@ -409,7 +416,7 @@ def load(
                             a.age_0_15,
                             a.age_16_64,
                             a.age_65_plus,
-                            artifacts[r.evidence[0].artifact.uri],
+                            artifacts[population_evidence[0].uri],
                         )
                     )
                 with connection.cursor() as cursor:

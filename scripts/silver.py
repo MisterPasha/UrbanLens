@@ -70,7 +70,7 @@ class CachedEvidence:
             from urllib.request import url2pathname
 
             path = Path(url2pathname(unquote(urlsplit(original.uri).path)))
-            if path.is_file():
+            if path.resolve().is_relative_to(self.local.root) and path.is_file():
                 yield from self.local.read_verified(original)
                 return
         yield from self.remote.read_verified(target)

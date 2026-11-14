@@ -18,3 +18,4 @@ dbt/logs/
 dbt/profiles.yml
 **/__pycache__/
 **/*.pyc
+**/*.md

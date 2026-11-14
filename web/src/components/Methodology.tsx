@@ -89,6 +89,7 @@ export function Data({ release }: { release: Envelope_Meta_ }) {
         <li>Postcodes.io: Contains Ordnance Survey data © Crown copyright and database right 2025. Contains Royal Mail data © Royal Mail copyright and database right 2025.
           Contains National Statistics data © Crown copyright and database right 2025. Contains NRS data © Crown copyright and database right 2025. <a href="https://postcodes.io/docs/licences/">Postcode licences</a></li></ul>
       <p><a href="/data-reuse/index.html">Data reuse and downloadable-data status</a>. Source rights apply separately from application code licensing.</p>
+      <p><a href="/third-party-notices.txt">Third-party software notices</a></p>
     </section>
   </>;
 }

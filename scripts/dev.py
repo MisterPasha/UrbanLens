@@ -135,6 +135,10 @@ def main() -> None:
             "pipeline",
             "bronze",
             "production",
+            "rehearsal",
+            "recovery",
+            "benchmark",
+            "reuse",
             "database",
             "silver",
             "classify",
@@ -179,6 +183,9 @@ def main() -> None:
         "pipeline",
         "bronze",
         "production",
+        "rehearsal",
+        "recovery",
+        "reuse",
         "database",
         "silver",
         "classify",
@@ -250,6 +257,14 @@ def main() -> None:
             in_environment("python", "-m", "scripts.bronze", *args.arguments)
         case "production":
             in_environment("python", "-m", "scripts.production", *args.arguments)
+        case "rehearsal":
+            in_environment("python", "-m", "scripts.rehearsal", *args.arguments)
+        case "recovery":
+            in_environment("python", "-m", "scripts.recovery", *args.arguments)
+        case "benchmark":
+            in_environment("python", "-m", "scripts.benchmark")
+        case "reuse":
+            in_environment("python", "-m", "scripts.export_reuse", *args.arguments)
         case "database":
             in_environment("python", "-m", "scripts.database", *args.arguments)
         case "silver":

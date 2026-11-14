@@ -2,8 +2,16 @@
 
 Once enabled, monthly refresh runs on the 7th at 08:00 UTC. One CodeBuild job sequences bounded
 FSA/OSM/profile Lambdas, the complete company cohort, postcode enrichment, reference
-checks, Silver, dbt tests, backup and atomic publication. Stages save S3 checkpoints.
+checks, Silver, dbt tests, backup and a prebuilt reuse ZIP. Stages save S3 checkpoints.
+After deployment of step 57, `reuse.yml` runs monthly at 09:15 UTC (or manually).
+Approve its existing GitHub production gate: it publishes the prepared download,
+verifies anonymous access, then starts a publication-only CodeBuild job. Until
+then the previous data stays active; health reports `reuse_publication_pending`.
+See [reuse commands and licences](../reuse/README.md).
 Partial cohorts, stale reviews or failed checks cannot replace the public release.
+Private S3 `manifests/` and `evidence/` retain source/rule/release proofs;
+`evidence/maintenance/code/` retains code archives. Local `data/` reports are
+supporting evidence, not public reuse downloads. Never publish private raw inputs.
 Changed reference editions are staged for compatibility review; checks do not alter
 the population reference date. Configured daily backups run at 03:00 UTC. Health checks at
 13:00 UTC read saved summaries and never wake Neon.
@@ -16,6 +24,7 @@ python scripts/dev.py production smoke --private
 python scripts/dev.py production start --job migrate
 python scripts/dev.py production start --job backup
 python scripts/dev.py production start --job refresh
+python scripts/dev.py production start --job publish
 python scripts/dev.py production retry --job refresh
 python scripts/dev.py production cutoff
 python scripts/dev.py production resume --bucket <existing-bucket> --confirm-headroom
@@ -41,14 +50,24 @@ automatic retries or change the normal two-attempt allowance.
 
 ## Monitoring and cutoff
 
+| Incident | Action |
+| --- | --- |
+| Provider outage or incomplete company edition | Keep the last accepted release; inspect stage logs; retry explicitly after the cause is fixed |
+| Source schema/reference edition change | Hold the input; update parser/contract or edition mapping and verify before acceptance |
+| Bad merge | Correct the reviewed mapping; rebuild and validate a candidate; rollback if already published |
+| Failed dbt model/test | Preserve the active release; fix the model and rerun the affected validation |
+| Quota/budget exhaustion | Run `production cutoff`; review allowances/cause before explicit resume |
+| Lost database | Follow the [verified recovery procedure](RECOVERY.md); reconcile before switching credentials/readers |
+
 Use the **UrbanLens** CloudWatch dashboard, scoped alarms and SNS emails. Warnings
 cover errors/throttles, API p95 above two seconds, workflow/backup age, storage growth,
 and saved Neon storage/connections. Monthly deadlines include 48 hours' grace.
 Storage warns at 800 MB of the reported 1 GB allowance. Saved usage measurements
 come from real jobs; they are not synthetic keep-alives. Check Neon compute usage
 and remaining free allowances in its console before resuming: no Neon account API
-key is configured. Daily backup hashes are verified; isolated restore verification
-is separate and remains a step-54 release requirement.
+key is configured. Daily backup hashes are verified; step 54 also verified an
+isolated restore, previous-release rollback and retained evidence recovery.
+See the [recovery runbook](RECOVERY.md) for commands and remaining limitations.
 
 The owner reported **GBP 0.01** month-to-date on 11 November 2026. Keep the GBP 5/10
 review points and act before the forecast reaches GBP 15. AWS-native budgets use
@@ -113,8 +132,9 @@ backup and atomic publication. The new release contains 1,178 venues.
 
 The replacement monthly refresh and daily backup schedules are enabled. Three legacy
 Bronze schedules remain disabled; public API access remains disabled until step 59.
-Neon measured approximately 529 MB with two connections. A newer reference edition
-is staged for compatibility review; the accepted reference date remains unchanged.
+Neon measured approximately 450 MB after scratch cleanup, with two connections.
+The boundary metadata check returned an upstream access error requiring review;
+the population workbook and accepted reference date remain unchanged.
 
 Owner-authorised recovery approvals are bound to each previous failed state and
 deployed software. Earlier attempts are archived without resetting counters. A
@@ -131,3 +151,26 @@ Verification runs: [Foundation checks](https://github.com/MisterPasha/UrbanLens/
 and [controlled private deployment](https://github.com/MisterPasha/UrbanLens/actions/runs/43204830275).
 GitHub trust matches the repository's verified immutable owner/repository IDs;
 no AWS access keys or database credentials are stored in GitHub.
+
+Step 52's accepted-input replay, interruption and repeatability checks passed.
+See [rehearsal instructions](REHEARSAL.md), [evidence](../../docs/evidence/end-to-end-rehearsal.md)
+and [capacity forecast](COSTS.md). Step 53's fault, reconciliation and audit checks
+passed locally; see [quality coverage](../quality/README.md). Source-error and
+population-provenance corrections require deployment and a new validated
+publication before public launch.
+
+Step 54 restored a real backup, reconciled both releases, exercised isolated
+rollback and reproduced the accepted normalised inputs. All temporary databases
+were removed. See [recovery evidence](../../docs/evidence/recovery-verification.md).
+The recovery portability and summary-status changes also await deployment.
+
+Step 55's small private benchmark passed: ten visitors, 80 successful browsing
+requests, warm analytical p95 356 ms. The first cold request took 4.9 seconds.
+See [benchmark instructions](PERFORMANCE.md). Public gateway/concurrency checks
+remain part of activation; the regional concurrency quota is still ten.
+
+Step 56's security, usability and failure-state review passed 38 existing checks
+and 12 accessibility audits. Live permissions/storage and source/build credential
+checks passed; dependency audits reported no known vulnerabilities. See
+[scope and evidence](../../docs/evidence/security-usability.md). Public HTTPS and
+gateway checks remain part of activation; notice publication is step 57.

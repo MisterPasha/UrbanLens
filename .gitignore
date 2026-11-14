@@ -1,7 +1,7 @@
 # Local configuration and credentials
 .env
 .env.*
-.env.example
+!.env.example
 .aws/
 .codex/
 .agents/
@@ -26,6 +26,7 @@ __pycache__/
 .nox/
 .hypothesis/
 .ipynb_checkpoints/
+*.ipynb
 .coverage
 .coverage.*
 coverage.xml
@@ -76,9 +77,24 @@ Desktop.ini
 *.bak
 *.swp
 *.swo
+*.orig
+*.rej
 *~
 
 # Local documentation and planning (existing exclusions)
-/docs
+/docs/*
+!/docs/local-development.md
 /planning
+
+# Keep detailed working notes locally; retain setup and deployment/runbook docs.
+*.md
+!/README.md
+!/docs/local-development.md
+!/infra/production/README.md
+!/reference/operations/*.md
+!/reference/reuse/README.md
+!/reference/ingestion/SOURCES.md
+
+# Superseded artwork; the active magnifier logo remains versioned.
+/web/src/assets/UrbanLens_logo_full.png
 

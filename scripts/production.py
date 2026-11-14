@@ -159,7 +159,9 @@ def main() -> None:
             "wait",
         ],
     )
-    parser.add_argument("--job", choices=["refresh", "backup", "migrate"], default="refresh")
+    parser.add_argument(
+        "--job", choices=["refresh", "backup", "migrate", "publish"], default="refresh"
+    )
     parser.add_argument("--api-image")
     parser.add_argument("--pipeline-image")
     parser.add_argument("--runtime-config-key")

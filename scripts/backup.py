@@ -7,10 +7,12 @@ import hashlib
 import io
 import json
 import os
+import re
 import subprocess
 import tarfile
 import tempfile
 import time
+from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -20,7 +22,7 @@ from psycopg.conninfo import conninfo_to_dict
 
 from scripts.database import administrator, credential, scratch_database
 from scripts.dev import ROOT, tool
-from urbanlens.database.migrations import connect, grants
+from urbanlens.database.migrations import ROLES, connect, grants
 from urbanlens.ingestion.contracts import Artifact
 from urbanlens.ingestion.interfaces import ArtifactStore
 from urbanlens.ingestion.storage import chunks
@@ -148,7 +150,11 @@ def native(
 
 
 def restore_check(
-    store: ArtifactStore, artifact: Artifact, expected: dict[str, Any]
+    store: ArtifactStore,
+    artifact: Artifact,
+    expected: dict[str, Any],
+    *,
+    inspect_restored: Callable[[str], dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     data = b"".join(store.read_verified(artifact))
     started = time.perf_counter()
@@ -180,6 +186,38 @@ def restore_check(
             actual = fingerprint(restored)
             if actual != expected:
                 raise ValueError("Restored logical contents differ from the backup snapshot")
+            rebound = []
+            # Older dbt-generated function bodies contain database.schema.table
+            # references. PostgreSQL cannot use those after a cross-name restore.
+            for oid, definition in restored.execute(
+                "SELECT p.oid,pg_get_functiondef(p.oid) FROM pg_proc p "
+                "JOIN pg_namespace n ON n.oid=p.pronamespace WHERE p.prokind='f' "
+                "AND (n.nspname IN ('ul_control','ul_silver','ul_gold','ul_api') "
+                "OR n.nspname ~ '^ul_candidate_[a-f0-9]{32}$')"
+            ).fetchall():
+                portable = re.sub(
+                    r'"(?:[^\"]|\"\")+"\."(ul_(?:control|silver|gold|api|candidate_[a-f0-9]{32}))"\.',
+                    r'"\1".',
+                    definition,
+                )
+                if portable != definition:
+                    restored.execute(portable, prepare=False)
+                    rebound.append(oid)
+            # --no-privileges deliberately omits ACLs, and --clean recreates the
+            # schemas provisioned by bootstrap. Restore their explicit allowlist.
+            restored.execute(
+                sql.SQL("GRANT USAGE ON SCHEMA ul_control,ul_silver TO {},{}").format(
+                    sql.Identifier(ROLES["pipeline"]), sql.Identifier(ROLES["dbt"])
+                )
+            )
+            restored.execute(
+                sql.SQL("GRANT USAGE,CREATE ON SCHEMA ul_gold TO {}").format(
+                    sql.Identifier(ROLES["dbt"])
+                )
+            )
+            restored.execute(
+                sql.SQL("GRANT USAGE ON SCHEMA ul_api TO {}").format(sql.Identifier(ROLES["api"]))
+            )
             grants(restored)
         with connect(administrator("local")) as owner:
             owner.execute(
@@ -192,21 +230,33 @@ def restore_check(
                 "SELECT has_schema_privilege(current_user,'ul_silver','USAGE')"
             ).fetchone() != (False,):
                 raise ValueError("Restored API role can access private Silver")
+        details = inspect_restored(database) if inspect_restored else None
     return dict(
         restored=True,
         logical_contents_match=True,
         api_private_access_denied=True,
         temporary_database_removed=True,
         restore_seconds=round(time.perf_counter() - started, 3),
+        rebound_database_qualified_functions=len(rebound),
+        recovery_details=details,
     )
 
 
 def run(
-    target: str, store: ArtifactStore, *, tier: str = "both", verify_restore: bool = True
+    target: str,
+    store: ArtifactStore,
+    *,
+    tier: str = "both",
+    verify_restore: bool = True,
+    point_suffix: str | None = None,
 ) -> dict[str, Any]:
     now = datetime.now(UTC)
     daily = f"backups/{target}/daily/{now.date()}"
     weekly = f"backups/{target}/weekly/{now.isocalendar().year}-W{now.isocalendar().week:02d}"
+    if point_suffix is not None:
+        if tier != "daily" or not re.fullmatch(r"[a-z0-9-]{1,40}", point_suffix):
+            raise ValueError("Recovery suffix requires a daily point and a safe suffix")
+        daily += "-" + point_suffix
     keys = [daily, weekly] if tier == "both" else [daily if tier == "daily" else weekly]
     manifests = []
     missing = []

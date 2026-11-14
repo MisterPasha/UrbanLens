@@ -201,6 +201,8 @@ def test_monthly_edition_check_stages_candidates_without_replacing_pins(
                     else geography.POP_URL
                 )
                 target.write(f'<a href="{link}">xlsx</a>'.encode())
+            elif url.endswith(".json"):
+                target.write(json.dumps({"id": "changed candidate"}).encode())
             else:
                 target.write(b"changed candidate")
             target.seek(0)
@@ -212,3 +214,33 @@ def test_monthly_edition_check_stages_candidates_without_replacing_pins(
     assert adapter.manifest == original
     assert report["population_discovery"]["different_from_pinned"] == new_edition
     assert (report["population_discovery"]["candidate_artifact"] is not None) == new_edition
+
+
+def test_monthly_metadata_access_error_is_not_a_new_edition(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    config, adapter, store = fixture(tmp_path)
+    assert adapter.manifest is not None and adapter.source is not None
+    raw = adapter.source
+
+    class Client:
+        def download(self, url: str, target: Any) -> None:
+            if url.endswith("boundary-item.json"):
+                target.write(b'{"error":{"code":403,"message":"Access denied"}}')
+            elif "/file?" in url:
+                target.write((raw / "population.xlsx").read_bytes())
+            elif "ons.gov.uk" in url:
+                target.write(f'<a href="{geography.POP_URL}">xlsx</a>'.encode())
+            else:
+                target.write((raw / url.rsplit("/", 1)[1]).read_bytes())
+            target.seek(0)
+
+    monkeypatch.setattr("urbanlens.ingestion.reference.HttpDownloader", lambda *a, **k: Client())
+    report = check_editions(config, adapter.manifest, store, baseline_directory=raw)
+    boundary = report["products"][0]
+    assert boundary["source_error"] == {"kind": "upstream_metadata_error", "code": 403}
+    assert boundary["edition_indicators_unchanged"] is None
+    assert boundary["changed_indicator_fields"] == []
+    assert not report["check_passed"]
+    assert report["source_check_failed"] and not report["edition_update_pending"]
+    assert report["products"][-1]["bytes_unchanged"]

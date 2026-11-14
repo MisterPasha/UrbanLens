@@ -44,6 +44,7 @@ CHECKPOINT_FILES = (
     ".cache/gold-neon.json",
     "data/gold/build-neon.json",
     "data/gold/release-neon-prepare.json",
+    "data/reuse/current.json",
     ".cache/reference-check.json",
 )
 
@@ -276,7 +277,7 @@ def main() -> None:
     (ROOT / ".cache/bronze-state.json").write_text(json.dumps(state))
     run_key, token = os.environ["URBANLENS_RUN_KEY"], os.environ["URBANLENS_RUN_TOKEN"]
     if not re.fullmatch(
-        r"runs/(refresh|backup|migrate)/[A-Za-z0-9_.-]+\.json", run_key
+        r"runs/(refresh|backup|migrate|publish)/[A-Za-z0-9_.-]+\.json", run_key
     ) or not re.fullmatch(r"[0-9a-f]{64}", token):
         raise ValueError("Invalid run identity")
     code_version = os.environ["SOFTWARE_VERSION"]
@@ -334,6 +335,15 @@ def main() -> None:
         with connect(credential("neon", "migration")) as c:
             migrate(c)
         return
+    if kind == "publish":
+        coordinator = Coordinator(backend, None, "")
+        pending, revision = coordinator.read("pending-publication.json")
+        identifier = pending["release_id"]
+        if run_key != f"runs/publish/{identifier}.json":
+            raise ValueError("Publication job differs from the prepared candidate")
+        command("release", "publish", "--target", "neon", "--release-id", identifier)
+        coordinator.write("pending-publication.json", revision, {})
+        return
     if kind == "refresh":
         classification_preflight()
         import boto3
@@ -367,12 +377,6 @@ def main() -> None:
                 (ROOT / "reference/geography/manifest.json").read_bytes(),
                 store,
                 baseline_directory=ROOT / "data/reference/geography",
-            )
-            report["check_passed"] = not report["population_discovery"][
-                "different_from_pinned"
-            ] and all(
-                item["bytes_unchanged"] or item["edition_indicators_unchanged"] is True
-                for item in report["products"]
             )
             proof = save_json(store, "evidence/reference-checks", report)
             (ROOT / ".cache/reference-check.json").write_text(
@@ -410,12 +414,40 @@ def main() -> None:
         )
         stage("candidate-cleanup", cleanup_workspaces)
 
+        def prepare_reuse() -> None:
+            release = json.loads((ROOT / "data/gold/release-neon-prepare.json").read_bytes())
+            command(
+                "export_reuse", "build", "--target", "neon", "--release-id", release["release_id"]
+            )
+
+        stage("reuse-build", prepare_reuse)
+
         from scripts.backup import run as backup
 
         stage("backup", lambda: backup("neon", store, verify_restore=False))
 
         def publish() -> None:
             release = json.loads((ROOT / "data/gold/release-neon-prepare.json").read_bytes())
+            if store.stat(f"reuse/published/{release['release_id']}.json") is None:
+                coordinator = Coordinator(backend, None, "")
+                existing, revision = coordinator.read("pending-publication.json")
+                if existing.get("release_id") not in (None, release["release_id"]):
+                    raise ValueError("Another candidate still awaits reuse publication")
+                coordinator.write(
+                    "pending-publication.json",
+                    revision,
+                    {
+                        "release_id": release["release_id"],
+                        "run_key": run_key,
+                        "software_version": code_version,
+                    },
+                )
+                print(
+                    json.dumps(
+                        {"publication": "awaiting_reuse_offer", "release_id": release["release_id"]}
+                    )
+                )
+                return
             command("release", "publish", "--target", "neon", "--release-id", release["release_id"])
 
         stage("publish", publish)
@@ -440,10 +472,16 @@ def main() -> None:
         ).fetchone()
     coordinator = Coordinator(backend, None, "")
     previous, _ = coordinator.read("measurements.json")
+    last_restore, _ = coordinator.read("last-restore.json")
     reference = ROOT / ".cache/reference-check.json"
     reference_pending = previous.get("reference_update_pending", False)
+    reference_error = previous.get("reference_source_check_failed", False)
     if kind == "refresh" and reference.is_file():
-        reference_pending = not json.loads(reference.read_bytes())["report"]["check_passed"]
+        reference_report = json.loads(reference.read_bytes())["report"]
+        reference_pending = reference_report.get(
+            "edition_update_pending", not reference_report["check_passed"]
+        )
+        reference_error = reference_report.get("source_check_failed", False)
     summary = {
         "job": kind,
         "completed_at": datetime.now(UTC).isoformat(),
@@ -452,8 +490,10 @@ def main() -> None:
         "storage_limit_bytes": 1_000_000_000,
         "compute_allowance_cu_hours": 100,
         "compute_usage": "not_available_without_Neon_account_API",
-        "restore_status": "checksum_verified; isolated_restore_not_run",
+        "restore_status": last_restore.get("status", "checksum_verified; isolated_restore_not_run"),
+        "last_restore": last_restore or None,
         "reference_update_pending": reference_pending,
+        "reference_source_check_failed": reference_error,
     }
     save_json(store, "evidence/production/summaries", summary)
     _, revision = Coordinator(backend, None, "").read("measurements.json")

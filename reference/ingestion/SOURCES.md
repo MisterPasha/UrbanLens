@@ -1,6 +1,6 @@
 # Postcodes, companies, references and acceptance
 
-All scheduled source work is **monthly**. These commands run locally; private S3 deployment and M1 acceptance are documented in [BRONZE.md](BRONZE.md).
+All scheduled source work is **monthly**. These commands run locally; see [production setup](../../infra/production/README.md) for private S3 deployment.
 
 ```powershell
 python scripts/dev.py pipeline postcode-check

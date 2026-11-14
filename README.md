@@ -7,3 +7,5 @@ A Data Engineering project focused on extracting data from multiple public sourc
 Currently in development.
 
 Data refreshes monthly.
+
+[Developer setup](docs/local-development.md) · [Operations](reference/operations/README.md)
