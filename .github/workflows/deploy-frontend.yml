@@ -1,0 +1,84 @@
+name: Deploy reviewed frontend
+
+on:
+  workflow_dispatch:
+    inputs:
+      revision:
+        description: Full commit SHA with successful Foundation checks.
+        required: true
+        type: string
+      data_enabled:
+        description: Expect live AWS data (leave false while SERVICE_ENABLED=false).
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: urbanlens-production-software
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REVISION: ${{ inputs.revision }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+      WEBSITE_URL: ${{ vars.WEBSITE_URL }}
+      DATA_ENABLED: ${{ inputs.data_enabled }}
+    steps:
+      - name: Require a tested commit and configured hosting
+        env:
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          [[ "$REVISION" =~ ^[a-f0-9]{40}$ ]]
+          gh api "repos/$REPOSITORY/actions/workflows/ci.yml/runs?head_sha=$REVISION&status=success" --jq '.workflow_runs | any(.event == "push")' | grep -qx true
+          test -n "$VERCEL_TOKEN"
+          test -n "$VERCEL_ORG_ID"
+          test -n "$VERCEL_PROJECT_ID"
+          test -n "$WEBSITE_URL"
+      - uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ inputs.revision }}
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version-file: .node-version
+      - name: Build and publish the reviewed frontend
+        run: |
+          npx --yes vercel@65.16.0 pull --yes --environment=production --token "$VERCEL_TOKEN"
+          npx --yes vercel@65.16.0 build --prod --token "$VERCEL_TOKEN"
+          npx --yes vercel@65.16.0 deploy --prebuilt --prod --token "$VERCEL_TOKEN"
+      - name: Check the public site and intended data-access state
+        run: |
+          node --input-type=module <<'JS'
+          const get = path => fetch(new URL(path, process.env.WEBSITE_URL), {
+            redirect: 'error', signal: AbortSignal.timeout(15000),
+          });
+          const page = await get('/');
+          if (!page.ok || !(await page.text()).includes('<title>UrbanLens</title>')) throw Error('Website failed');
+          const meta = await get('/api/v1/meta');
+          const body = await meta.json();
+          if (process.env.DATA_ENABLED !== 'true') {
+            if (meta.status !== 503 || body.error?.code !== 'service_limited') throw Error('Service cutoff failed');
+            const health = await get('/health');
+            if (health.status !== 503 || (await health.json()).error?.code !== 'service_limited') throw Error('Health adapter failed');
+            console.log('Website and disabled API verified');
+          } else {
+            if (!meta.ok || !body.release_id) throw Error('Published metadata unavailable');
+            const health = await get('/health');
+            if (!health.ok || (await health.json()).service !== 'urbanlens-api') throw Error('API health failed');
+            const venues = await get(`/api/v1/establishments?release_id=${encodeURIComponent(body.release_id)}&limit=1&map_limit=1`);
+            const data = await venues.json();
+            if (!venues.ok || data.release_id !== body.release_id) throw Error('Published venues unavailable');
+            console.log('Website and published API verified');
+          }
+          JS
