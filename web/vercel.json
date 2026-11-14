@@ -6,11 +6,11 @@
   "outputDirectory": "dist",
   "regions": ["lhr1"],
   "functions": {
-    "api/*.ts": { "maxDuration": 15 }
+    "api/*.mjs": { "maxDuration": 15 }
   },
   "rewrites": [
-    { "source": "/api/v1/(.*)", "destination": "/api" },
-    { "source": "/health", "destination": "/api/health" }
+    { "source": "/api/v1/:endpoint*", "destination": "/api/proxy?__urbanlens_path=:endpoint*" },
+    { "source": "/health", "destination": "/api/proxy?__urbanlens_health=1" }
   ],
   "git": { "deploymentEnabled": false }
 }

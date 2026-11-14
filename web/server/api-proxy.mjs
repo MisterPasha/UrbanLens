@@ -1,18 +1,18 @@
-export interface ProxyEnvironment {
-  API_ORIGIN?: string;
-  SERVICE_ENABLED?: string;
-}
-
 const unavailable = () => Response.json({ error: { code: 'service_limited',
   message: 'The service is temporarily limited. Please try again later.', request_id: '' } },
 { status: 503, headers: { 'Cache-Control': 'no-store' } });
 
-export async function proxyRequest(request: Request, env: ProxyEnvironment): Promise<Response> {
+/**
+ * @param {Request} request
+ * @param {{ API_ORIGIN?: string, SERVICE_ENABLED?: string }} env
+ * @returns {Promise<Response>}
+ */
+export async function proxyRequest(request, env) {
   if (request.method !== 'GET') return Response.json({ error: { code: 'method_not_allowed',
     message: 'Only GET requests are supported.', request_id: '' } },
   { status: 405, headers: { Allow: 'GET', 'Cache-Control': 'no-store' } });
   if (env.SERVICE_ENABLED !== 'true' || !env.API_ORIGIN) return unavailable();
-  let origin: URL;
+  let origin;
   try { origin = new URL(env.API_ORIGIN); } catch { return unavailable(); }
   if (origin.protocol !== 'https:' || !/^[a-z0-9]+\.execute-api\.eu-west-2\.amazonaws\.com$/.test(origin.hostname)
     || origin.port || origin.username || origin.password || origin.pathname !== '/' || origin.search || origin.hash) return unavailable();
@@ -24,7 +24,7 @@ export async function proxyRequest(request: Request, env: ProxyEnvironment): Pro
     });
     return new Response(response.body, { status: response.status, headers: {
       'Content-Type': 'application/json', 'Cache-Control': 'no-store',
-      ...(response.headers.has('Retry-After') ? { 'Retry-After': response.headers.get('Retry-After')! } : {}),
+      ...(response.headers.has('Retry-After') ? { 'Retry-After': response.headers.get('Retry-After') ?? '' } : {}),
     } });
   } catch { return unavailable(); }
 }
