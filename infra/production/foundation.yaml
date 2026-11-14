@@ -159,6 +159,13 @@ Resources:
             Fn::Sub: arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/urbanlens-production/*
   CloudFormationRole:
     Type: AWS::IAM::Role
+    Metadata:
+      cfn-lint:
+        config:
+          # The official Stage schema requires these tagging actions; lint's IAM
+          # action catalogue omits them (aws-cloudformation/cfn-lint#4280).
+          ignore_checks:
+          - W3037
     Properties:
       RoleName: urbanlens-production-cloudformation
       AssumeRolePolicyDocument:
@@ -321,6 +328,8 @@ Resources:
             - apigateway:PUT
             - apigateway:PATCH
             - apigateway:DELETE
+            - apigateway:TagResource
+            - apigateway:UntagResource
             Resource:
             - Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}::/apis*
             - Fn::Sub: arn:${AWS::Partition}:apigateway:${AWS::Region}::/tags/*
