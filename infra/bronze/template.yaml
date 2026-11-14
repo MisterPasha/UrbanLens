@@ -33,14 +33,14 @@ Resources:
             Status: Enabled
             AbortIncompleteMultipartUpload:
               DaysAfterInitiation: 1
-          - Id: NeonDailyBackups7Days
+          - Id: NeonDailyBackups70Days
             Status: Enabled
             Prefix: backups/neon/daily/
-            ExpirationInDays: 7
-          - Id: NeonWeeklyBackups28Days
+            ExpirationInDays: 70
+          - Id: NeonWeeklyBackups70Days
             Status: Enabled
             Prefix: backups/neon/weekly/
-            ExpirationInDays: 28
+            ExpirationInDays: 70
           - Id: LocalDailyBackups7Days
             Status: Enabled
             Prefix: backups/local/daily/

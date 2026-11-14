@@ -212,6 +212,17 @@ def test_health_grace_and_running_job_deadline(tmp_path: Path) -> None:
     assert "monthly_refresh_overdue" not in engine.health(NOW + timedelta(days=3))["alerts"]
 
 
+def test_backup_deadline_is_monthly_with_calendar_grace(tmp_path: Path) -> None:
+    engine, _ = setup(tmp_path)
+    engine.write("last-backup.json", None, {"ended_at": "2028-01-07T03:10:00+00:00"})
+    for now in (datetime(2028, 2, 6, tzinfo=UTC), datetime(2028, 2, 9, 3, tzinfo=UTC)):
+        assert "backup_overdue" not in engine.health(now)["alerts"]
+    assert "backup_overdue" in engine.health(datetime(2028, 2, 9, 4, tzinfo=UTC))["alerts"]
+    _, revision = engine.read("last-backup.json")
+    engine.write("last-backup.json", revision, {"ended_at": "2028-02-07T03:10:00+00:00"})
+    assert "backup_overdue" not in engine.health(datetime(2028, 3, 6, tzinfo=UTC))["alerts"]
+
+
 def test_stale_completion_cannot_release_another_job(tmp_path: Path) -> None:
     engine, builds = setup(tmp_path)
     first = engine.start("refresh", NOW)

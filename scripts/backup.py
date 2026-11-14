@@ -337,8 +337,11 @@ def run(
         existing_points_reused=len(keys) - len(missing),
         verification_code=archive.model_dump(mode="json"),
         scheduled=False,
-        retention="seven daily/four weekly points; reruns reuse the period's first successful "
-        "point",
+        retention=(
+            "monthly Neon schedule, 70-day retention; legacy daily/weekly keys share one dump"
+            if target == "neon"
+            else "local daily/weekly points expire after 7/28 days"
+        ),
     )
     proof = save_json(store, "evidence/maintenance/backups", report)
     return dict(**report, evidence=proof.model_dump(mode="json"))

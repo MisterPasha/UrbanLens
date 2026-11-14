@@ -174,7 +174,12 @@ class Coordinator:
         ):
             alerts.append("monthly_refresh_overdue")
         backup, _ = self.read("last-backup.json")
-        if not backup or now - datetime.fromisoformat(backup["ended_at"]) > timedelta(hours=48):
+        backup_due = now.replace(day=7, hour=3, minute=0, second=0, microsecond=0)
+        if now < backup_due:
+            backup_due = (backup_due.replace(day=1) - timedelta(days=1)).replace(day=7)
+        if now > backup_due + timedelta(hours=48) and (
+            not backup or datetime.fromisoformat(backup["ended_at"]) < backup_due
+        ):
             alerts.append("backup_overdue")
         switches, _ = self.read("switches.json")
         measurements, _ = self.read("measurements.json")

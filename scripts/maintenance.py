@@ -110,6 +110,9 @@ def replay(c: Any, store: ArtifactStore, target: str) -> dict[str, Any]:
 
 
 def lifecycle() -> dict[str, Any]:
+    neon_days = int(
+        json.loads((ROOT / "config/retention.json").read_bytes())["neon_monthly_backup_days"]
+    )
     rules = [
         dict(ID="Raw90Days", Status="Enabled", Prefix="bronze/", Expiration=dict(Days=90)),
         dict(
@@ -120,6 +123,8 @@ def lifecycle() -> dict[str, Any]:
     ]
     for target in ("local", "neon"):
         for tier, days in (("daily", 7), ("weekly", 28)):
+            if target == "neon":
+                days = neon_days  # Monthly captures retain the existing portable key layout.
             rules.append(
                 dict(
                     ID=target.title() + tier.title() + "Backups" + str(days) + "Days",

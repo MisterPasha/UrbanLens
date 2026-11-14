@@ -186,6 +186,6 @@ def test_object_cleanup_protects_current_silver_and_fragment_review_evidence(
     rules = {r.get("Prefix"): r.get("Expiration", {}).get("Days") for r in lifecycle()["Rules"]}
     assert (
         rules["bronze/"] == 90
-        and rules["backups/neon/daily/"] == 7
-        and rules["backups/neon/weekly/"] == 28
+        and rules["backups/neon/daily/"] == 70
+        and rules["backups/neon/weekly/"] == 70
     )

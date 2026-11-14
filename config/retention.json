@@ -3,9 +3,10 @@
   "raw_days": 90,
   "history_months": 12,
   "logs_days": 7,
+  "neon_monthly_backup_days": 70,
   "daily_backup_days": 7,
   "weekly_backup_days": 28,
   "daily_backups": 7,
   "weekly_backups": 4,
-  "note": "Current entities, identity registries, active links, reviews and referenced evidence are protected. Cleanup is reference-aware, never a blanket Silver expiry."
+  "note": "Neon backups run monthly and retain legacy daily/weekly keys for 70 days; the 7/28-day defaults apply to local backups. Current entities, active links, reviews and referenced evidence remain protected."
 }
