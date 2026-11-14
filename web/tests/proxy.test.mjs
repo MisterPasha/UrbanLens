@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import process from 'node:process';
 import { URL } from 'node:url';
 import { onRequestGet } from '../functions/api/[[path]].ts';
-import vercel from '../api/[...path].ts';
+import vercel from '../api/index.ts';
 import health from '../api/health.ts';
 const { Request, Response } = globalThis;
 

@@ -1,4 +1,4 @@
-import proxy from './[...path].ts';
+import proxy from './index.ts';
 
 export default {
   fetch(request: Request): Promise<Response> {

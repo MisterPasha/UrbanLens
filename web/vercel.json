@@ -9,6 +9,7 @@
     "api/*.ts": { "maxDuration": 15 }
   },
   "rewrites": [
+    { "source": "/api/v1/(.*)", "destination": "/api" },
     { "source": "/health", "destination": "/api/health" }
   ],
   "git": { "deploymentEnabled": false }
