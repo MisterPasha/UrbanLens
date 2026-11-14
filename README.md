@@ -4,7 +4,7 @@ Business Location Intelligence platform utilising Python, SQL, dbt, PostgreSQL/P
 
 A Data Engineering project focused on extracting data from multiple public sources, building reliable ETL/ELT pipelines, and integrating cloud services, spatial databases and APIs to support location analysis. The initial scope covers hospitality businesses in Brighton & Hove.
 
-Currently in development.
+Live demo: [UrbanLens](https://urban-lens-gamma.vercel.app/).
 
 Data refreshes monthly.
 
