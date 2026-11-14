@@ -259,7 +259,9 @@ def main() -> None:
     report["quota_check"] = dict(
         regional_concurrent_executions=limits["ConcurrentExecutions"],
         api_reserved_concurrency=concurrency.get("ReservedConcurrentExecutions"),
-        public_activation_required_regional_limit=104,
+        public_activation_required_regional_limit=(
+            104 if concurrency.get("ReservedConcurrentExecutions") else 10
+        ),
         configuration_changes=0,
     )
     (directory / "report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

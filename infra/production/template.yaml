@@ -40,14 +40,16 @@ Parameters:
     AllowedValues:
     - 'true'
     - 'false'
-    Description: Enable only after Lambda regional concurrency is at least 104 (100
-      unreserved + four reserved). Required before public API release.
+    Description: Optional per-function limits; enable after Lambda regional concurrency
+      is at least 104. When false, functions share the account quota (10 for launch).
 Conditions:
   ServeApi:
+    Fn::Equals:
+    - Ref: ApiEnabled
+    - 'true'
+  ReserveApiConcurrency:
     Fn::And:
-    - Fn::Equals:
-      - Ref: ApiEnabled
-      - 'true'
+    - Condition: ServeApi
     - Condition: ReserveFunctions
   RunSchedules:
     Fn::Equals:
@@ -310,7 +312,7 @@ Resources:
       Timeout: 10
       ReservedConcurrentExecutions:
         Fn::If:
-        - ServeApi
+        - ReserveApiConcurrency
         - 2
         - Ref: AWS::NoValue
       Environment:
