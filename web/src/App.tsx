@@ -41,7 +41,7 @@ export function App() {
     return () => window.removeEventListener('hashchange', navigate);
   }, []);
   useEffect(() => {
-    document.title = `${sections.find(section => section.value === state.section)?.label} · UrbanLens`;
+    document.title = 'UrbanLens';
     if (previousSection.current !== state.section) heading.current?.focus({ preventScroll: true });
     previousSection.current = state.section;
   }, [state.section]);

@@ -83,17 +83,11 @@ Desktop.ini
 
 # Local documentation and planning (existing exclusions)
 /docs/*
-!/docs/local-development.md
 /planning
 
-# Keep detailed working notes locally; retain setup and deployment/runbook docs.
+# Keep all Markdown locally except the root project summary.
 *.md
 !/README.md
-!/docs/local-development.md
-!/infra/production/README.md
-!/reference/operations/*.md
-!/reference/reuse/README.md
-!/reference/ingestion/SOURCES.md
 
 # Superseded artwork; the active magnifier logo remains versioned.
 /web/src/assets/UrbanLens_logo_full.png
