@@ -58,6 +58,7 @@ test('Vercel adapter uses server settings, allows only reads, and forwards healt
     assert.equal(new URL(url).origin, 'https://abc123.execute-api.eu-west-2.amazonaws.com');
     if (new URL(url).pathname === '/health') return Response.json({ status: 'ok', service: 'urbanlens-api' });
     assert.equal(new URL(url).pathname, '/api/v1/meta');
+    assert.equal(new URL(url).search, '');
     return Response.json({ release_id: 'published' });
   };
   try {
@@ -69,7 +70,7 @@ test('Vercel adapter uses server settings, allows only reads, and forwards healt
     process.env.SERVICE_ENABLED = 'true';
     assert.equal((await vercelResponse(new Request(request.url, { method: 'POST' }))).status, 405);
     assert.equal(calls, 0);
-    const response = await vercelResponse(new Request('https://urbanlens.vercel.app/api/proxy?__urbanlens_path=meta'));
+    const response = await vercelResponse(new Request('https://urbanlens.vercel.app/api/proxy?__urbanlens_path=meta&endpoint=meta'));
     assert.equal(response.status, 200);
     assert.equal(response.headers.get('Cache-Control'), 'no-store');
     assert.equal((await response.json()).release_id, 'published');

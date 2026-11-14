@@ -10,6 +10,8 @@ export default async function handler(request, response) {
   const health = request.query?.__urbanlens_health ?? incoming.searchParams.get('__urbanlens_health');
   incoming.searchParams.delete('__urbanlens_path');
   incoming.searchParams.delete('__urbanlens_health');
+  // Vercel also adds the named rewrite capture to the forwarded query string.
+  incoming.searchParams.delete('endpoint');
   if (health === '1') incoming.pathname = '/health';
   else if (!incoming.pathname.startsWith('/api/v1/') && typeof endpoint === 'string') {
     incoming.pathname = `/api/v1/${endpoint}`;
